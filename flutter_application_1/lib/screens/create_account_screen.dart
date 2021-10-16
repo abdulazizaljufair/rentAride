@@ -1,0 +1,146 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_application_1/screens/HomeScreen.dart';
+import 'package:flutter_application_1/screens/login_screen.dart';
+import 'package:flutter_application_1/widgets/custom_button.dart';
+import 'package:flutter_application_1/widgets/my_text_field.dart';
+
+class CreateAccountScreen extends StatelessWidget {
+  final _formKey = GlobalKey<FormState>();
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Padding(
+        padding: EdgeInsets.only(left: 20, right: 20),
+        child: Form(
+          key: _formKey,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 60,
+                ),
+                Center(
+                  child: Image.asset(
+                    'images/login.jpg',
+                    height: 100,
+                    width: 100,
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  'Rent A Ride',
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0XFF27292E),
+                  ),
+                ),
+                SizedBox(
+                  height: 35,
+                ),
+                MyTextformField(
+                  hintText: 'Firstname',
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter Your Firstname';
+                    }
+                    return null;
+                  },
+                  keyboardType: TextInputType.name,
+                ),
+                SizedBox(
+                  height: 35,
+                ),
+                MyTextformField(
+                  hintText: 'Lastname',
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter Your Lastname';
+                    }
+                    return null;
+                  },
+                  keyboardType: TextInputType.name,
+                ),
+                SizedBox(
+                  height: 35,
+                ),
+                MyTextformField(
+                  hintText: 'Email',
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter Your Email';
+                    }
+                    return null;
+                  },
+                  keyboardType: TextInputType.emailAddress,
+                ),
+                SizedBox(
+                  height: 35,
+                ),
+                MyTextformField(
+                  hintText: 'Password',
+                  obscure: true,
+                  keyboardType: TextInputType.visiblePassword,
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter Your Password';
+                    } else if (value.length < 8) {
+                      return 'Password must be at least 8 characters';
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(
+                  height: 35,
+                ),
+                MyTextformField(
+                  hintText: 'Phone Number',
+                  keyboardType: TextInputType.phone,
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter Your Phone Number';
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(
+                  height: 35,
+                ),
+                CustomButton(
+                  text: 'Create Account',
+                  textcolor: Colors.white,
+                  buttoncolor: Colors.black,
+                  height: 50,
+                  onTap: () {
+                    if (_formKey.currentState.validate()) {
+                      _formKey.currentState.save();
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => HomeScreen()));
+                    }
+                  },
+                ),
+                SizedBox(
+                  height: 35,
+                ),
+                InkWell(
+                  onTap: () {
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) => LoginScreen()));
+                  },
+                  child: Text(
+                    'If you already have account? Login',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
