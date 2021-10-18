@@ -9,6 +9,7 @@ import 'package:flutter_application_1/screens/add_card_screen.dart';
 import 'package:flutter_application_1/screens/addcar2.dart';
 import 'package:flutter_application_1/screens/choose_Existingcard.dart';
 import 'package:flutter_application_1/screens/login_screen.dart';
+import 'package:flutter_application_1/screens/manage_profilescreen.dart';
 import 'package:flutter_application_1/widgets/my_list_tile.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
@@ -131,6 +132,10 @@ class HomeScreen extends StatelessWidget {
           Mylist(
             icon: Icons.person,
             title: 'Manage Profile',
+            onTap: () {
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => ManageProfile()));
+            },
           ),
           Mylist(
             icon: Icons.view_agenda,
