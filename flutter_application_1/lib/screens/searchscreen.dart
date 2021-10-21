@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/screens/cardetails.dart';
 import 'package:flutter_application_1/widgets/my_text_field.dart';
 import 'package:flutter_application_1/widgets/time_date.dart';
 
@@ -61,28 +62,36 @@ class SearchScreen extends StatelessWidget {
               gridDelegate:
                   SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
               itemBuilder: (context, index) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      height: 150,
-                      width: 150,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: AssetImage('images/car.jpeg')),
-                      ),
+                return InkWell(
+                  onTap: () {
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => CarDetails()));
+                  },
+                  child: Container(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          height: 150,
+                          width: 150,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image: AssetImage('images/car.jpeg')),
+                          ),
+                        ),
+                        Text(
+                          'KIA',
+                          style: TextStyle(color: Colors.black),
+                        ),
+                        Text(
+                          '150 RIYALS per day',
+                          style: TextStyle(color: Colors.black),
+                        ),
+                      ],
                     ),
-                    Text(
-                      'KIA',
-                      style: TextStyle(color: Colors.black),
-                    ),
-                    Text(
-                      '150 RIYALS per day',
-                      style: TextStyle(color: Colors.black),
-                    ),
-                  ],
+                  ),
                 );
               },
             ),
