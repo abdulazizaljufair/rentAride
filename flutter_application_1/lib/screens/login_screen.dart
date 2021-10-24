@@ -8,6 +8,19 @@ import 'package:flutter_application_1/widgets/my_text_field.dart';
 class LoginScreen extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
 
+  var _userEmail = '';
+  var _userPassword = '';
+
+  void _trySubmit() {
+    final isValid = _formKey.currentState.validate();
+
+    if (isValid) {
+      _formKey.currentState.save();
+      print(_userEmail);
+      print(_userPassword);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,15 +69,17 @@ class LoginScreen extends StatelessWidget {
                     height: 30,
                   ),
                   MyTextformField(
-                    hintText: 'Email',
-                    keyboardType: TextInputType.emailAddress,
-                    validator: (value) {
-                      if (value.isEmpty) {
-                        return 'Please enter Your Email';
-                      }
-                      return null;
-                    },
-                  ),
+                      hintText: 'Email',
+                      keyboardType: TextInputType.emailAddress,
+                      validator: (value) {
+                        if (value.isEmpty || !value.contains('@')) {
+                          return 'Please enter a valid email';
+                        }
+                        return null;
+                      },
+                      onSaved: (value) {
+                        _userEmail = value;
+                      }),
                   SizedBox(
                     height: 30,
                   ),
@@ -72,11 +87,12 @@ class LoginScreen extends StatelessWidget {
                     hintText: 'Password',
                     keyboardType: TextInputType.visiblePassword,
                     obscure: true,
+                    onSaved: (value) {
+                      _userPassword = value;
+                    },
                     validator: (value) {
-                      if (value.isEmpty) {
-                        return 'Please enter Your Password';
-                      } else if (value.length < 8) {
-                        return 'Password must be at least 8 characters';
+                      if (value.isEmpty || value.length < 8) {
+                        return 'Please enter a valid password';
                       }
                       return null;
                     },
@@ -102,6 +118,7 @@ class LoginScreen extends StatelessWidget {
                     onTap: () {
                       if (_formKey.currentState.validate()) {
                         _formKey.currentState.save();
+                        _trySubmit();
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(

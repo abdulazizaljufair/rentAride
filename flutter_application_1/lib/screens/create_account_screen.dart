@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/HomeScreen.dart';
 import 'package:flutter_application_1/screens/login_screen.dart';
@@ -6,6 +8,18 @@ import 'package:flutter_application_1/widgets/my_text_field.dart';
 
 class CreateAccountScreen extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
+  var _userEmail = '';
+  var _userPassword = '';
+  void _trySubmit() {
+    final isValid = _formKey.currentState.validate();
+
+    if (isValid) {
+      _formKey.currentState.save();
+      print(_userEmail);
+      print(_userPassword);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,8 +82,11 @@ class CreateAccountScreen extends StatelessWidget {
                 ),
                 MyTextformField(
                   hintText: 'Email',
+                  onSaved: (value) {
+                    _userEmail = value;
+                  },
                   validator: (value) {
-                    if (value.isEmpty) {
+                    if (value.isEmpty || !value.contains('@')) {
                       return 'Please enter Your Email';
                     }
                     return null;
@@ -83,6 +100,9 @@ class CreateAccountScreen extends StatelessWidget {
                   hintText: 'Password',
                   obscure: true,
                   keyboardType: TextInputType.visiblePassword,
+                  onSaved: (value) {
+                    _userPassword = value;
+                  },
                   validator: (value) {
                     if (value.isEmpty) {
                       return 'Please enter Your Password';
@@ -116,6 +136,7 @@ class CreateAccountScreen extends StatelessWidget {
                   onTap: () {
                     if (_formKey.currentState.validate()) {
                       _formKey.currentState.save();
+                      _trySubmit();
                       Navigator.push(
                           context,
                           MaterialPageRoute(

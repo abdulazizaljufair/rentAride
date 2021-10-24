@@ -4,6 +4,7 @@ class MyTextformField extends StatelessWidget {
   final String hintText;
   final Function validator;
   final Function onTap;
+  final Function onSaved;
   final bool obscure;
   final bool readonly;
   final TextInputType keyboardType;
@@ -17,13 +18,15 @@ class MyTextformField extends StatelessWidget {
       this.suffixIcon,
       this.onTap,
       this.controller,
-      this.readonly = false});
+      this.readonly = false,
+      this.onSaved});
   @override
   Widget build(BuildContext context) {
     return TextFormField(
         onTap: onTap == null ? () {} : onTap,
         obscureText: obscure,
         keyboardType: keyboardType,
+        onSaved: onSaved,
         controller: controller,
         readOnly: readonly,
         decoration: InputDecoration(
