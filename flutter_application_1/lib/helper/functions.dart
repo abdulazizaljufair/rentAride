@@ -4,7 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
 selectDate(BuildContext context, CupertinoDatePickerMode mode,
-    {TextEditingController controller}) {
+    {TextEditingController controller, String pickedDate}) {
   showModalBottomSheet<DateTime>(
     context: context,
     builder: (context) {
@@ -44,9 +44,11 @@ selectDate(BuildContext context, CupertinoDatePickerMode mode,
                         DateFormat('yyyy-mm-dd').format(dateTime);
                     String formattedTime = DateFormat('hh:mm').format(dateTime);
                     if (mode == CupertinoDatePickerMode.date) {
-                      controller.text = formattedDate;
+                      if (controller != null) controller.text = formattedDate;
+                      if (pickedDate != null) pickedDate = formattedDate;
                     } else {
-                      controller.text = formattedTime;
+                      if (controller != null) controller.text = formattedTime;
+                      if (pickedDate != null) pickedDate = formattedTime;
                     }
                   },
                 ),
