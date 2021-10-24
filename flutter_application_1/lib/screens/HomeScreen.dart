@@ -3,6 +3,7 @@ import 'package:flutter_application_1/helper/functions.dart';
 import 'package:flutter_application_1/model/slider_model.dart';
 import 'package:flutter_application_1/screens/ExistingAdress.dart';
 import 'package:flutter_application_1/screens/View_booking.dart';
+import 'package:flutter_application_1/screens/aboutus.dart';
 import 'package:flutter_application_1/screens/add_address.dart';
 import 'package:flutter_application_1/screens/add_car_screen.dart';
 import 'package:flutter_application_1/screens/add_card_screen.dart';
@@ -145,6 +146,14 @@ class HomeScreen extends StatelessWidget {
                   .push(MaterialPageRoute(builder: (context) => ViewBooking()));
             },
           ),
+          Mylist(
+            icon: Icons.info,
+            title: 'About Us',
+            onTap: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => AboutUs()));
+            },
+          ),
           SizedBox(
             height: 150,
           ),
@@ -227,35 +236,8 @@ class HomeScreen extends StatelessWidget {
                 },
               ),
             ),
-            Container(
-              height: 250,
-              width: MediaQuery.of(context).size.width,
-              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
-              margin: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
-                    BoxShadow(blurRadius: 10, color: Colors.black38)
-                  ]),
-              child: Column(
-                children: [
-                  Text(
-                    'About Us',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 22,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                      """ Rent A Ride is a mobile application which acts as an intermediary, allowing customers to rent a car or act as lessors to list their car for rent. Our application will provide a variety of car options and prices that suits everyone's needs. This will allow people in Saudi Arabia with unused cars to list them. This will create a great opportunity for an individual to benefit from the app and to boost the economy.
-
- """),
-                ],
-              ),
+            SizedBox(
+              height: 350,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
