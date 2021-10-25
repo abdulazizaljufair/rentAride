@@ -5,8 +5,7 @@ import 'package:flutter_application_1/helper/functions.dart';
 class TimeDate extends StatelessWidget {
   TextEditingController fromdatecontroller = TextEditingController();
   TextEditingController fromtimecontroller = TextEditingController();
-  TextEditingController todatecontroller = TextEditingController();
-  TextEditingController totimecontroller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     fromdatecontroller.text = "2021/3/23";
