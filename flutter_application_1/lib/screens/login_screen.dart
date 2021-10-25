@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/HomeScreen.dart';
 import 'package:flutter_application_1/screens/button_nav_controller.dart';
@@ -8,7 +9,7 @@ import 'package:flutter_application_1/widgets/my_text_field.dart';
 class LoginScreen extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
 
-  var _userEmail = '';
+  String _userEmail = '';
   var _userPassword = '';
 
   void _trySubmit() {
@@ -115,14 +116,26 @@ class LoginScreen extends StatelessWidget {
                     textcolor: Colors.white,
                     buttoncolor: Colors.black,
                     height: 50,
-                    onTap: () {
+                    onTap: () async {
                       if (_formKey.currentState.validate()) {
                         _formKey.currentState.save();
-                        _trySubmit();
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ButtonNavController()));
+                        try {
+                          await FirebaseAuth.instance
+                              .signInWithEmailAndPassword(
+                                  email: _userEmail, password: _userPassword);
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ButtonNavController()));
+                        } on FirebaseAuthException catch (e) {
+                          if (e.code == 'user-not-found') {
+                            print('No user found for that email.');
+                          } else if (e.code == 'wrong-password') {
+                            print('Wrong password provided for that user.');
+                          }
+                        }
+                        // _trySubmit();
+
                       }
                     },
                   ),

@@ -1,13 +1,16 @@
 import 'dart:ffi';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/HomeScreen.dart';
 import 'package:flutter_application_1/screens/login_screen.dart';
 import 'package:flutter_application_1/widgets/custom_button.dart';
 import 'package:flutter_application_1/widgets/my_text_field.dart';
+import 'login_screen.dart';
 
 class CreateAccountScreen extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
+
   var _userEmail = '';
   var _userPassword = '';
   void _trySubmit() {
@@ -133,14 +136,26 @@ class CreateAccountScreen extends StatelessWidget {
                   textcolor: Colors.white,
                   buttoncolor: Colors.black,
                   height: 50,
-                  onTap: () {
+                  onTap: () async {
                     if (_formKey.currentState.validate()) {
                       _formKey.currentState.save();
-                      _trySubmit();
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => HomeScreen()));
+                      try {
+                        await FirebaseAuth.instance
+                            .createUserWithEmailAndPassword(
+                                email: _userEmail, password: _userPassword);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => HomeScreen()));
+                      } on FirebaseAuthException catch (e) {
+                        if (e.code == 'email-already-in-use') {
+                          print('The account already exists for that email.');
+                        }
+                      } catch (e) {
+                        print(e);
+                      }
+                      // _trySubmit();
+
                     }
                   },
                 ),
