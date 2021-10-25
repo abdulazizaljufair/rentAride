@@ -6,11 +6,19 @@ import 'package:flutter_application_1/screens/create_account_screen.dart';
 import 'package:flutter_application_1/widgets/custom_button.dart';
 import 'package:flutter_application_1/widgets/my_text_field.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
 
   String _userEmail = '';
+
   var _userPassword = '';
+
+  String error;
 
   void _trySubmit() {
     final isValid = _formKey.currentState.validate();
@@ -99,6 +107,10 @@ class LoginScreen extends StatelessWidget {
                     },
                   ),
                   SizedBox(
+                    height: 10,
+                  ),
+                  if (error != null) Text(error),
+                  SizedBox(
                     height: 20,
                   ),
                   InkWell(
@@ -123,6 +135,8 @@ class LoginScreen extends StatelessWidget {
                           await FirebaseAuth.instance
                               .signInWithEmailAndPassword(
                                   email: _userEmail, password: _userPassword);
+                          print("UID is: " +
+                              FirebaseAuth.instance.currentUser.uid);
                           Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
@@ -130,13 +144,16 @@ class LoginScreen extends StatelessWidget {
                         } on FirebaseAuthException catch (e) {
                           if (e.code == 'user-not-found') {
                             print('No user found for that email.');
+                            error = ("user-not-found");
                           } else if (e.code == 'wrong-password') {
                             print('Wrong password provided for that user.');
+                            error = "wrong-password";
                           }
                         }
                         // _trySubmit();
 
                       }
+                      setState(() {});
                     },
                   ),
                   SizedBox(

@@ -1,5 +1,6 @@
 import 'dart:ffi';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/HomeScreen.dart';
@@ -10,9 +11,12 @@ import 'login_screen.dart';
 
 class CreateAccountScreen extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
-
+  CollectionReference users = FirebaseFirestore.instance.collection('users');
   var _userEmail = '';
   var _userPassword = '';
+  String phone = "0";
+  String fName = 'f';
+  String lName = 'l';
   void _trySubmit() {
     final isValid = _formKey.currentState.validate();
 
@@ -21,6 +25,19 @@ class CreateAccountScreen extends StatelessWidget {
       print(_userEmail);
       print(_userPassword);
     }
+  }
+
+  Future<void> addUser() {
+    // Call the user's CollectionReference to add a new user
+    return users
+        .add({
+          'fristName': fName, // John Doe
+          'lastName': lName, // Stokes and Sons
+          'email': _userEmail,
+          'phoneNumber': phone,
+        })
+        .then((value) => print("User Added"))
+        .catchError((error) => print("Failed to add user: $error"));
   }
 
   @override
@@ -65,7 +82,10 @@ class CreateAccountScreen extends StatelessWidget {
                     }
                     return null;
                   },
-                  keyboardType: TextInputType.name,
+                  // keyboardType: TextInputType.name,
+                  onSaved: (value) {
+                    fName = value;
+                  },
                 ),
                 SizedBox(
                   height: 35,
@@ -78,7 +98,10 @@ class CreateAccountScreen extends StatelessWidget {
                     }
                     return null;
                   },
-                  keyboardType: TextInputType.name,
+                  // keyboardType: TextInputType.text,
+                  onSaved: (value) {
+                    lName = value;
+                  },
                 ),
                 SizedBox(
                   height: 35,
@@ -120,7 +143,10 @@ class CreateAccountScreen extends StatelessWidget {
                 ),
                 MyTextformField(
                   hintText: 'Phone Number',
-                  keyboardType: TextInputType.phone,
+                  // keyboardType: TextInputType.phone,
+                  onSaved: (value) {
+                    phone = value;
+                  },
                   validator: (value) {
                     if (value.isEmpty) {
                       return 'Please enter Your Phone Number';
@@ -143,6 +169,7 @@ class CreateAccountScreen extends StatelessWidget {
                         await FirebaseAuth.instance
                             .createUserWithEmailAndPassword(
                                 email: _userEmail, password: _userPassword);
+                        addUser();
                         Navigator.push(
                             context,
                             MaterialPageRoute(
