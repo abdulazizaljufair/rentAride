@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/screens/resrve.dart';
 import 'package:flutter_application_1/widgets/custom_button.dart';
 
 class CarDetails extends StatelessWidget {
@@ -83,9 +84,12 @@ class CarDetails extends StatelessWidget {
                 CustomButton(
                   buttoncolor: Color(0xFF27292E),
                   textcolor: Colors.white,
-                  text: 'Reserve',
+                  text: 'Next',
                   height: 55,
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) => reserveCar()));
+                  },
                 ),
               ],
             ),

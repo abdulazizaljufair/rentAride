@@ -7,6 +7,7 @@ import 'package:flutter_application_1/screens/HomeScreen.dart';
 import 'package:flutter_application_1/screens/login_screen.dart';
 import 'package:flutter_application_1/widgets/custom_button.dart';
 import 'package:flutter_application_1/widgets/my_text_field.dart';
+import 'button_nav_controller.dart';
 import 'login_screen.dart';
 
 class CreateAccountScreen extends StatelessWidget {
@@ -170,10 +171,10 @@ class CreateAccountScreen extends StatelessWidget {
                             .createUserWithEmailAndPassword(
                                 email: _userEmail, password: _userPassword);
                         addUser();
-                        Navigator.push(
+                        Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => HomeScreen()));
+                                builder: (context) => ButtonNavController()));
                       } on FirebaseAuthException catch (e) {
                         if (e.code == 'email-already-in-use') {
                           print('The account already exists for that email.');
