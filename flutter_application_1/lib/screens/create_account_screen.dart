@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +16,7 @@ class CreateAccountScreen extends StatelessWidget {
   String phone = "0";
   String fName = 'f';
   String lName = 'l';
+
   void _trySubmit() {
     final isValid = _formKey.currentState.validate();
 

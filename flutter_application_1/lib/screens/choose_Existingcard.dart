@@ -1,6 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/screens/add_car_screen.dart';
+import 'add_card_screen.dart';
 
-class ChooseCard extends StatelessWidget {
+class ChooseCard extends StatefulWidget {
+  @override
+  State<ChooseCard> createState() => _ChooseCardState();
+}
+
+class _ChooseCardState extends State<ChooseCard> {
+  List cardL2 = [];
+
+  void initState() {
+    super.initState();
+    FetchDatabaseList();
+  }
+
+  FetchDatabaseList() async {
+    dynamic res = await AddCard().getUserCardList();
+
+    if (res == null) {
+      print('Unable to retrive');
+    } else {
+      setState(() {
+        cardL2 = res;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,11 +58,11 @@ class ChooseCard extends StatelessWidget {
                     ),
                     Column(
                       children: [
-                        Text('6703 4444 4444 4449'),
+                        cardL2[0]['Card Number'],
                         SizedBox(
                           height: 10,
                         ),
-                        Text('abdulaziz'),
+                        cardL2[1]['Holder Name'],
                       ],
                     )
                   ],
