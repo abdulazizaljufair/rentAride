@@ -1,7 +1,34 @@
+import 'dart:html';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/screens/add_address.dart';
 
-class Exaddress extends StatelessWidget {
+class Exaddress extends StatefulWidget {
   @override
+  State<Exaddress> createState() => _ExaddressState();
+}
+
+class _ExaddressState extends State<Exaddress> {
+  @override
+  List addressL2 = [];
+
+  void initState() {
+    super.initState();
+    FetchDatabaseList();
+  }
+
+  FetchDatabaseList() async {
+    dynamic res = await ManageAdress().getUserAddressList();
+
+    if (res == null) {
+      print('Unable to retrive');
+    } else {
+      setState(() {
+        addressL2 = res;
+      });
+    }
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -9,7 +36,7 @@ class Exaddress extends StatelessWidget {
         title: Text('Existing addreses'),
       ),
       body: ListView.separated(
-        itemCount: 1,
+        itemCount: addressL2.length,
         itemBuilder: (context, index) {
           return Container(
               padding: EdgeInsets.all(15),
@@ -33,28 +60,28 @@ class Exaddress extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Saudi arabia',
+                        addressL2[index]['City Name'],
                         style: TextStyle(color: Colors.black),
                       ),
                       SizedBox(
                         height: 10,
                       ),
                       Text(
-                        'Riyadh',
+                        addressL2[index]['Country Name'],
                         style: TextStyle(color: Colors.black),
                       ),
                       SizedBox(
                         height: 10,
                       ),
                       Text(
-                        '6657',
+                        addressL2[index]['Street Name'],
                         style: TextStyle(color: Colors.black),
                       ),
                       SizedBox(
                         height: 10,
                       ),
                       Text(
-                        'Altamar',
+                        addressL2[index]['Zip Code'],
                         style: TextStyle(color: Colors.black),
                       ),
                     ],

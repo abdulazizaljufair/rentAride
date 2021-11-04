@@ -2,6 +2,7 @@ import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.da
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/helper/functions.dart';
+import 'package:flutter_application_1/screens/ChatScreen_2.dart';
 import 'package:flutter_application_1/screens/HomeScreen.dart';
 import 'package:flutter_application_1/screens/OffersScreen.dart';
 import 'package:flutter_application_1/screens/chatsScreen.dart';
@@ -21,7 +22,7 @@ class _ButtonNavControllerState extends State<ButtonNavController> {
   List<Widget> screens = [
     HomeScreen(),
     SearchScreen(),
-    ChatsScreen(),
+    ChatScreen2(),
     Recievedoffer(),
     ListCar(),
   ];
