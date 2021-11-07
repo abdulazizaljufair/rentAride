@@ -40,7 +40,7 @@ class _ChooseCardState extends State<ChooseCard> {
         ),
       ),
       body: ListView.builder(
-          itemCount: 2,
+          itemCount: cardL2.length,
           itemBuilder: (context, index) {
             return InkWell(
               onTap: () {},
@@ -58,11 +58,11 @@ class _ChooseCardState extends State<ChooseCard> {
                     ),
                     Column(
                       children: [
-                        cardL2[0]['Card Number'],
+                        Text(cardL2[index]['Card Number']),
                         SizedBox(
                           height: 10,
                         ),
-                        cardL2[1]['Holder Name'],
+                        Text(cardL2[index]['Holder Name']),
                       ],
                     )
                   ],

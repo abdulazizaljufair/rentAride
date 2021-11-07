@@ -1,7 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/screens/add_car_screen.dart';
 
-class AddCarScreen extends StatelessWidget {
+class AddCarScreen extends StatefulWidget {
   @override
+  State<AddCarScreen> createState() => _AddCarScreenState();
+}
+
+class _AddCarScreenState extends State<AddCarScreen> {
+  @override
+  List car = [];
+
+  void initState() {
+    super.initState();
+    FetchDatabaseList();
+  }
+
+  FetchDatabaseList() async {
+    dynamic res = await AddCar().getUserCarList();
+
+    if (res == null) {
+      print('Unable to retrive');
+    } else {
+      setState(() {
+        car = res;
+      });
+    }
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -9,7 +34,7 @@ class AddCarScreen extends StatelessWidget {
         title: Text('Existing Cars'),
       ),
       body: ListView.separated(
-        itemCount: 2,
+        itemCount: car.length,
         itemBuilder: (context, index) {
           return Container(
               padding: EdgeInsets.all(15),
@@ -33,37 +58,47 @@ class AddCarScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'KIA',
+                        car[index]['Car Type'],
                         style: TextStyle(color: Colors.black),
                       ),
                       SizedBox(
                         height: 10,
                       ),
                       Text(
-                        'Model 2021',
+                        car[index]['Chasis Number'],
                         style: TextStyle(color: Colors.black),
                       ),
                       SizedBox(
                         height: 10,
                       ),
                       Text(
-                        '4484844843',
+                        car[index]['License Number'],
                         style: TextStyle(color: Colors.black),
                       ),
                       SizedBox(
                         height: 10,
                       ),
                       Text(
-                        '10000 KM',
+                        car[index]['Model'],
                         style: TextStyle(color: Colors.black),
                       ),
                       SizedBox(
                         height: 10,
                       ),
                       Text(
-                        'SV30-0169266',
+                        car[index]['Odometer'],
                         style: TextStyle(color: Colors.black),
                       ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        car[index]['year'],
+                        style: TextStyle(color: Colors.black),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      )
                     ],
                   )
                 ],

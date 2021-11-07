@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Database/Database.dart';
 import 'package:flutter_application_1/screens/HomeScreen.dart';
 import 'package:flutter_application_1/screens/login_screen.dart';
 import 'package:flutter_application_1/widgets/custom_button.dart';
@@ -25,6 +26,15 @@ class CreateAccountScreen extends StatelessWidget {
       print(_userEmail);
       print(_userPassword);
     }
+  }
+
+  Future updateUserList(String uid) async {
+    return await users.doc(uid).update({
+      'fristName': fName, // John Doe
+      'lastName': lName, // Stokes and Sons
+      'email': _userEmail,
+      'phoneNumber': phone,
+    });
   }
 
   Future<void> addUser() {
@@ -169,6 +179,7 @@ class CreateAccountScreen extends StatelessWidget {
                         await FirebaseAuth.instance
                             .createUserWithEmailAndPassword(
                                 email: _userEmail, password: _userPassword);
+
                         addUser();
                         Navigator.pushReplacement(
                             context,
