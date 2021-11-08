@@ -4,12 +4,15 @@ import 'package:flutter_application_1/widgets/custom_button.dart';
 import 'package:flutter_application_1/widgets/my_text_field.dart';
 
 import 'HomeScreen.dart';
+import 'create_account_screen.dart';
 
 class AddCard extends StatelessWidget {
   bool checkBoxValue = false;
 
   final _formKey = GlobalKey<FormState>();
-  CollectionReference card = FirebaseFirestore.instance.collection('Cards');
+  // final uid = CreateAccountScreen().getCurrentUserId();
+
+  CollectionReference card = FirebaseFirestore.instance.collection('UserData');
   String hName = 'o';
   String cNumber = 'i';
   String eDate = 'z';

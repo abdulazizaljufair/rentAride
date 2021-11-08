@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_application_1/widgets/messagebubble.dart';
 import 'new_messages.dart';
+import 'messagebubble.dart';
 
 class Massages extends StatelessWidget {
   const Massages({Key key}) : super(key: key);
@@ -22,8 +24,11 @@ class Massages extends StatelessWidget {
         final chatDocs = ChatsSnapshot.data.documents.lenght;
         return ListView.builder(
           reverse: true,
-          itemCount: chatDocs,
-          itemBuilder: (ctx, index) => messageBubble(chatDocs[index]['text']),
+          itemCount: chatDocs.lenght,
+          itemBuilder: (ctx, index) => messageBubble(
+              chatDocs[index]['text'],
+              chatDocs[index].get['userId'] ==
+                  FirebaseAuth.instance.currentUser.uid),
         );
       },
     );

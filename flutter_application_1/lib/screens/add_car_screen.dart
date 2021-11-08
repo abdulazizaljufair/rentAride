@@ -15,16 +15,18 @@ class AddCar extends StatelessWidget {
   var odometer = 's';
   var year = 's';
   var cNumber = 's';
+  var cAddress;
 
   Future<void> addCar() {
     // Call the user's CollectionReference to add a new user
     return car.add({
       'Car Type': carType,
       'Model': model,
+      'year': year,
       'License Number': lNumber,
       'odometer': odometer,
-      'year': year,
       'Chasis Number': cNumber,
+      'Car address': cAddress,
     }).then((value) => print("Car Added"));
   }
 
@@ -149,6 +151,16 @@ class AddCar extends StatelessWidget {
                     hintText: 'Chasis Number',
                     onSaved: (value) {
                       cNumber = value;
+                    },
+                    // keyboardType: TextInputType.number,
+                  ),
+                  SizedBox(
+                    height: 35,
+                  ),
+                  MyTextformField(
+                    hintText: 'Car Address',
+                    onSaved: (value) {
+                      cAddress = value;
                     },
                     // keyboardType: TextInputType.number,
                   ),

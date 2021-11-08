@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/helper/functions.dart';
@@ -5,14 +6,17 @@ import 'package:flutter_application_1/screens/manage_profilescreen.dart';
 import 'package:flutter_application_1/widgets/custom_button.dart';
 import 'package:flutter_application_1/widgets/my_text_field.dart';
 
+import 'create_account_screen.dart';
+
 class EditProfile extends StatelessWidget {
+  final auth = FirebaseAuth.instance.currentUser;
+  final update = CreateAccountScreen();
   var _formKey = GlobalKey<FormState>();
   String fName;
   String lName;
   String email;
   String dlisence;
   String pNumber;
-  final auth = FirebaseAuth.instance.currentUser;
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +107,7 @@ class EditProfile extends StatelessWidget {
               MyTextformField(
                   hintText: 'Phone Number',
                   onSaved: (value) {
-                    dlisence = value;
+                    pNumber = value;
                   }),
               SizedBox(
                 height: 25,
@@ -112,6 +116,7 @@ class EditProfile extends StatelessWidget {
                 onTap: () {
                   _formKey.currentState.save();
                   auth.updateEmail(email);
+
                   Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (context) => ManageProfile()));
                 },

@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/helper/functions.dart';
 import 'package:flutter_application_1/model/slider_model.dart';
+import 'package:flutter_application_1/modules/users.dart';
 import 'package:flutter_application_1/screens/ExistingAdress.dart';
 import 'package:flutter_application_1/screens/View_booking.dart';
 import 'package:flutter_application_1/screens/aboutus.dart';
@@ -15,7 +16,14 @@ import 'package:flutter_application_1/screens/manage_profilescreen.dart';
 import 'package:flutter_application_1/widgets/my_list_tile.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final String userId = FirebaseAuth.instance.currentUser.uid;
+
   final List<SliderModel> imagList = [
     SliderModel(
       title: 'Rent a car for only 200 riyals a day ',
@@ -38,6 +46,13 @@ class HomeScreen extends StatelessWidget {
           'https://images.unsplash.com/photo-1606611013016-969c19ba27bb?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Zm9yZCUyMGNhcnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
     ),
   ];
+
+  @override
+  // void initState() async{
+  //   // TODO: implement initState
+  //   final
+  //   await
+  // }
 
   @override
   Widget build(BuildContext context) {

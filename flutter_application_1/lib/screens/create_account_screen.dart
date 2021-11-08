@@ -28,6 +28,10 @@ class CreateAccountScreen extends StatelessWidget {
     }
   }
 
+  // Future<String> getCurrentUserId() async {
+  //   return (await FirebaseAuth.instance.currentUser).uid;
+  // }
+
   Future updateUserList(String uid) async {
     return await users.doc(uid).update({
       'fristName': fName, // John Doe
@@ -37,7 +41,7 @@ class CreateAccountScreen extends StatelessWidget {
     });
   }
 
-  Future<void> addUser() {
+  Future<void> addUser(String id) {
     // Call the user's CollectionReference to add a new user
     return users
         .add({
@@ -45,6 +49,7 @@ class CreateAccountScreen extends StatelessWidget {
           'lastName': lName, // Stokes and Sons
           'email': _userEmail,
           'phoneNumber': phone,
+          'userId': id,
         })
         .then((value) => print("User Added"))
         .catchError((error) => print("Failed to add user: $error"));
@@ -180,7 +185,7 @@ class CreateAccountScreen extends StatelessWidget {
                             .createUserWithEmailAndPassword(
                                 email: _userEmail, password: _userPassword);
 
-                        addUser();
+                        addUser(FirebaseAuth.instance.currentUser.uid);
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
