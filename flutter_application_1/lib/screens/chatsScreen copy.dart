@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/model/user_model.dart';
 import 'package:flutter_application_1/screens/chats_details.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ChatsScreen extends StatelessWidget {
   List<UserModel> users = [
@@ -40,11 +41,11 @@ class ChatsScreen extends StatelessWidget {
                 child: Row(
                   children: [
                     CircleAvatar(
-                      maxRadius: 30,
+                      maxRadius: 30.h,
                       backgroundImage: AssetImage(users[index].imagepath),
                     ),
                     SizedBox(
-                      width: 20,
+                      width: 20.w,
                     ),
                     Text(
                       users[index].name,

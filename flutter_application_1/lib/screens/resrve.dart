@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/helper/functions.dart';
 import 'package:flutter_application_1/widgets/custom_button.dart';
 import 'package:flutter_application_1/widgets/my_text_field.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class reserveCar extends StatelessWidget {
   TextEditingController fromdatecontroller = TextEditingController();
@@ -26,7 +27,7 @@ class reserveCar extends StatelessWidget {
           child: Column(
             children: [
               SizedBox(
-                height: 40,
+                height: 40.h,
               ),
               Row(
                 children: [
@@ -52,7 +53,7 @@ class reserveCar extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    width: 10,
+                    width: 10.w,
                   ),
                   Expanded(
                     child: MyTextformField(
@@ -78,7 +79,7 @@ class reserveCar extends StatelessWidget {
                 ],
               ),
               SizedBox(
-                height: 15,
+                height: 15.h,
               ),
               Row(
                 children: [
@@ -104,7 +105,7 @@ class reserveCar extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    width: 10,
+                    width: 10.w,
                   ),
                   Expanded(
                     child: MyTextformField(
@@ -130,26 +131,13 @@ class reserveCar extends StatelessWidget {
                 ],
               ),
               SizedBox(
-                height: 15,
-              ),
-              MyTextformField(
-                hintText: 'Price',
-                keyboardType: TextInputType.number,
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Please enter the price';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(
-                height: 40,
+                height: 40.h,
               ),
               CustomButton(
                 text: 'Reserve',
                 buttoncolor: Color(0xFF27292E),
                 textcolor: Colors.white,
-                height: 50,
+                height: 50.h,
               ),
             ],
           ),

@@ -5,6 +5,7 @@ import 'package:flutter_application_1/widgets/my_text_field.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_application_1/helper/functions.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ListCar extends StatefulWidget {
   @override
@@ -37,8 +38,8 @@ class _ListCarState extends State<ListCar> {
                     pickImage();
                   },
                   child: Container(
-                    height: 85,
-                    width: 80,
+                    height: 85.h,
+                    width: 80.w,
                     decoration: BoxDecoration(
                       color: Color(0xFF27292E),
                       borderRadius: BorderRadius.circular(20),
@@ -51,14 +52,14 @@ class _ListCarState extends State<ListCar> {
                 ),
               ),
               SizedBox(
-                height: 10,
+                height: 10.h,
               ),
               Text('Upload car photo'),
               SizedBox(
-                height: 10,
+                height: 10.h,
               ),
               SizedBox(
-                height: 15,
+                height: 15.h,
               ),
               MyTextformField(
                 hintText: 'Car Model',
@@ -71,7 +72,7 @@ class _ListCarState extends State<ListCar> {
                 },
               ),
               SizedBox(
-                height: 15,
+                height: 15.h,
               ),
               MyTextformField(
                 hintText: 'Year',
@@ -84,7 +85,7 @@ class _ListCarState extends State<ListCar> {
                 },
               ),
               SizedBox(
-                height: 15,
+                height: 15.h,
               ),
               MyTextformField(
                 hintText: 'odometer',
@@ -97,7 +98,7 @@ class _ListCarState extends State<ListCar> {
                 },
               ),
               SizedBox(
-                height: 15,
+                height: 15.h,
               ),
               MyTextformField(
                 hintText: 'Chasis Number',
@@ -109,7 +110,7 @@ class _ListCarState extends State<ListCar> {
                 },
               ),
               SizedBox(
-                height: 15,
+                height: 15.h,
               ),
               MyTextformField(
                 hintText: 'Car adress',
@@ -122,13 +123,13 @@ class _ListCarState extends State<ListCar> {
                 },
               ),
               SizedBox(
-                height: 15,
+                height: 15.h,
               ),
               CustomButton(
                 text: 'Next',
                 buttoncolor: Color(0xFF27292E),
                 textcolor: Colors.white,
-                height: 50,
+                height: 50.h,
                 onTap: () {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => ListCarTWO()));

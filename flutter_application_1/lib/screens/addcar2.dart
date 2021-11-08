@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/add_car_screen.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AddCarScreen extends StatefulWidget {
   @override
@@ -52,7 +53,7 @@ class _AddCarScreenState extends State<AddCarScreen> {
                     ),
                   ),
                   SizedBox(
-                    width: 20,
+                    width: 20.w,
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -62,42 +63,42 @@ class _AddCarScreenState extends State<AddCarScreen> {
                         style: TextStyle(color: Colors.black),
                       ),
                       SizedBox(
-                        height: 10,
+                        height: 10.h,
                       ),
                       Text(
                         car[index]['Chasis Number'],
                         style: TextStyle(color: Colors.black),
                       ),
                       SizedBox(
-                        height: 10,
+                        height: 10.h,
                       ),
                       Text(
                         car[index]['License Number'],
                         style: TextStyle(color: Colors.black),
                       ),
                       SizedBox(
-                        height: 10,
+                        height: 10.h,
                       ),
                       Text(
                         car[index]['Model'],
                         style: TextStyle(color: Colors.black),
                       ),
                       SizedBox(
-                        height: 10,
+                        height: 10.h,
                       ),
                       Text(
                         car[index]['Odometer'],
                         style: TextStyle(color: Colors.black),
                       ),
                       SizedBox(
-                        height: 10,
+                        height: 10.h,
                       ),
                       Text(
                         car[index]['year'],
                         style: TextStyle(color: Colors.black),
                       ),
                       SizedBox(
-                        height: 10,
+                        height: 10.h,
                       )
                     ],
                   )

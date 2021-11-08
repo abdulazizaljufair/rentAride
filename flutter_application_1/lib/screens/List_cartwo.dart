@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/helper/functions.dart';
 import 'package:flutter_application_1/widgets/custom_button.dart';
 import 'package:flutter_application_1/widgets/my_text_field.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ListCarTWO extends StatelessWidget {
   TextEditingController fromdatecontroller = TextEditingController();
@@ -26,7 +27,7 @@ class ListCarTWO extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(
-              height: 40,
+              height: 40.h,
             ),
             Row(
               children: [
@@ -52,7 +53,7 @@ class ListCarTWO extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  width: 10,
+                  width: 10.w,
                 ),
                 Expanded(
                   child: MyTextformField(
@@ -78,7 +79,7 @@ class ListCarTWO extends StatelessWidget {
               ],
             ),
             SizedBox(
-              height: 15,
+              height: 15.h,
             ),
             Row(
               children: [
@@ -104,7 +105,7 @@ class ListCarTWO extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  width: 10,
+                  width: 10.w,
                 ),
                 Expanded(
                   child: MyTextformField(
@@ -130,7 +131,7 @@ class ListCarTWO extends StatelessWidget {
               ],
             ),
             SizedBox(
-              height: 15,
+              height: 15.h,
             ),
             MyTextformField(
               hintText: 'Price',
@@ -143,13 +144,13 @@ class ListCarTWO extends StatelessWidget {
               },
             ),
             SizedBox(
-              height: 40,
+              height: 40.h,
             ),
             CustomButton(
               text: 'List',
               buttoncolor: Color(0xFF27292E),
               textcolor: Colors.white,
-              height: 50,
+              height: 50.h,
             ),
           ],
         ),

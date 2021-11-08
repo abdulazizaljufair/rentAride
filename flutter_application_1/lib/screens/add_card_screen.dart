@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/widgets/custom_button.dart';
 import 'package:flutter_application_1/widgets/my_text_field.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'HomeScreen.dart';
 
@@ -66,7 +67,7 @@ class AddCard extends StatelessWidget {
                   },
                 ),
                 SizedBox(
-                  height: 30,
+                  height: 30.h,
                 ),
                 MyTextformField(
                     hintText: 'Card Number',
@@ -75,7 +76,7 @@ class AddCard extends StatelessWidget {
                       cNumber = value;
                     }),
                 SizedBox(
-                  height: 30,
+                  height: 30.h,
                 ),
                 MyTextformField(
                     hintText: 'Expire date',
@@ -84,7 +85,7 @@ class AddCard extends StatelessWidget {
                       eDate = value;
                     }),
                 SizedBox(
-                  height: 30,
+                  height: 30.h,
                 ),
                 MyTextformField(
                     hintText: 'Security Code',
@@ -93,13 +94,13 @@ class AddCard extends StatelessWidget {
                       sCode = value;
                     }),
                 SizedBox(
-                  height: 50,
+                  height: 50.h,
                 ),
                 CustomButton(
                   buttoncolor: Color(0xFF27292E),
                   textcolor: Colors.white,
                   text: 'Save',
-                  height: 50,
+                  height: 50.h,
                   onTap: () async {
                     _formKey.currentState.save();
                     addCard();

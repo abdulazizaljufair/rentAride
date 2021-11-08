@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/widgets/custom_button.dart';
 import 'package:flutter_application_1/widgets/my_text_field.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'Edit_profile.dart';
 import 'manage_profilescreen.dart';
@@ -55,7 +56,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                 },
               ),
               SizedBox(
-                height: 20,
+                height: 20.h,
               ),
               // MyTextformField(
               //   hintText: 'New Password',
@@ -98,7 +99,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                   Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (context) => ManageProfile()));
                 },
-                height: 65,
+                height: 65.h,
                 buttoncolor: Color(0XFF27292E),
                 textcolor: Colors.white,
                 text: 'Reset Password',

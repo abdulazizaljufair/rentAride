@@ -6,6 +6,7 @@ import 'package:flutter_application_1/screens/HomeScreen.dart';
 import 'package:flutter_application_1/screens/login_screen.dart';
 import 'package:flutter_application_1/widgets/custom_button.dart';
 import 'package:flutter_application_1/widgets/my_text_field.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'button_nav_controller.dart';
 import 'login_screen.dart';
 
@@ -61,28 +62,28 @@ class CreateAccountScreen extends StatelessWidget {
             child: Column(
               children: [
                 SizedBox(
-                  height: 60,
+                  height: 60.h,
                 ),
                 Center(
                   child: Image.asset(
                     'images/login.jpg',
-                    height: 100,
-                    width: 100,
+                    height: 100.h,
+                    width: 100.w,
                   ),
                 ),
                 SizedBox(
-                  height: 10,
+                  height: 10.h,
                 ),
                 Text(
                   'Rent A Ride',
                   style: TextStyle(
-                    fontSize: 30,
+                    fontSize: 30.sp,
                     fontWeight: FontWeight.bold,
                     color: Color(0XFF27292E),
                   ),
                 ),
                 SizedBox(
-                  height: 35,
+                  height: 35.h,
                 ),
                 MyTextformField(
                   hintText: 'Firstname',
@@ -98,7 +99,7 @@ class CreateAccountScreen extends StatelessWidget {
                   },
                 ),
                 SizedBox(
-                  height: 35,
+                  height: 35.h,
                 ),
                 MyTextformField(
                   hintText: 'Lastname',
@@ -114,7 +115,7 @@ class CreateAccountScreen extends StatelessWidget {
                   },
                 ),
                 SizedBox(
-                  height: 35,
+                  height: 35.h,
                 ),
                 MyTextformField(
                   hintText: 'Email',
@@ -130,7 +131,7 @@ class CreateAccountScreen extends StatelessWidget {
                   keyboardType: TextInputType.emailAddress,
                 ),
                 SizedBox(
-                  height: 35,
+                  height: 35.h,
                 ),
                 MyTextformField(
                   hintText: 'Password',
@@ -149,7 +150,7 @@ class CreateAccountScreen extends StatelessWidget {
                   },
                 ),
                 SizedBox(
-                  height: 35,
+                  height: 35.h,
                 ),
                 MyTextformField(
                   hintText: 'Phone Number',
@@ -165,13 +166,13 @@ class CreateAccountScreen extends StatelessWidget {
                   },
                 ),
                 SizedBox(
-                  height: 35,
+                  height: 35.h,
                 ),
                 CustomButton(
                   text: 'Create Account',
                   textcolor: Colors.white,
                   buttoncolor: Colors.black,
-                  height: 50,
+                  height: 50.h,
                   onTap: () async {
                     if (_formKey.currentState.validate()) {
                       _formKey.currentState.save();
@@ -198,7 +199,7 @@ class CreateAccountScreen extends StatelessWidget {
                   },
                 ),
                 SizedBox(
-                  height: 35,
+                  height: 35.h,
                 ),
                 InkWell(
                   onTap: () {
@@ -207,7 +208,7 @@ class CreateAccountScreen extends StatelessWidget {
                   },
                   child: Text(
                     'If you already have account? Login',
-                    style: TextStyle(fontSize: 16),
+                    style: TextStyle(fontSize: 16.sp),
                   ),
                 ),
               ],

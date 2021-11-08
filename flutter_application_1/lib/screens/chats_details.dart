@@ -5,6 +5,7 @@ import 'package:flutter_chat_bubble/bubble_type.dart';
 import 'package:flutter_chat_bubble/chat_bubble.dart';
 import 'package:flutter_chat_bubble/clippers/chat_bubble_clipper_1.dart';
 import 'package:flutter_chat_bubble/clippers/chat_bubble_clipper_4.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ChatsDetailsScreen extends StatelessWidget {
   final UserModel userModel;
@@ -21,17 +22,17 @@ class ChatsDetailsScreen extends StatelessWidget {
         title: Row(
           children: [
             CircleAvatar(
-              maxRadius: 25,
+              maxRadius: 25.h,
               backgroundImage: AssetImage(userModel.imagepath),
             ),
             SizedBox(
-              width: 20,
+              width: 20.w,
             ),
             Text(
               userModel.name,
               style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 17,
+                  fontSize: 17.sp,
                   color: Colors.black),
             )
           ],

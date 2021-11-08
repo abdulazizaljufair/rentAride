@@ -14,6 +14,7 @@ import 'package:flutter_application_1/screens/login_screen.dart';
 import 'package:flutter_application_1/screens/manage_profilescreen.dart';
 import 'package:flutter_application_1/widgets/my_list_tile.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HomeScreen extends StatelessWidget {
   final List<SliderModel> imagList = [
@@ -47,14 +48,14 @@ class HomeScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(
-            height: 80,
+            height: 80.h,
           ),
           CircleAvatar(
-            maxRadius: 50,
+            maxRadius: 50.h,
             backgroundImage: AssetImage('images/avatar1.jpg'),
           ),
           SizedBox(
-            height: 15,
+            height: 15.h,
           ),
           Text(
             'abdulaziz aljufair',
@@ -156,7 +157,7 @@ class HomeScreen extends StatelessWidget {
             },
           ),
           SizedBox(
-            height: 150,
+            height: 100.h,
           ),
           InkWell(
             child: Mylist(
@@ -180,7 +181,7 @@ class HomeScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              height: 15,
+              height: 15.h,
             ),
             Container(
               child: CarouselSlider(
@@ -198,20 +199,20 @@ class HomeScreen extends StatelessWidget {
                 'Where you can find us',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 22,
+                  fontSize: 22.sp,
                 ),
               ),
             ),
             SizedBox(
-              height: 200,
+              height: 200.h,
               child: ListView.builder(
                 itemCount: 5,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) {
                   return Container(
                     margin: EdgeInsets.all(15),
-                    height: 150,
-                    width: 160,
+                    height: 150.h,
+                    width: 160.w,
                     decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(20),
@@ -222,14 +223,14 @@ class HomeScreen extends StatelessWidget {
                       children: [
                         Image.asset(
                           'images/city1.png',
-                          height: 120,
-                          width: 120,
+                          height: 120.h,
+                          width: 120.w,
                         ),
                         Text(
                           'Riyadh',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontSize: 20,
+                            fontSize: 20.sp,
                           ),
                         ),
                       ],
@@ -239,7 +240,7 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: 350,
+              height: 350.h,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -248,34 +249,34 @@ class HomeScreen extends StatelessWidget {
                   children: [
                     Image.asset(
                       'images/facebook.jpeg',
-                      height: 40,
-                      width: 40,
+                      height: 40.h,
+                      width: 40.w,
                     ),
                     Text('@RentARide')
                   ],
                 ),
                 SizedBox(
-                  width: 15,
+                  width: 15.w,
                 ),
                 Column(
                   children: [
                     Image.asset(
                       'images/twitter logo.png',
-                      height: 40,
-                      width: 40,
+                      height: 40.h,
+                      width: 40.w,
                     ),
                     Text('@RentARide')
                   ],
                 ),
                 SizedBox(
-                  width: 15,
+                  width: 15.w,
                 ),
                 Column(
                   children: [
                     Image.asset(
                       'images/instagram logo.jpeg',
-                      height: 40,
-                      width: 40,
+                      height: 40.h,
+                      width: 40.w,
                     ),
                     Text('@RentARide')
                   ],
@@ -283,7 +284,7 @@ class HomeScreen extends StatelessWidget {
               ],
             ),
             SizedBox(
-              height: 40,
+              height: 40.h,
             ),
           ],
         ),
@@ -323,7 +324,7 @@ class HomeScreen extends StatelessWidget {
                               item.title,
                               style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 20.0,
+                                fontSize: 20.0.sp,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),

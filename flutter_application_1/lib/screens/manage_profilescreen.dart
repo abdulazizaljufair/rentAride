@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/helper/functions.dart';
 import 'package:flutter_application_1/screens/Edit_profile.dart';
 import 'package:flutter_application_1/screens/ResetPassword.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ManageProfile extends StatefulWidget {
   @override
@@ -25,7 +26,7 @@ class _ManageProfileState extends State<ManageProfile> {
       body: Column(
         children: [
           SizedBox(
-            height: 20,
+            height: 20.h,
           ),
           SwitchListTile(
             title: Text('Enable/Disable Notifications'),
@@ -36,7 +37,7 @@ class _ManageProfileState extends State<ManageProfile> {
             },
           ),
           Divider(
-            height: 20,
+            height: 20.h,
             thickness: 3,
             indent: 20,
             endIndent: 20,
@@ -53,7 +54,7 @@ class _ManageProfileState extends State<ManageProfile> {
             ),
           ),
           Divider(
-            height: 20,
+            height: 20.h,
             thickness: 3,
             indent: 20,
             endIndent: 20,
@@ -70,7 +71,7 @@ class _ManageProfileState extends State<ManageProfile> {
             ),
           ),
           Divider(
-            height: 20,
+            height: 20.h,
             thickness: 3,
             indent: 20,
             endIndent: 20,

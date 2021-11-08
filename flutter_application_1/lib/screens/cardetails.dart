@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/resrve.dart';
 import 'package:flutter_application_1/widgets/custom_button.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class CarDetails extends StatelessWidget {
+class CarDetails extends StatefulWidget {
+  @override
+  _CarDetailsState createState() => _CarDetailsState();
+}
+
+class _CarDetailsState extends State<CarDetails> {
+  String insurancetype = 'Insurance Type';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -12,7 +20,7 @@ class CarDetails extends StatelessWidget {
           Image.asset(
             'images/car.jpeg',
             width: MediaQuery.of(context).size.width,
-            height: 300,
+            height: 300.h,
             fit: BoxFit.cover,
           ),
           Padding(
@@ -21,21 +29,23 @@ class CarDetails extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  height: 15,
+                  height: 15.h,
                 ),
                 Text(
                   'Ford',
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                  style:
+                      TextStyle(fontSize: 22.sp, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
-                  height: 10,
+                  height: 10.h,
                 ),
                 Text(
                   'Aziz saleh',
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.normal),
+                  style:
+                      TextStyle(fontSize: 15.sp, fontWeight: FontWeight.normal),
                 ),
                 Container(
-                  height: 250,
+                  height: 250.h,
                   width: MediaQuery.of(context).size.width,
                   padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
                   margin: EdgeInsets.symmetric(vertical: 10),
@@ -50,11 +60,11 @@ class CarDetails extends StatelessWidget {
                         'Car Details',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 22,
+                          fontSize: 22.sp,
                         ),
                       ),
                       SizedBox(
-                        height: 10,
+                        height: 10.h,
                       ),
                       Text(""" 
 
@@ -63,8 +73,12 @@ class CarDetails extends StatelessWidget {
                   ),
                 ),
                 DropdownButton(
-                  hint: Text('Choose Insurance Type'),
+                  hint: Text(insurancetype),
                   isExpanded: true,
+                  onChanged: (value) {
+                    insurancetype = value;
+                    setState(() {});
+                  },
                   iconSize: 30,
                   items: [
                     'Standard',
@@ -79,13 +93,13 @@ class CarDetails extends StatelessWidget {
                   ).toList(),
                 ),
                 SizedBox(
-                  height: 30,
+                  height: 30.h,
                 ),
                 CustomButton(
                   buttoncolor: Color(0xFF27292E),
                   textcolor: Colors.white,
                   text: 'Next',
-                  height: 55,
+                  height: 55.h,
                   onTap: () {
                     Navigator.pushReplacement(context,
                         MaterialPageRoute(builder: (context) => reserveCar()));

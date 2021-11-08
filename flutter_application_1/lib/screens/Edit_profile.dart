@@ -4,6 +4,7 @@ import 'package:flutter_application_1/helper/functions.dart';
 import 'package:flutter_application_1/screens/manage_profilescreen.dart';
 import 'package:flutter_application_1/widgets/custom_button.dart';
 import 'package:flutter_application_1/widgets/my_text_field.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class EditProfile extends StatelessWidget {
   var _formKey = GlobalKey<FormState>();
@@ -39,8 +40,8 @@ class EditProfile extends StatelessWidget {
                     pickImage();
                   },
                   child: Container(
-                    height: 110,
-                    width: 110,
+                    height: 110.h,
+                    width: 110.w,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: Color(0xFF27292E),
@@ -54,11 +55,11 @@ class EditProfile extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: 10,
+                height: 10.h,
               ),
               Text('Upload Profile picture'),
               SizedBox(
-                height: 25,
+                height: 25.h,
               ),
               Row(
                 children: [
@@ -71,7 +72,7 @@ class EditProfile extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    width: 10,
+                    width: 10.w,
                   ),
                   Expanded(
                       child: MyTextformField(
@@ -82,7 +83,7 @@ class EditProfile extends StatelessWidget {
                 ],
               ),
               SizedBox(
-                height: 25,
+                height: 25.h,
               ),
               MyTextformField(
                   hintText: 'Email',
@@ -90,7 +91,7 @@ class EditProfile extends StatelessWidget {
                     email = value;
                   }),
               SizedBox(
-                height: 25,
+                height: 25.h,
               ),
               MyTextformField(
                   hintText: 'Driver Lisence',
@@ -98,7 +99,7 @@ class EditProfile extends StatelessWidget {
                     dlisence = value;
                   }),
               SizedBox(
-                height: 25,
+                height: 25.h,
               ),
               MyTextformField(
                   hintText: 'Phone Number',
@@ -106,7 +107,7 @@ class EditProfile extends StatelessWidget {
                     dlisence = value;
                   }),
               SizedBox(
-                height: 25,
+                height: 25.h,
               ),
               CustomButton(
                 onTap: () {
@@ -115,7 +116,7 @@ class EditProfile extends StatelessWidget {
                   Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (context) => ManageProfile()));
                 },
-                height: 65,
+                height: 65.h,
                 buttoncolor: Color(0XFF27292E),
                 textcolor: Colors.white,
                 text: 'Save',
