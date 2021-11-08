@@ -3,6 +3,7 @@ import 'package:flutter_application_1/helper/functions.dart';
 import 'package:flutter_application_1/screens/choose_Existing_cartwo.dart';
 import 'package:flutter_application_1/widgets/custom_button.dart';
 import 'package:flutter_application_1/widgets/my_text_field.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ChooseExistingCar extends StatelessWidget {
   @override
@@ -29,8 +30,8 @@ class ChooseExistingCar extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          height: 150,
-                          width: 150,
+                          height: 150.h,
+                          width: 150.w,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
                             image: DecorationImage(
@@ -39,7 +40,7 @@ class ChooseExistingCar extends StatelessWidget {
                           ),
                         ),
                         SizedBox(
-                          width: 20,
+                          width: 20.w,
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -49,14 +50,14 @@ class ChooseExistingCar extends StatelessWidget {
                               style: TextStyle(color: Colors.black),
                             ),
                             SizedBox(
-                              height: 10,
+                              height: 10.h,
                             ),
                             Text(
                               'Model 2021',
                               style: TextStyle(color: Colors.grey),
                             ),
                             SizedBox(
-                              height: 10,
+                              height: 10.h,
                             ),
                             Text(
                               '1000 KM',
@@ -78,14 +79,14 @@ class ChooseExistingCar extends StatelessWidget {
             text: 'Next',
             textcolor: Colors.white,
             buttoncolor: Color(0xFF27292E),
-            height: 50,
+            height: 50.h,
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => ChooseExistingScreen()));
             },
           ),
           SizedBox(
-            height: 50,
+            height: 50.h,
           ),
         ],
       ),

@@ -5,6 +5,7 @@ import 'package:flutter_application_1/screens/button_nav_controller.dart';
 import 'package:flutter_application_1/screens/create_account_screen.dart';
 import 'package:flutter_application_1/widgets/custom_button.dart';
 import 'package:flutter_application_1/widgets/my_text_field.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -43,39 +44,39 @@ class _LoginScreenState extends State<LoginScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(
-                    height: 60,
+                    height: 60.h,
                   ),
                   Center(
                     child: Image.asset(
                       'images/login.jpg',
-                      height: 130,
-                      width: 130,
+                      height: 130.h,
+                      width: 130.w,
                     ),
                   ),
                   SizedBox(
-                    height: 30,
+                    height: 30.h,
                   ),
                   Text(
                     'Rent A Ride',
                     style: TextStyle(
-                      fontSize: 40,
+                      fontSize: 40.sp,
                       fontWeight: FontWeight.bold,
                       color: Color(0XFF27292E),
                     ),
                   ),
                   SizedBox(
-                    height: 10,
+                    height: 10.h,
                   ),
                   Text(
                     'Enjoy Your Journey',
                     style: TextStyle(
-                      fontSize: 15,
+                      fontSize: 15.sp,
                       fontWeight: FontWeight.normal,
                       color: Colors.grey,
                     ),
                   ),
                   SizedBox(
-                    height: 30,
+                    height: 30.h,
                   ),
                   MyTextformField(
                       hintText: 'Email',
@@ -90,7 +91,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         _userEmail = value;
                       }),
                   SizedBox(
-                    height: 30,
+                    height: 30.h,
                   ),
                   MyTextformField(
                     hintText: 'Password',
@@ -107,11 +108,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                   ),
                   SizedBox(
-                    height: 10,
+                    height: 10.h,
                   ),
                   if (error != null) Text(error),
                   SizedBox(
-                    height: 20,
+                    height: 20.h,
                   ),
                   InkWell(
                     onTap: () {},
@@ -121,13 +122,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: 20,
+                    height: 20.h,
                   ),
                   CustomButton(
                     text: 'Login',
                     textcolor: Colors.white,
                     buttoncolor: Colors.black,
-                    height: 50,
+                    height: 50.h,
                     onTap: () async {
                       if (_formKey.currentState.validate()) {
                         _formKey.currentState.save();
@@ -157,7 +158,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                   ),
                   SizedBox(
-                    height: 15,
+                    height: 15.h,
                   ),
                   InkWell(
                     onTap: () {
@@ -168,7 +169,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                     child: Text(
                       'Dont have Account? Register',
-                      style: TextStyle(fontSize: 16),
+                      style: TextStyle(fontSize: 16.sp),
                     ),
                   ),
                 ],

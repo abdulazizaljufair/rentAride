@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class messageBubble extends StatelessWidget {
   messageBubble(this.message, this.isMe);

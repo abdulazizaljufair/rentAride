@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/helper/functions.dart';
 import 'package:flutter_application_1/widgets/custom_button.dart';
 import 'package:flutter_application_1/widgets/my_text_field.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'HomeScreen.dart';
 
@@ -76,8 +77,8 @@ class AddCar extends StatelessWidget {
                                 pickImage();
                               },
                               child: Container(
-                                height: 85,
-                                width: 80,
+                                height: 85.h,
+                                width: 80.w,
                                 decoration: BoxDecoration(
                                   color: Color(0xFF27292E),
                                   borderRadius: BorderRadius.circular(20),
@@ -89,7 +90,7 @@ class AddCar extends StatelessWidget {
                               ),
                             ),
                             SizedBox(
-                              height: 10,
+                              height: 10.h,
                             ),
                             Text('Upload Car photo')
                           ],
@@ -98,7 +99,7 @@ class AddCar extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    height: 20,
+                    height: 20.h,
                   ),
                   MyTextformField(
                     hintText: 'Car Type',
@@ -107,7 +108,7 @@ class AddCar extends StatelessWidget {
                     },
                   ),
                   SizedBox(
-                    height: 20,
+                    height: 20.h,
                   ),
                   MyTextformField(
                       hintText: 'Model',
@@ -115,7 +116,7 @@ class AddCar extends StatelessWidget {
                         model = value;
                       }),
                   SizedBox(
-                    height: 20,
+                    height: 20.h,
                   ),
                   MyTextformField(
                     hintText: 'License Number',
@@ -125,7 +126,7 @@ class AddCar extends StatelessWidget {
                     // keyboardType: TextInputType.number,
                   ),
                   SizedBox(
-                    height: 20,
+                    height: 20.h,
                   ),
                   MyTextformField(
                     hintText: 'Odometer',
@@ -135,7 +136,7 @@ class AddCar extends StatelessWidget {
                     // keyboardType: TextInputType.number,
                   ),
                   SizedBox(
-                    height: 20,
+                    height: 20.h,
                   ),
                   MyTextformField(
                     hintText: 'Year',
@@ -145,7 +146,7 @@ class AddCar extends StatelessWidget {
                     // keyboardType: TextInputType.datetime,
                   ),
                   SizedBox(
-                    height: 20,
+                    height: 20.h,
                   ),
                   MyTextformField(
                     hintText: 'Chasis Number',
@@ -155,7 +156,7 @@ class AddCar extends StatelessWidget {
                     // keyboardType: TextInputType.number,
                   ),
                   SizedBox(
-                    height: 35,
+                    height: 35.h,
                   ),
                   MyTextformField(
                     hintText: 'Car Address',
@@ -171,7 +172,7 @@ class AddCar extends StatelessWidget {
                     buttoncolor: Color(0xFF27292E),
                     textcolor: Colors.white,
                     text: 'Save',
-                    height: 50,
+                    height: 50.h,
                     onTap: () async {
                       _formKey.currentState.save();
                       addCar();

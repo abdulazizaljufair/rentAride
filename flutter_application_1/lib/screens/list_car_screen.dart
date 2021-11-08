@@ -6,6 +6,7 @@ import 'package:flutter_application_1/widgets/my_text_field.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_application_1/helper/functions.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ListCar extends StatefulWidget {
   @override

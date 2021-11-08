@@ -41,8 +41,9 @@ selectDate(BuildContext context, CupertinoDatePickerMode mode,
                   mode: mode,
                   onDateTimeChanged: (DateTime dateTime) {
                     String formattedDate =
-                        DateFormat('yyyy-mm-dd').format(dateTime);
+                        DateFormat('yyyy-MM-dd').format(dateTime);
                     String formattedTime = DateFormat('hh:mm').format(dateTime);
+
                     if (mode == CupertinoDatePickerMode.date) {
                       if (controller != null) controller.text = formattedDate;
                       if (pickedDate != null) pickedDate = formattedDate;

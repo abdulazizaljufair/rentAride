@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/add_address.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class Exaddress extends StatefulWidget {
   @override
@@ -43,8 +44,8 @@ class _ExaddressState extends State<Exaddress> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    height: 150,
-                    width: 150,
+                    height: 150.h,
+                    width: 150.w,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       image: DecorationImage(
@@ -53,7 +54,7 @@ class _ExaddressState extends State<Exaddress> {
                     ),
                   ),
                   SizedBox(
-                    width: 20,
+                    width: 20.w,
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -63,7 +64,7 @@ class _ExaddressState extends State<Exaddress> {
                         style: TextStyle(color: Colors.black),
                       ),
                       SizedBox(
-                        height: 10,
+                        height: 10.h,
                       ),
                       Text(
                         //
@@ -71,14 +72,14 @@ class _ExaddressState extends State<Exaddress> {
                         style: TextStyle(color: Colors.black),
                       ),
                       SizedBox(
-                        height: 10,
+                        height: 10.h,
                       ),
                       Text(
                         addressL2[index]['Street Name'],
                         style: TextStyle(color: Colors.black),
                       ),
                       SizedBox(
-                        height: 10,
+                        height: 10.h,
                       ),
                       Text(
                         addressL2[index]['Zip Code'],

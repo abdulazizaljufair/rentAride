@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/helper/functions.dart';
 import 'package:flutter_application_1/screens/ChatScreen_2.dart';
 import 'package:flutter_application_1/screens/HomeScreen.dart';
-import 'package:flutter_application_1/screens/OffersScreen.dart';
+
 import 'package:flutter_application_1/screens/chatsScreen.dart';
 import 'package:flutter_application_1/screens/choose_existing_car.dart';
 import 'package:flutter_application_1/screens/list_car_screen.dart';

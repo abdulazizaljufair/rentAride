@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/HomeScreen.dart';
 import 'package:flutter_application_1/widgets/custom_button.dart';
 import 'package:flutter_application_1/widgets/my_text_field.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ManageAdress extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
@@ -58,7 +59,7 @@ class ManageAdress extends StatelessWidget {
                     },
                   ),
                   SizedBox(
-                    height: 15,
+                    height: 15.h,
                   ),
                   Row(
                     children: [
@@ -70,7 +71,7 @@ class ManageAdress extends StatelessWidget {
                                 cityName = value;
                               })),
                       SizedBox(
-                        width: 5,
+                        width: 5.w,
                       ),
                       Expanded(
                           flex: 1,
@@ -82,7 +83,7 @@ class ManageAdress extends StatelessWidget {
                     ],
                   ),
                   SizedBox(
-                    height: 15,
+                    height: 15.h,
                   ),
                   MyTextformField(
                       hintText: 'Street Name',
@@ -90,13 +91,13 @@ class ManageAdress extends StatelessWidget {
                         stName = value;
                       }),
                   SizedBox(
-                    height: 50,
+                    height: 50.h,
                   ),
                   CustomButton(
                     text: 'Save',
                     textcolor: Colors.white,
                     buttoncolor: Color(0xFF27292E),
-                    height: 50,
+                    height: 50.h,
                     onTap: () async {
                       _formKey.currentState.save();
                       addAddress();

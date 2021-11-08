@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/helper/functions.dart';
 import 'package:flutter_application_1/widgets/custom_button.dart';
 import 'package:flutter_application_1/widgets/my_text_field.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ChooseExistingScreen extends StatelessWidget {
   TextEditingController fromdatecontroller = TextEditingController();
@@ -17,7 +18,7 @@ class ChooseExistingScreen extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(
-            height: 70,
+            height: 70.h,
           ),
           Row(
             children: [
@@ -43,7 +44,7 @@ class ChooseExistingScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                width: 10,
+                width: 10.w,
               ),
               Expanded(
                 child: MyTextformField(
@@ -69,7 +70,7 @@ class ChooseExistingScreen extends StatelessWidget {
             ],
           ),
           SizedBox(
-            height: 15,
+            height: 15.h,
           ),
           Row(
             children: [
@@ -95,7 +96,7 @@ class ChooseExistingScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                width: 10,
+                width: 10.w,
               ),
               Expanded(
                 child: MyTextformField(
@@ -121,20 +122,20 @@ class ChooseExistingScreen extends StatelessWidget {
             ],
           ),
           SizedBox(
-            height: 25,
+            height: 25.h,
           ),
           MyTextformField(
             hintText: 'Price',
             keyboardType: TextInputType.number,
           ),
           SizedBox(
-            height: 30,
+            height: 30.h,
           ),
           CustomButton(
             text: 'List',
             textcolor: Colors.white,
             buttoncolor: Color(0xFF27292E),
-            height: 50,
+            height: 50.h,
           ),
         ],
       ),

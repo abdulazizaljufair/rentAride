@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/helper/functions.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TimeDate extends StatelessWidget {
   TextEditingController fromdatecontroller = TextEditingController();
@@ -16,19 +17,19 @@ class TimeDate extends StatelessWidget {
         Row(
           children: [
             SizedBox(
-              width: 100,
+              width: 100.w,
               child: TextField(
                 readOnly: true,
                 controller: fromdatecontroller,
                 decoration: InputDecoration(border: InputBorder.none),
                 style: TextStyle(
                   fontWeight: FontWeight.normal,
-                  fontSize: 15,
+                  fontSize: 15.sp,
                 ),
               ),
             ),
             SizedBox(
-              width: 10,
+              width: 10.w,
             ),
             IconButton(
               onPressed: () {
@@ -45,14 +46,14 @@ class TimeDate extends StatelessWidget {
         Row(
           children: [
             SizedBox(
-              width: 100,
+              width: 100.w,
               child: TextField(
                 readOnly: true,
                 controller: fromtimecontroller,
                 decoration: InputDecoration(border: InputBorder.none),
                 style: TextStyle(
                   fontWeight: FontWeight.normal,
-                  fontSize: 15,
+                  fontSize: 15.sp,
                 ),
               ),
             ),
