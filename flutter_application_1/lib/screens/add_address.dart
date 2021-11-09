@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/HomeScreen.dart';
 import 'package:flutter_application_1/widgets/custom_button.dart';
@@ -13,6 +14,7 @@ class ManageAdress extends StatelessWidget {
   String cityName = 'i';
   String zipCode = 'z';
   String stName = 's';
+  final String userId = FirebaseAuth.instance.currentUser.uid;
 
   Future<void> addAddress() {
     // Call the user's CollectionReference to add a new user
@@ -21,13 +23,17 @@ class ManageAdress extends StatelessWidget {
       'City Name': cityName,
       'Zip Code': zipCode,
       'Street Name': stName,
+      'userId': userId
     }).then((value) => print("address Added"));
   }
 
   Future getUserAddressList() async {
     List aList = [];
     try {
-      await address1.get().then((QuerySnapshot) {
+      await address1
+          .where("userId", isEqualTo: userId)
+          .get()
+          .then((QuerySnapshot) {
         QuerySnapshot.docs.forEach((element) {
           aList.add(element.data());
         });

@@ -13,6 +13,7 @@ class nMessages extends StatefulWidget {
 class nMessagesState extends State<nMessages> {
   var eMessage = '';
   final _controller = new TextEditingController();
+
   void _sendMassge() async {
     FocusScope.of(context).unfocus();
     final user = await FirebaseAuth.instance.currentUser;

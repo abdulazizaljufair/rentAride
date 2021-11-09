@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/helper/functions.dart';
@@ -24,6 +25,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final String userId = FirebaseAuth.instance.currentUser.uid;
+  dynamic user;
 
   final List<SliderModel> imagList = [
     SliderModel(
@@ -48,262 +50,293 @@ class _HomeScreenState extends State<HomeScreen> {
     ),
   ];
 
-  @override
-  // void initState() async{
-  //   // TODO: implement initState
-  //   final
-  //   await
+  // void x() async {
+  //   await FirebaseFirestore.instance
+  //       .collection('users')
+  //       .where('userId', isEqualTo: userId)
+  //       .get()
+  //       .then((QuerySnapshot querySnapshot) {
+  //     querySnapshot.docs.forEach((doc) {
+  //       user.email = doc["email"] ?? " ";
+  //       name = doc["fristName"] ?? " ";
+  //       user.lName = doc['lastName'] ?? " ";
+  //       user.phone = doc['phoneNumber'] ?? " ";
+  //       user.uId = doc["userId"] ?? " ";
+  //     });
+  //   });
   // }
+  CollectionReference users = FirebaseFirestore.instance.collection('users');
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: Drawer(
-          child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SizedBox(
-            height: 80.h,
-          ),
-          CircleAvatar(
-            maxRadius: 50.h,
-            backgroundImage: AssetImage('images/avatar1.jpg'),
-          ),
-          SizedBox(
-            height: 15.h,
-          ),
-          Text(
-            'abdulaziz aljufair',
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
-          Text('abdulazizaljufair@gmail.com'),
-          Divider(
-            thickness: 3,
-            height: 35,
-          ),
-          InkWell(
-            child: Mylist(
-              icon: Icons.credit_card,
-              title: 'Manage Cards',
-              onTap: () {
-                showMyDialog(
-                  context: context,
-                  primarytitle: 'please choose card from',
-                  button1title: 'Choose Existing card',
-                  button2title: 'Add new card',
-                  onPressedButton1: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => ChooseCard()));
-                  },
-                  onPressedButton2: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => AddCard()));
-                  },
-                );
-              },
-            ),
-          ),
-          InkWell(
-            child: Mylist(
-              icon: Icons.car_repair,
-              title: 'Manage cars',
-              onTap: () {
-                showMyDialog(
-                  context: context,
-                  primarytitle: 'please choose car from',
-                  button1title: 'Existing car',
-                  button2title: 'Add new car',
-                  onPressedButton1: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => AddCarScreen()));
-                  },
-                  onPressedButton2: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => AddCar()));
-                  },
-                );
-              },
-            ),
-          ),
-          InkWell(
-            child: Mylist(
-              icon: Icons.location_on,
-              title: 'Manage Address',
-              onTap: () {
-                showMyDialog(
-                  context: context,
-                  primarytitle: 'choose Address from',
-                  button1title: 'Existing Address',
-                  button2title: 'Add new Address',
-                  onPressedButton1: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => Exaddress()));
-                  },
-                  onPressedButton2: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => ManageAdress()));
-                  },
-                );
-              },
-            ),
-          ),
-          Mylist(
-            icon: Icons.person,
-            title: 'Manage Profile',
-            onTap: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => ManageProfile()));
-            },
-          ),
-          Mylist(
-            icon: Icons.view_agenda,
-            title: 'View Booking',
-            onTap: () {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => ViewBooking()));
-            },
-          ),
-          Mylist(
-            icon: Icons.info,
-            title: 'About Us',
-            onTap: () {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => AboutUs()));
-            },
-          ),
-          SizedBox(
-            height: 100.h,
-          ),
-          InkWell(
-            child: Mylist(
-              icon: Icons.logout,
-              title: 'Logout',
-              onTap: () async {
-                await FirebaseAuth.instance.signOut();
-                Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => LoginScreen()));
-              },
-            ),
-          ),
-        ],
-      )),
-      appBar: AppBar(
-        backgroundColor: Color(0xFF27292E),
-        title: Text('Home'),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: 15.h,
-            ),
-            Container(
-              child: CarouselSlider(
-                options: CarouselOptions(
-                  autoPlay: true,
-                  aspectRatio: 2.0,
-                  enlargeCenterPage: true,
-                ),
-                items: getimageswidgets(),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(15),
-              child: Text(
-                'Where you can find us',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 22.sp,
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 200.h,
-              child: ListView.builder(
-                itemCount: 5,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) {
-                  return Container(
-                    margin: EdgeInsets.all(15),
-                    height: 150.h,
-                    width: 160.w,
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(20),
-                        boxShadow: [
-                          BoxShadow(blurRadius: 10, color: Colors.black38)
-                        ]),
-                    child: Column(
-                      children: [
-                        Image.asset(
-                          'images/city1.png',
-                          height: 120.h,
-                          width: 120.w,
-                        ),
-                        Text(
-                          'Riyadh',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20.sp,
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
-            ),
-            SizedBox(
-              height: 350.h,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+    // x();
+    return FutureBuilder<DocumentSnapshot>(
+      future: users.doc(userId).get(),
+      builder:
+          (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+        if (snapshot.hasError) {
+          return Text("Something went wrong");
+        }
+
+        if (snapshot.hasData && !snapshot.data.exists) {
+          return Text("Document does not exist");
+        }
+
+        if (snapshot.connectionState == ConnectionState.done) {
+          Map<String, dynamic> data =
+              snapshot.data.data() as Map<String, dynamic>;
+          return Scaffold(
+            drawer: Drawer(
+                child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Column(
-                  children: [
-                    Image.asset(
-                      'images/facebook.jpeg',
-                      height: 40.h,
-                      width: 40.w,
-                    ),
-                    Text('@RentARide')
-                  ],
+                SizedBox(
+                  height: 80.h,
+                ),
+                CircleAvatar(
+                  maxRadius: 50.h,
+                  backgroundImage: AssetImage('images/avatar1.jpg'),
                 ),
                 SizedBox(
-                  width: 15.w,
+                  height: 15.h,
                 ),
-                Column(
-                  children: [
-                    Image.asset(
-                      'images/twitter logo.png',
-                      height: 40.h,
-                      width: 40.w,
-                    ),
-                    Text('@RentARide')
-                  ],
+                Text(
+                  data["fristName"].toString(),
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                // user?.email ?? " ",
+                Divider(
+                  thickness: 3,
+                  height: 35,
+                ),
+                InkWell(
+                  child: Mylist(
+                    icon: Icons.credit_card,
+                    title: 'Manage Cards',
+                    onTap: () {
+                      showMyDialog(
+                        context: context,
+                        primarytitle: 'please choose card from',
+                        button1title: 'Choose Existing card',
+                        button2title: 'Add new card',
+                        onPressedButton1: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => ChooseCard()));
+                        },
+                        onPressedButton2: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => AddCard()));
+                        },
+                      );
+                    },
+                  ),
+                ),
+                InkWell(
+                  child: Mylist(
+                    icon: Icons.car_repair,
+                    title: 'Manage cars',
+                    onTap: () {
+                      showMyDialog(
+                        context: context,
+                        primarytitle: 'please choose car from',
+                        button1title: 'Existing car',
+                        button2title: 'Add new car',
+                        onPressedButton1: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => AddCarScreen()));
+                        },
+                        onPressedButton2: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => AddCar()));
+                        },
+                      );
+                    },
+                  ),
+                ),
+                InkWell(
+                  child: Mylist(
+                    icon: Icons.location_on,
+                    title: 'Manage Address',
+                    onTap: () {
+                      showMyDialog(
+                        context: context,
+                        primarytitle: 'choose Address from',
+                        button1title: 'Existing Address',
+                        button2title: 'Add new Address',
+                        onPressedButton1: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => Exaddress()));
+                        },
+                        onPressedButton2: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => ManageAdress()));
+                        },
+                      );
+                    },
+                  ),
+                ),
+                Mylist(
+                  icon: Icons.person,
+                  title: 'Manage Profile',
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => ManageProfile()));
+                  },
+                ),
+                Mylist(
+                  icon: Icons.view_agenda,
+                  title: 'View Booking',
+                  onTap: () {
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => ViewBooking()));
+                  },
+                ),
+                Mylist(
+                  icon: Icons.info,
+                  title: 'About Us',
+                  onTap: () {
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => AboutUs()));
+                  },
                 ),
                 SizedBox(
-                  width: 15.w,
+                  height: 100.h,
                 ),
-                Column(
-                  children: [
-                    Image.asset(
-                      'images/instagram logo.jpeg',
-                      height: 40.h,
-                      width: 40.w,
-                    ),
-                    Text('@RentARide')
-                  ],
+                InkWell(
+                  child: Mylist(
+                    icon: Icons.logout,
+                    title: 'Logout',
+                    onTap: () async {
+                      await FirebaseAuth.instance.signOut();
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (context) => LoginScreen()));
+                    },
+                  ),
                 ),
               ],
+            )),
+            appBar: AppBar(
+              backgroundColor: Color(0xFF27292E),
+              title: Text('Home'),
             ),
-            SizedBox(
-              height: 40.h,
+            body: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 15.h,
+                  ),
+                  Container(
+                    child: CarouselSlider(
+                      options: CarouselOptions(
+                        autoPlay: true,
+                        aspectRatio: 2.0,
+                        enlargeCenterPage: true,
+                      ),
+                      items: getimageswidgets(),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(15),
+                    child: Text(
+                      'Where you can find us',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 22.sp,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 200.h,
+                    child: ListView.builder(
+                      itemCount: 5,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          margin: EdgeInsets.all(15),
+                          height: 150.h,
+                          width: 160.w,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(20),
+                              boxShadow: [
+                                BoxShadow(blurRadius: 10, color: Colors.black38)
+                              ]),
+                          child: Column(
+                            children: [
+                              Image.asset(
+                                'images/city1.png',
+                                height: 120.h,
+                                width: 120.w,
+                              ),
+                              Text(
+                                'Riyadh',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20.sp,
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  SizedBox(
+                    height: 350.h,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Column(
+                        children: [
+                          Image.asset(
+                            'images/facebook.jpeg',
+                            height: 40.h,
+                            width: 40.w,
+                          ),
+                          Text('@RentARide')
+                        ],
+                      ),
+                      SizedBox(
+                        width: 15.w,
+                      ),
+                      Column(
+                        children: [
+                          Image.asset(
+                            'images/twitter logo.png',
+                            height: 40.h,
+                            width: 40.w,
+                          ),
+                          Text('@RentARide')
+                        ],
+                      ),
+                      SizedBox(
+                        width: 15.w,
+                      ),
+                      Column(
+                        children: [
+                          Image.asset(
+                            'images/instagram logo.jpeg',
+                            height: 40.h,
+                            width: 40.w,
+                          ),
+                          Text('@RentARide')
+                        ],
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 40.h,
+                  ),
+                ],
+              ),
             ),
-          ],
-        ),
-      ),
+          );
+        }
+
+        return Text("loading");
+      },
     );
   }
 

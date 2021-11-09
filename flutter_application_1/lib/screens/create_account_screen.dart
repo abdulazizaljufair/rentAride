@@ -45,7 +45,8 @@ class CreateAccountScreen extends StatelessWidget {
   Future<void> addUser(String id) {
     // Call the user's CollectionReference to add a new user
     return users
-        .add({
+        .doc(id)
+        .set({
           'fristName': fName, // John Doe
           'lastName': lName, // Stokes and Sons
           'email': _userEmail,

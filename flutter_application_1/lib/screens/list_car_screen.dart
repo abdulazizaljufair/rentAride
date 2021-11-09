@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/List_cartwo.dart';
 import 'package:flutter_application_1/widgets/custom_button.dart';
@@ -24,8 +25,10 @@ class _ListCarState extends State<ListCar> {
   var cNumber;
   var cAddress;
   var lNumber;
+  final String userId = FirebaseAuth.instance.currentUser.uid;
   @override
-  CollectionReference car1 = FirebaseFirestore.instance.collection('Cars');
+  CollectionReference car1 =
+      FirebaseFirestore.instance.collection('Listed Cars');
 
   Future<void> listCar() {
     // Call the user's CollectionReference to add a new user
@@ -37,6 +40,7 @@ class _ListCarState extends State<ListCar> {
       'odometer': odometer,
       'Chasis Number': cNumber,
       'Car address': cAddress,
+      'userId': userId
     }).then((value) => print("Car Added"));
   }
 
