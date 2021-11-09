@@ -35,67 +35,73 @@ class _ExaddressState extends State<Exaddress> {
         backgroundColor: Color(0XFF27292E),
         title: Text('Existing addreses'),
       ),
-      body: ListView.separated(
-        itemCount: addressL2.length,
-        itemBuilder: (context, index) {
-          return Container(
-              padding: EdgeInsets.all(15),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    height: 150.h,
-                    width: 150.w,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: AssetImage('images/location .jpeg')),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 20.w,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        addressL2[index]['City Name'],
-                        style: TextStyle(color: Colors.black),
-                      ),
-                      SizedBox(
-                        height: 10.h,
-                      ),
-                      Text(
-                        //
-                        addressL2[index]['Country Name'],
-                        style: TextStyle(color: Colors.black),
-                      ),
-                      SizedBox(
-                        height: 10.h,
-                      ),
-                      Text(
-                        addressL2[index]['Street Name'],
-                        style: TextStyle(color: Colors.black),
-                      ),
-                      SizedBox(
-                        height: 10.h,
-                      ),
-                      Text(
-                        addressL2[index]['Zip Code'],
-                        style: TextStyle(color: Colors.black),
-                      ),
-                    ],
-                  )
-                ],
-              ));
-        },
-        separatorBuilder: (context, index) {
-          return Divider(
-            thickness: 3,
-          );
-        },
-      ),
+      body: addressL2.isEmpty
+          ? Center(
+              child: Text("No saved addresses"),
+              widthFactor: 5,
+              heightFactor: 5,
+            )
+          : ListView.separated(
+              itemCount: addressL2.length,
+              itemBuilder: (context, index) {
+                return Container(
+                    padding: EdgeInsets.all(15),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          height: 150.h,
+                          width: 150.w,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image: AssetImage('images/location .jpeg')),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 20.w,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              addressL2[index]['City Name'],
+                              style: TextStyle(color: Colors.black),
+                            ),
+                            SizedBox(
+                              height: 10.h,
+                            ),
+                            Text(
+                              //
+                              addressL2[index]['Country Name'],
+                              style: TextStyle(color: Colors.black),
+                            ),
+                            SizedBox(
+                              height: 10.h,
+                            ),
+                            Text(
+                              addressL2[index]['Street Name'],
+                              style: TextStyle(color: Colors.black),
+                            ),
+                            SizedBox(
+                              height: 10.h,
+                            ),
+                            Text(
+                              addressL2[index]['Zip Code'],
+                              style: TextStyle(color: Colors.black),
+                            ),
+                          ],
+                        )
+                      ],
+                    ));
+              },
+              separatorBuilder: (context, index) {
+                return Divider(
+                  thickness: 3,
+                );
+              },
+            ),
     );
   }
 }

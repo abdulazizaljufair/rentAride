@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/widgets/custom_button.dart';
 import 'package:flutter_application_1/widgets/my_text_field.dart';
@@ -13,11 +14,12 @@ class AddCard extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
   // final uid = CreateAccountScreen().getCurrentUserId();
 
-  CollectionReference card = FirebaseFirestore.instance.collection('UserData');
+  CollectionReference card = FirebaseFirestore.instance.collection('Cards');
   String hName = 'o';
   String cNumber = 'i';
   String eDate = 'z';
   String sCode = 's';
+  final String userId = FirebaseAuth.instance.currentUser.uid;
 
   Future<void> addCard() {
     // Call the user's CollectionReference to add a new user
@@ -26,13 +28,14 @@ class AddCard extends StatelessWidget {
       'Card Number': cNumber,
       'Expire Date': eDate,
       'Security Number': sCode,
+      'userId': userId,
     }).then((value) => print("Card Added"));
   }
 
   Future getUserCardList() async {
     List cList = [];
     try {
-      await card.get().then((QuerySnapshot) {
+      await card.where("userId", isEqualTo: userId).get().then((QuerySnapshot) {
         QuerySnapshot.docs.forEach((element) {
           cList.add(element.data());
         });
