@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/helper/functions.dart';
+import 'package:flutter_application_1/screens/sucessbook.dart';
 import 'package:flutter_application_1/widgets/custom_button.dart';
 import 'package:flutter_application_1/widgets/my_text_field.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -54,6 +55,10 @@ class Paymentcar extends StatelessWidget {
               textcolor: Colors.white,
               text: 'Pay',
               height: 50.h,
+              onTap: () {
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => ConfirmBooking()));
+              },
             ),
           ],
         ),
