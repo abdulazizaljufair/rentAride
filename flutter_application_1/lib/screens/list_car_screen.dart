@@ -1,6 +1,10 @@
+import 'dart:html';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/screens/HomeScreen.dart';
 import 'package:flutter_application_1/screens/List_cartwo.dart';
 import 'package:flutter_application_1/widgets/custom_button.dart';
 import 'package:flutter_application_1/widgets/my_text_field.dart';
@@ -8,6 +12,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_application_1/helper/functions.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'dart:io';
+import "package:permission_handler/permission_handler.dart";
 
 class ListCar extends StatefulWidget {
   @override
@@ -17,6 +23,10 @@ class ListCar extends StatefulWidget {
 bool checkBoxValue = false;
 
 class _ListCarState extends State<ListCar> {
+  TextEditingController fromdatecontroller = TextEditingController();
+  TextEditingController todatecontroller = TextEditingController();
+  TextEditingController fromtimecontroller = TextEditingController();
+  TextEditingController totimecontroller = TextEditingController();
   var _formKey = GlobalKey<FormState>();
   var cType;
   var cModel;
@@ -25,6 +35,14 @@ class _ListCarState extends State<ListCar> {
   var cNumber;
   var cAddress;
   var lNumber;
+  var sDate;
+  var eDate;
+  var sTime;
+  var eTime;
+  var price;
+  PermissionStatus _status;
+
+  @override
   final String userId = FirebaseAuth.instance.currentUser.uid;
   @override
   CollectionReference car1 =
@@ -40,7 +58,12 @@ class _ListCarState extends State<ListCar> {
       'odometer': odometer,
       'Chasis Number': cNumber,
       'Car address': cAddress,
-      'userId': userId
+      'Start Date': sDate,
+      'End Date': eDate,
+      'Start Time': sTime,
+      'End Time': eTime,
+      'Price': price,
+      'userId': userId,
     }).then((value) => print("Car Added"));
   }
 
@@ -201,6 +224,133 @@ class _ListCarState extends State<ListCar> {
                 SizedBox(
                   height: 15,
                 ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: MyTextformField(
+                          hintText: 'From Date',
+                          controller: fromdatecontroller,
+                          keyboardType: TextInputType.datetime,
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return 'Please enter the date';
+                            }
+                            return null;
+                          },
+                          suffixIcon: Icon(
+                            Icons.calendar_today,
+                            color: Color(0xFF27292E),
+                          ),
+                          onTap: () {
+                            selectDate(context, CupertinoDatePickerMode.date,
+                                controller: fromdatecontroller);
+                          },
+                          onSaved: (value) {
+                            sDate = value;
+                          }),
+                    ),
+                    SizedBox(
+                      width: 10.w,
+                    ),
+                    Expanded(
+                      child: MyTextformField(
+                          hintText: 'Until Date',
+                          keyboardType: TextInputType.datetime,
+                          controller: todatecontroller,
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return 'Please enter the date';
+                            }
+                            return null;
+                          },
+                          suffixIcon: Icon(
+                            Icons.calendar_today,
+                            color: Color(0xFF27292E),
+                          ),
+                          onTap: () {
+                            selectDate(context, CupertinoDatePickerMode.date,
+                                controller: todatecontroller);
+                          },
+                          onSaved: (value) {
+                            eDate = value;
+                          }),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 15.h,
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: MyTextformField(
+                          hintText: 'From time ',
+                          controller: fromtimecontroller,
+                          keyboardType: TextInputType.datetime,
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return 'Please enter the time';
+                            }
+                            return null;
+                          },
+                          suffixIcon: Icon(
+                            Icons.access_time,
+                            color: Color(0xFF27292E),
+                          ),
+                          onTap: () {
+                            selectDate(context, CupertinoDatePickerMode.time,
+                                controller: totimecontroller);
+                          },
+                          onSaved: (value) {
+                            sTime = value;
+                          }),
+                    ),
+                    SizedBox(
+                      width: 10.w,
+                    ),
+                    Expanded(
+                      child: MyTextformField(
+                          hintText: 'until',
+                          controller: totimecontroller,
+                          keyboardType: TextInputType.datetime,
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return 'Please enter the time';
+                            }
+                            return null;
+                          },
+                          suffixIcon: Icon(
+                            Icons.access_time,
+                            color: Color(0xFF27292E),
+                          ),
+                          onTap: () {
+                            selectDate(context, CupertinoDatePickerMode.time,
+                                controller: totimecontroller);
+                          },
+                          onSaved: (value) {
+                            eTime = value;
+                          }),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 15.h,
+                ),
+                MyTextformField(
+                    hintText: 'Price',
+                    keyboardType: TextInputType.number,
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Please enter the price';
+                      }
+                      return null;
+                    },
+                    onSaved: (value) {
+                      price = value;
+                    }),
+                SizedBox(
+                  height: 20.h,
+                ),
                 CustomButton(
                   text: 'Next',
                   buttoncolor: Color(0xFF27292E),
@@ -210,7 +360,7 @@ class _ListCarState extends State<ListCar> {
                     _formKey.currentState.save();
                     listCar();
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => ListCarTWO()));
+                        MaterialPageRoute(builder: (context) => HomeScreen()));
                   },
                 ),
               ],
@@ -221,10 +371,10 @@ class _ListCarState extends State<ListCar> {
     );
   }
 
-  Future<List<XFile>> pickImage() async {
-    final ImagePicker _picker = ImagePicker();
-
-    final List<XFile> image = await _picker.pickMultiImage();
-    return image;
+  Future pickImage() async {
+    var status = await Permission.camera.status;
+    if (await status.isGranted) {
+      await ImagePicker().pickImage(source: ImageSource.gallery);
+    }
   }
 }
