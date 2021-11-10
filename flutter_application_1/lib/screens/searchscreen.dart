@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/screens/add_car_screen.dart';
 import 'package:flutter_application_1/screens/cardetails.dart';
+import 'package:flutter_application_1/screens/list_car_screen.dart';
 import 'package:flutter_application_1/widgets/my_text_field.dart';
 import 'package:flutter_application_1/widgets/time_date.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,6 +15,25 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   @override
+  List car = [];
+
+  void initState() {
+    super.initState();
+    FetchDatabaseList();
+  }
+
+  FetchDatabaseList() async {
+    final res = await ListCar1().getUserCarList();
+
+    if (res == null) {
+      print('Unable to retrive');
+    } else {
+      setState(() {
+        car = res;
+      });
+    }
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -62,45 +84,51 @@ class _SearchScreenState extends State<SearchScreen> {
             ),
           ),
           Expanded(
-            child: GridView.builder(
-              itemCount: 8,
-              padding: EdgeInsets.symmetric(horizontal: 15),
-              gridDelegate:
-                  SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-              itemBuilder: (context, index) {
-                return InkWell(
-                  onTap: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => CarDetails()));
-                  },
-                  child: Container(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          height: 120.h,
-                          width: 120.w,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            image: DecorationImage(
-                                fit: BoxFit.cover,
-                                image: AssetImage('images/car.jpeg')),
+            child: car.isEmpty
+                ? Center(
+                    child: Text("No saved cars"),
+                    widthFactor: 5,
+                    heightFactor: 5,
+                  )
+                : GridView.builder(
+                    itemCount: car.length,
+                    padding: EdgeInsets.symmetric(horizontal: 15),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2),
+                    itemBuilder: (context, index) {
+                      return InkWell(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => CarDetails()));
+                        },
+                        child: Container(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                height: 120.h,
+                                width: 120.w,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  image: DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: AssetImage('images/car.jpeg')),
+                                ),
+                              ),
+                              Text(
+                                car[index]['Model'],
+                                style: TextStyle(color: Colors.black),
+                              ),
+                              Text(
+                                car[index]['Price'],
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            ],
                           ),
                         ),
-                        Text(
-                          'KIA',
-                          style: TextStyle(color: Colors.black),
-                        ),
-                        Text(
-                          '150 RIYALS per day',
-                          style: TextStyle(color: Colors.black),
-                        ),
-                      ],
-                    ),
+                      );
+                    },
                   ),
-                );
-              },
-            ),
           ),
         ],
       ),
