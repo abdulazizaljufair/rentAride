@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -13,8 +15,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'dart:io';
 import "package:permission_handler/permission_handler.dart";
 
-class ListCar1 extends StatelessWidget {
-  bool checkBoxValue = false;
+class ListCar extends StatefulWidget {
+  @override
+  _ListCarState createState() => _ListCarState();
+}
+
+bool checkBoxValue = false;
+
+class _ListCarState extends State<ListCar> {
   TextEditingController fromdatecontroller = TextEditingController();
   TextEditingController todatecontroller = TextEditingController();
   TextEditingController fromtimecontroller = TextEditingController();
@@ -32,10 +40,11 @@ class ListCar1 extends StatelessWidget {
   var sTime;
   var eTime;
   var price;
+  PermissionStatus _status;
 
   @override
   final String userId = FirebaseAuth.instance.currentUser.uid;
-
+  @override
   CollectionReference car1 =
       FirebaseFirestore.instance.collection('Listed Cars');
 
@@ -56,21 +65,6 @@ class ListCar1 extends StatelessWidget {
       'Price': price,
       'userId': userId,
     }).then((value) => print("Car Added"));
-  }
-
-  Future getUserCarList() async {
-    List aList = [];
-    try {
-      await car1.get().then((QuerySnapshot) {
-        QuerySnapshot.docs.forEach((element) {
-          aList.add(element.data);
-        });
-      });
-      return aList;
-    } catch (e) {
-      print(e.toString());
-      return null;
-    }
   }
 
   Widget build(BuildContext context) {
@@ -375,5 +369,12 @@ class ListCar1 extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future pickImage() async {
+    var status = await Permission.camera.status;
+    if (await status.isGranted) {
+      await ImagePicker().pickImage(source: ImageSource.gallery);
+    }
   }
 }

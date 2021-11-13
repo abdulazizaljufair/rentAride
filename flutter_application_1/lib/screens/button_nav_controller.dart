@@ -24,7 +24,7 @@ class _ButtonNavControllerState extends State<ButtonNavController> {
     SearchScreen(),
     ChatScreen2(),
     Recievedoffer(),
-    ListCar1(),
+    ListCar(),
   ];
 
   Widget build(BuildContext context) {
@@ -42,7 +42,7 @@ class _ButtonNavControllerState extends State<ButtonNavController> {
             },
             onPressedButton2: () {
               Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => ListCar1()));
+                  .push(MaterialPageRoute(builder: (context) => ListCar()));
             },
           );
         },
