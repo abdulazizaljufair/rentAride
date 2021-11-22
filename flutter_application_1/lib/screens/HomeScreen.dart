@@ -12,8 +12,10 @@ import 'package:flutter_application_1/screens/add_car_screen.dart';
 import 'package:flutter_application_1/screens/add_card_screen.dart';
 import 'package:flutter_application_1/screens/addcar2.dart';
 import 'package:flutter_application_1/screens/choose_Existingcard.dart';
+import 'package:flutter_application_1/screens/finalpayment1.dart';
 import 'package:flutter_application_1/screens/login_screen.dart';
 import 'package:flutter_application_1/screens/manage_profilescreen.dart';
+import 'package:flutter_application_1/widgets/custom_button.dart';
 import 'package:flutter_application_1/widgets/my_list_tile.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -230,6 +232,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   SizedBox(
                     height: 15.h,
                   ),
+
                   Container(
                     child: CarouselSlider(
                       options: CarouselOptions(
@@ -239,6 +242,92 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       items: getimageswidgets(),
                     ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(15),
+                    child: Text(
+                      'Recent search',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 22.sp,
+                      ),
+                    ),
+                  ),
+                  ListView.separated(
+                    physics:NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: 4,
+                    itemBuilder: (context, index) {
+                      return Container(
+                          padding: EdgeInsets.all(15),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                height: 120.h,
+                                width: 120.w,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  image: DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: AssetImage('images/car.jpeg')),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 20.w,
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'KIA',
+                                    style: TextStyle(color: Colors.black),
+                                  ),
+                                  SizedBox(
+                                    height: 10.h,
+                                  ),
+                                  Text(
+                                    '20/3/2021',
+                                    style: TextStyle(color: Colors.grey),
+                                  ),
+                                  SizedBox(
+                                    height: 10.h,
+                                  ),
+                                  Text(
+                                    'from:10:30 PM',
+                                    style: TextStyle(color: Colors.grey),
+                                  ),
+                                  SizedBox(
+                                    height: 10.h,
+                                  ),
+                                  Text(
+                                    'Insurance type: standard',
+                                    style: TextStyle(color: Colors.grey),
+                                  ),
+                                  SizedBox(
+                                    height: 10.h,
+                                  ),
+                                  Text(
+                                    'Booking Status: Pending',
+                                    style: TextStyle(color: Colors.grey),
+                                  ),
+                                  SizedBox(
+                                    height: 20.h,
+                                  ),
+                                  SizedBox(
+                                    width: 180.w,
+
+                                  ),
+                                ],
+                              )
+                            ],
+                          ));
+                    },
+                    separatorBuilder: (context, index) {
+                      return Divider(
+                        thickness: 3,
+                      );
+                    },
                   ),
                   Padding(
                     padding: const EdgeInsets.all(15),
@@ -286,9 +375,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                     ),
                   ),
+
                   SizedBox(
                     height: 350.h,
                   ),
+
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

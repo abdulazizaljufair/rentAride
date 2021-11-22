@@ -31,7 +31,7 @@ class _ChooseExistingCarState extends State<ChooseExistingCar> {
       });
     }
   }
-
+    int selectedIndex=-1;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,70 +56,82 @@ class _ChooseExistingCarState extends State<ChooseExistingCar> {
                 : ListView.separated(
                     itemCount: car.length,
                     itemBuilder: (context, index) {
-                      return Container(
-                          padding: EdgeInsets.all(15),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                height: 150.h,
-                                width: 150.w,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  image: DecorationImage(
-                                      fit: BoxFit.cover,
-                                      image: AssetImage('images/car.jpeg')),
+                      return InkWell(
+                        onTap: (){
+                         selectedIndex=index ;
+                        print(index);
+                        setState(() {
+
+                        });
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: selectedIndex==index? Colors.grey.shade400 : Colors.white
+                          ),
+                            padding: EdgeInsets.all(15),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  height: 150.h,
+                                  width: 150.w,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    image: DecorationImage(
+                                        fit: BoxFit.cover,
+                                        image: AssetImage('images/car.jpeg')),
+                                  ),
                                 ),
-                              ),
-                              SizedBox(
-                                width: 20.w,
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    car[index]['Car Type'],
-                                    style: TextStyle(color: Colors.black),
-                                  ),
-                                  SizedBox(
-                                    height: 10.h,
-                                  ),
-                                  Text(
-                                    car[index]['Chasis Number'],
-                                    style: TextStyle(color: Colors.grey),
-                                  ),
-                                  SizedBox(
-                                    height: 10.h,
-                                  ),
-                                  Text(
-                                    car[index]['License Number'],
-                                    style: TextStyle(color: Colors.grey),
-                                  ),
-                                  SizedBox(
-                                    height: 10.h,
-                                  ),
-                                  Text(
-                                    car[index]['Model'],
-                                    style: TextStyle(color: Colors.grey),
-                                  ),
-                                  SizedBox(
-                                    height: 10.h,
-                                  ),
-                                  Text(
-                                    car[index]['odometer'],
-                                    style: TextStyle(color: Colors.grey),
-                                  ),
-                                  SizedBox(
-                                    height: 10.h,
-                                  ),
-                                  Text(
-                                    car[index]['year'],
-                                    style: TextStyle(color: Colors.grey),
-                                  )
-                                ],
-                              ),
-                            ],
-                          ));
+                                SizedBox(
+                                  width: 20.w,
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      car[index]['Car Type'],
+                                      style: TextStyle(color: selectedIndex==index? Colors.white : Colors.grey),
+                                    ),
+                                    SizedBox(
+                                      height: 10.h,
+                                    ),
+                                    Text(
+                                      car[index]['Chasis Number'],
+                                      style: TextStyle(color: selectedIndex==index? Colors.white : Colors.grey),
+                                    ),
+                                    SizedBox(
+                                      height: 10.h,
+                                    ),
+                                    Text(
+                                      car[index]['License Number'],
+                                      style: TextStyle(color: selectedIndex==index? Colors.white : Colors.grey),
+                                    ),
+                                    SizedBox(
+                                      height: 10.h,
+                                    ),
+                                    Text(
+                                      car[index]['Model'],
+                                      style: TextStyle(color: selectedIndex==index? Colors.white : Colors.grey),
+                                    ),
+                                    SizedBox(
+                                      height: 10.h,
+                                    ),
+                                    Text(
+                                      car[index]['odometer'],
+                                      style: TextStyle(color: selectedIndex==index? Colors.white : Colors.grey),
+                                    ),
+                                    SizedBox(
+                                      height: 10.h,
+                                    ),
+                                    Text(
+                                      car[index]['year'],
+                                      style: TextStyle(color: selectedIndex==index? Colors.white : Colors.grey),
+                                    )
+                                  ],
+                                ),
+                              ],
+                            )),
+                      );
                     },
                     separatorBuilder: (context, index) {
                       return Divider(
@@ -128,7 +140,7 @@ class _ChooseExistingCarState extends State<ChooseExistingCar> {
                     },
                   ),
           ),
-          CustomButton(
+          selectedIndex!=-1?CustomButton(
             text: 'Next',
             textcolor: Colors.white,
             buttoncolor: Color(0xFF27292E),
@@ -137,7 +149,7 @@ class _ChooseExistingCarState extends State<ChooseExistingCar> {
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => ChooseExistingScreen()));
             },
-          ),
+          ):SizedBox(),
           SizedBox(
             height: 50.h,
           ),
