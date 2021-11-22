@@ -5,6 +5,7 @@ class MyTextformField extends StatelessWidget {
   final Function validator;
   final Function onTap;
   final Function onSaved;
+  final Function onChanged;
   final bool obscure;
   final bool readonly;
   final TextInputType keyboardType;
@@ -19,7 +20,8 @@ class MyTextformField extends StatelessWidget {
       this.onTap,
       this.controller,
       this.readonly = false,
-      this.onSaved});
+      this.onSaved,
+      this.onChanged  });
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -27,6 +29,7 @@ class MyTextformField extends StatelessWidget {
         obscureText: obscure,
         keyboardType: keyboardType,
         onSaved: onSaved,
+        onChanged: onChanged,
         controller: controller,
         readOnly: readonly,
         decoration: InputDecoration(

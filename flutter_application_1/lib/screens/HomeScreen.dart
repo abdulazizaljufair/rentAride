@@ -58,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
   //       .then((QuerySnapshot querySnapshot) {
   //     querySnapshot.docs.forEach((doc) {
   //       user.email = doc["email"] ?? " ";
-  //       name = doc["fristName"] ?? " ";
+  //       var name = doc["fristName"] ?? " ";
   //       user.lName = doc['lastName'] ?? " ";
   //       user.phone = doc['phoneNumber'] ?? " ";
   //       user.uId = doc["userId"] ?? " ";
@@ -101,7 +101,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 15.h,
                 ),
                 Text(
-                  data["fristName"].toString(),
+                  data['fristName'].toString(),
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  data['email'].toString(),
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 // user?.email ?? " ",

@@ -1,4 +1,3 @@
-import 'dart:html';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
@@ -15,14 +14,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'dart:io';
 import "package:permission_handler/permission_handler.dart";
 
-class ListCar extends StatefulWidget {
+class ListCar extends StatelessWidget{
   @override
-  _ListCarState createState() => _ListCarState();
-}
-
 bool checkBoxValue = false;
-
-class _ListCarState extends State<ListCar> {
   TextEditingController fromdatecontroller = TextEditingController();
   TextEditingController todatecontroller = TextEditingController();
   TextEditingController fromtimecontroller = TextEditingController();
@@ -41,8 +35,7 @@ class _ListCarState extends State<ListCar> {
   var eTime;
   var price;
   PermissionStatus _status;
-
-  @override
+  File file;
   final String userId = FirebaseAuth.instance.currentUser.uid;
   @override
   CollectionReference car1 =
@@ -65,6 +58,21 @@ class _ListCarState extends State<ListCar> {
       'Price': price,
       'userId': userId,
     }).then((value) => print("Car Added"));
+
+  }
+  Future getUserCarList() async {
+    List cList = [];
+    try {
+      await car1.where("userId", isEqualTo: userId).get().then((QuerySnapshot) {
+        QuerySnapshot.docs.forEach((element) {
+          cList.add(element.data());
+        });
+      });
+      return cList;
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
   }
 
   Widget build(BuildContext context) {
@@ -372,9 +380,9 @@ class _ListCarState extends State<ListCar> {
   }
 
   Future pickImage() async {
-    var status = await Permission.camera.status;
-    if (await status.isGranted) {
-      await ImagePicker().pickImage(source: ImageSource.gallery);
-    }
+    final img = await FilePicker.platform.pickFiles(allowMultiple: true);
+    if(img == null) return;
+    final path = img.files;
+    // setState(() => file = File(path));
   }
 }
