@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/helper/functions.dart';
+import 'package:flutter_application_1/images/UserChange.dart';
 import 'package:flutter_application_1/model/slider_model.dart';
 import 'package:flutter_application_1/modules/users.dart';
 import 'package:flutter_application_1/screens/ExistingAdress.dart';
@@ -28,6 +31,17 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final String userId = FirebaseAuth.instance.currentUser.uid;
   dynamic user;
+  File _userImageFile;
+
+  void _pickedImage(File Image) {
+    if (_userImageFile == null) {
+      Scaffold.of(context).showSnackBar(SnackBar(
+        content: Text('Please Upload Image'),
+        backgroundColor: Theme.of(context).errorColor,
+      ));
+    }
+    _userImageFile = Image;
+  }
 
   final List<SliderModel> imagList = [
     SliderModel(
@@ -91,14 +105,11 @@ class _HomeScreenState extends State<HomeScreen> {
             drawer: Drawer(
                 child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
+              children: <Widget>[
                 SizedBox(
-                  height: 80.h,
+                  height: 50.h,
                 ),
-                CircleAvatar(
-                  maxRadius: 50.h,
-                  backgroundImage: AssetImage('images/avatar1.jpg'),
-                ),
+                imageUser(_pickedImage),
                 SizedBox(
                   height: 15.h,
                 ),
@@ -110,7 +121,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   data['email'].toString(),
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-                // user?.email ?? " ",
                 Divider(
                   thickness: 3,
                   height: 35,
@@ -190,14 +200,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                 ),
                 Mylist(
-                  icon: Icons.view_agenda,
-                  title: 'View Booking',
-                  onTap: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => ViewBooking()));
-                  },
-                ),
-                Mylist(
                   icon: Icons.info,
                   title: 'About Us',
                   onTap: () {
@@ -232,7 +234,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   SizedBox(
                     height: 15.h,
                   ),
-
                   Container(
                     child: CarouselSlider(
                       options: CarouselOptions(
@@ -254,7 +255,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   ListView.separated(
-                    physics:NeverScrollableScrollPhysics(),
+                    physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemCount: 4,
                     itemBuilder: (context, index) {
@@ -316,7 +317,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                   SizedBox(
                                     width: 180.w,
-
                                   ),
                                 ],
                               )
@@ -375,11 +375,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                     ),
                   ),
-
                   SizedBox(
                     height: 350.h,
                   ),
-
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

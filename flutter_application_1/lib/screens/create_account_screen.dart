@@ -9,6 +9,7 @@ import 'package:flutter_application_1/widgets/my_text_field.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'button_nav_controller.dart';
 import 'login_screen.dart';
+import 'package:flutter_application_1/helper/functions.dart';
 
 class CreateAccountScreen extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
@@ -18,27 +19,18 @@ class CreateAccountScreen extends StatelessWidget {
   String phone = "0";
   String fName = 'f';
   String lName = 'l';
-
-  void _trySubmit() {
-    final isValid = _formKey.currentState.validate();
-
-    if (isValid) {
-      _formKey.currentState.save();
-      print(_userEmail);
-      print(_userPassword);
-    }
-  }
-
+  String emails = "hi it's working good";
   // Future<String> getCurrentUserId() async {
   //   return (await FirebaseAuth.instance.currentUser).uid;
   // }
 
-  Future updateUserList(String uid) async {
+  Future updateUserList(String uid, String fullName, String lastName,
+      String newEmail, String phoneNumber) async {
     return await users.doc(uid).update({
-      'fristName': fName, // John Doe
-      'lastName': lName, // Stokes and Sons
-      'email': _userEmail,
-      'phoneNumber': phone,
+      'fristName': fullName, // John Doe
+      'lastName': lastName, // Stokes and Sons
+      'email': newEmail,
+      'phoneNumber': phoneNumber,
     });
   }
 
@@ -55,6 +47,21 @@ class CreateAccountScreen extends StatelessWidget {
         })
         .then((value) => print("User Added"))
         .catchError((error) => print("Failed to add user: $error"));
+  }
+
+  Future getUsersList() async {
+    List uList = [];
+    try {
+      await users.get().then((QuerySnapshot) {
+        QuerySnapshot.docs.forEach((element) {
+          uList.add(element.data());
+        });
+      });
+      return uList;
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
   }
 
   @override
@@ -181,13 +188,12 @@ class CreateAccountScreen extends StatelessWidget {
                   height: 50.h,
                   onTap: () async {
                     if (_formKey.currentState.validate()) {
-                      _formKey.currentState.save();
                       try {
                         await FirebaseAuth.instance
                             .createUserWithEmailAndPassword(
                                 email: _userEmail, password: _userPassword);
 
-                        addUser(FirebaseAuth.instance.currentUser.uid);
+                        await addUser(FirebaseAuth.instance.currentUser.uid);
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
@@ -216,6 +222,9 @@ class CreateAccountScreen extends StatelessWidget {
                     'If you already have account? Login',
                     style: TextStyle(fontSize: 16.sp),
                   ),
+                ),
+                SizedBox(
+                  height: 10.h,
                 ),
               ],
             ),

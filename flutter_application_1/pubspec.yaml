@@ -45,6 +45,8 @@ dependencies:
   flutter_chat_bubble: ^2.0.0
   file_picker: ^3.0.3
   permission_handler:
+  provider:
+  # firebase_storage: ^10.1.0
 
 dev_dependencies:
   flutter_test:

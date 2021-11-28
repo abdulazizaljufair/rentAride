@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/helper/functions.dart';
+import 'package:flutter_application_1/modules/users.dart';
 import 'package:flutter_application_1/screens/add_card_screen.dart';
 import 'package:flutter_application_1/screens/choose_Existingcard.dart';
 import 'package:flutter_application_1/screens/finalpayment1.dart';
@@ -8,6 +10,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ViewBooking extends StatelessWidget {
   @override
+  CollectionReference bookings =
+      FirebaseFirestore.instance.collection('bookings');
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(

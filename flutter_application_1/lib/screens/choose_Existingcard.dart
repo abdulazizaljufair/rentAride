@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/add_car_screen.dart';
+import 'package:flutter_application_1/screens/create_account_screen.dart';
 import 'add_card_screen.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -17,14 +20,23 @@ class _ChooseCardState extends State<ChooseCard> {
   }
 
   FetchDatabaseList() async {
-    dynamic res = await AddCard().getUserCardList();
+    CollectionReference users = FirebaseFirestore.instance.collection('Cards');
+    final String userId = FirebaseAuth.instance.currentUser.uid;
 
-    if (res == null) {
-      print('Unable to retrive');
-    } else {
-      setState(() {
-        cardL2 = res;
+    try {
+      await users
+          .where('userId', isEqualTo: userId)
+          .get()
+          .then((QuerySnapshot) {
+        QuerySnapshot.docs.forEach((element) {
+          setState(() {
+            cardL2.add(element.data());
+          });
+        });
       });
+    } catch (e) {
+      print(e.toString());
+      return null;
     }
   }
 
@@ -66,11 +78,11 @@ class _ChooseCardState extends State<ChooseCard> {
                         ),
                         Column(
                           children: [
-                            Text(cardL2[index]['Card Number']),
+                            Text(cardL2[index]['Holder Name'].toString()),
                             SizedBox(
                               height: 10.h,
                             ),
-                            Text(cardL2[index]['Holder Name']),
+                            Text(cardL2[index]['Expire Date'].toString()),
                           ],
                         )
                       ],

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/helper/functions.dart';
 import 'package:flutter_application_1/screens/Edit_profile.dart';
@@ -10,6 +11,7 @@ class ManageProfile extends StatefulWidget {
 }
 
 class _ManageProfileState extends State<ManageProfile> {
+  final auth = FirebaseAuth.instance.currentUser;
   bool enablenotifications = false;
   @override
   Widget build(BuildContext context) {
@@ -83,7 +85,8 @@ class _ManageProfileState extends State<ManageProfile> {
                   primarytitle: 'Are you sure',
                   button1title: 'Yes',
                   button2title: 'No',
-                  onPressedButton1: () {
+                  onPressedButton1: () async {
+                    await auth.delete();
                     Navigator.pop(context);
                   },
                   onPressedButton2: () {
