@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/helper/functions.dart';
+import 'package:flutter_application_1/screens/HomeScreen.dart';
+import 'package:flutter_application_1/screens/button_nav_controller.dart';
 import 'package:flutter_application_1/screens/sucessbook.dart';
 import 'package:flutter_application_1/widgets/custom_button.dart';
 import 'package:flutter_application_1/widgets/my_text_field.dart';
@@ -56,8 +58,56 @@ class Paymentcar extends StatelessWidget {
               text: 'Pay',
               height: 50.h,
               onTap: () {
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => ConfirmBooking()));
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return Dialog(
+                        backgroundColor: Colors.white,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            SizedBox(
+                              height: 15.h,
+                            ),
+                            Text(
+                              "Payment Complete",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 21.sp,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Image.asset(
+                              'images/payment.jpg',
+                              height: 120.h,
+                              width: 120.w,
+                            ),
+                            SizedBox(
+                              height: 15.h,
+                            ),
+                            SizedBox(
+                              width: 100.w,
+                              child: CustomButton(
+                                buttoncolor: Color(0xFF27292E),
+                                textcolor: Colors.white,
+                                text: 'Ok',
+                                height: 50.h,
+                                onTap: () {
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              ButtonNavController()));
+                                },
+                              ),
+                            ),
+                            SizedBox(
+                              height: 15.h,
+                            ),
+                          ],
+                        ),
+                      );
+                    });
               },
             ),
           ],
@@ -66,3 +116,5 @@ class Paymentcar extends StatelessWidget {
     );
   }
 }
+//Navigator.pushReplacement(context,
+//MaterialPageRoute(builder: (context) => ConfirmBooking()));
