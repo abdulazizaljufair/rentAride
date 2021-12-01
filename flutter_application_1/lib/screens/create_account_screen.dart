@@ -172,7 +172,7 @@ class CreateAccountScreen extends StatelessWidget {
                     phone = value;
                   },
                   validator: (value) {
-                    if (value.isEmpty) {
+                    if (value.isEmpty || value.length < 10) {
                       return 'Please enter Your Phone Number';
                     }
                     return null;

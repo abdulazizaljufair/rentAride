@@ -101,8 +101,15 @@ class _CarDetailsState extends State<CarDetails> {
                   text: 'Next',
                   height: 55.h,
                   onTap: () {
-                    Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) => reserveCar()));
+                    if (insurancetype == 'Insurance Type') {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text('Please choose Insurance Type')));
+                    } else {
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => reserveCar()));
+                    }
                   },
                 ),
               ],

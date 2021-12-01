@@ -27,6 +27,12 @@ class Paymentcar extends StatelessWidget {
             MyTextformField(
               hintText: 'Holder Name',
               keyboardType: TextInputType.name,
+              validator: (value) {
+                if (value.isEmpty) {
+                  return 'Please enter Holder Name';
+                }
+                return null;
+              },
             ),
             SizedBox(
               height: 30.h,
@@ -34,6 +40,14 @@ class Paymentcar extends StatelessWidget {
             MyTextformField(
               hintText: 'Card Number',
               keyboardType: TextInputType.number,
+              validator: (value) {
+                if (value.isEmpty) {
+                  return 'Please enter Your Card Number';
+                } else if (value.length < 16) {
+                  return 'Card Number must be at 16 digits';
+                }
+                return null;
+              },
             ),
             SizedBox(
               height: 30.h,
@@ -41,6 +55,12 @@ class Paymentcar extends StatelessWidget {
             MyTextformField(
               hintText: 'Expire date',
               keyboardType: TextInputType.datetime,
+              validator: (value) {
+                if (value.isEmpty) {
+                  return 'Please enter the expire date';
+                }
+                return null;
+              },
             ),
             SizedBox(
               height: 30.h,
@@ -48,6 +68,14 @@ class Paymentcar extends StatelessWidget {
             MyTextformField(
               hintText: 'Security Code',
               keyboardType: TextInputType.number,
+              validator: (value) {
+                if (value.isEmpty) {
+                  return 'Please enter Your Security code';
+                } else if (value.length < 3) {
+                  return 'Security code must be at least 3 digits';
+                }
+                return null;
+              },
             ),
             SizedBox(
               height: 50.h,

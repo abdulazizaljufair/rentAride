@@ -93,7 +93,7 @@ class _ListCarState extends State<ListCar> {
   File file;
 
   final String userId = FirebaseAuth.instance.currentUser.uid;
-
+  List<File> image;
   @override
   CollectionReference car1 =
       FirebaseFirestore.instance.collection('Listed Cars');
@@ -152,7 +152,8 @@ class _ListCarState extends State<ListCar> {
               children: [
                 Center(
                   child: InkWell(
-                    onTap: () {
+                    onTap: () async {
+                      image = await pickImage();
                       ImagesCars(_pickedImage);
                     },
                     child: Container(
@@ -426,7 +427,7 @@ class _ListCarState extends State<ListCar> {
                   height: 20.h,
                 ),
                 CustomButton(
-                  text: 'Next',
+                  text: 'List',
                   buttoncolor: Color(0xFF27292E),
                   textcolor: Colors.white,
                   height: 50,
@@ -440,6 +441,10 @@ class _ListCarState extends State<ListCar> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => HomeScreen()));
+                      }
+                      if (image == null) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('You Should choose Image')));
                       }
                     }
                   },
