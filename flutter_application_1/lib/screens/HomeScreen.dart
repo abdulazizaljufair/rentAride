@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/helper/functions.dart';
 import 'package:flutter_application_1/images/UserChange.dart';
+import 'package:flutter_application_1/model/city_model.dart';
 import 'package:flutter_application_1/model/slider_model.dart';
 import 'package:flutter_application_1/modules/users.dart';
 import 'package:flutter_application_1/screens/ExistingAdress.dart';
@@ -64,6 +65,25 @@ class _HomeScreenState extends State<HomeScreen> {
       imageUrl:
           'https://images.unsplash.com/photo-1606611013016-969c19ba27bb?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Zm9yZCUyMGNhcnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60',
     ),
+  ];
+  List<CityModel> cities = [
+   CityModel(
+     name: 'Riyadh',
+     imageURL: 'images/riyadh.jpeg'
+   ),
+    CityModel(
+        name: 'Jeddah',
+        imageURL: 'images/jeddah.jpeg'
+    ),
+    CityModel(
+        name: 'Dammam',
+        imageURL: 'images/Dammam.jpeg'
+    ),
+    CityModel(
+        name: 'Makkah',
+        imageURL: 'images/makkah.jpeg'
+    ),
+
   ];
 
   // void x() async {
@@ -342,12 +362,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   SizedBox(
                     height: 200.h,
                     child: ListView.builder(
-                      itemCount: 5,
+                      itemCount: cities.length,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
                         return Container(
                           margin: EdgeInsets.all(15),
-                          height: 150.h,
+                          height: 200.h,
                           width: 160.w,
                           decoration: BoxDecoration(
                               color: Colors.white,
@@ -357,13 +377,22 @@ class _HomeScreenState extends State<HomeScreen> {
                               ]),
                           child: Column(
                             children: [
-                              Image.asset(
-                                'images/city1.png',
-                                height: 120.h,
-                                width: 120.w,
+
+                              Container(
+                                height: 130.h,
+                                width: 160.w,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  image: DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: AssetImage(cities[index].imageURL)),
+                                ),
                               ),
+                                SizedBox(
+                                  height: 10.h,
+                                ),
                               Text(
-                                'Riyadh',
+                                cities[index].name,
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 20.sp,
