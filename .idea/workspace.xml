@@ -22,12 +22,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c33de12b-5c13-4b93-b4e5-ba14cd6880f3" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.vscode/launch.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vscode/launch.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/flutter_application_1/ios/Podfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/flutter_application_1/ios/Podfile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/flutter_application_1/ios/Runner.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/flutter_application_1/ios/Runner.xcodeproj/project.pbxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/flutter_application_1/lib/screens/button_nav_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/flutter_application_1/lib/screens/button_nav_controller.dart" afterDir="false" />
-    </list>
+    <list default="true" id="c33de12b-5c13-4b93-b4e5-ba14cd6880f3" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
