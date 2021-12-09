@@ -6,6 +6,34 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class CarDetails extends StatefulWidget {
   @override
   _CarDetailsState createState() => _CarDetailsState();
+  String carType;
+  String cModel;
+  String year;
+  String lNumber;
+  String odometer;
+  int cNumber;
+  String cAddress;
+  int price;
+
+  CarDetails(
+    String carType,
+    String cModel,
+    String year,
+    String lNumber,
+    int cNumber,
+    String odometer,
+    String cAddress,
+    int price,
+  ) {
+    this.carType = carType;
+    this.cModel = cModel;
+    this.year = year;
+    this.lNumber = lNumber;
+    this.cNumber = cNumber;
+    this.odometer = odometer;
+    this.cAddress = cAddress;
+    this.price = price;
+  }
 }
 
 class _CarDetailsState extends State<CarDetails> {
@@ -17,7 +45,7 @@ class _CarDetailsState extends State<CarDetails> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.asset(
+          Image.network(
             'images/car.jpeg',
             width: MediaQuery.of(context).size.width,
             height: 300.h,
@@ -32,7 +60,7 @@ class _CarDetailsState extends State<CarDetails> {
                   height: 15.h,
                 ),
                 Text(
-                  'Ford',
+                  widget.carType,
                   style:
                       TextStyle(fontSize: 22.sp, fontWeight: FontWeight.bold),
                 ),
@@ -77,6 +105,7 @@ class _CarDetailsState extends State<CarDetails> {
                   isExpanded: true,
                   onChanged: (value) {
                     insurancetype = value;
+
                     setState(() {});
                   },
                   iconSize: 30,
@@ -105,10 +134,21 @@ class _CarDetailsState extends State<CarDetails> {
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                           content: Text('Please choose Insurance Type')));
                     } else {
+                      print(widget.cAddress);
+
                       Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => reserveCar()));
+                              builder: (context) => reserveCar(
+                                  widget.carType,
+                                  widget.cModel,
+                                  widget.year,
+                                  widget.lNumber,
+                                  widget.cNumber,
+                                  widget.odometer,
+                                  widget.cAddress,
+                                  widget.price,
+                                  insurancetype)));
                     }
                   },
                 ),

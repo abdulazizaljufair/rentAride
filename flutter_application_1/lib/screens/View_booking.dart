@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/helper/functions.dart';
 import 'package:flutter_application_1/modules/users.dart';
@@ -8,10 +9,63 @@ import 'package:flutter_application_1/screens/finalpayment1.dart';
 import 'package:flutter_application_1/widgets/custom_button.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class ViewBooking extends StatelessWidget {
+class ViewBooking extends StatefulWidget {
   @override
-  CollectionReference bookings =
-      FirebaseFirestore.instance.collection('bookings');
+  State<ViewBooking> createState() => _ViewBookingState();
+}
+
+class _ViewBookingState extends State<ViewBooking> {
+  @override
+  CollectionReference Bookings =
+      FirebaseFirestore.instance.collection('Bookings');
+
+  List pendingBookings = [];
+  List completedBookings = [];
+
+  void initState() {
+    super.initState();
+    FetchDatabaseListPending();
+    FetchDatabaseListCompleted();
+  }
+
+  final String userId = FirebaseAuth.instance.currentUser.uid;
+  FetchDatabaseListPending() async {
+    try {
+      await Bookings.where('status', isEqualTo: 'Pending')
+          .where('userId', isEqualTo: userId)
+          .get()
+          .then((QuerySnapshot) {
+        QuerySnapshot.docs.forEach((element) {
+          setState(() {
+            pendingBookings.add(element.data());
+          });
+        });
+      });
+      return pendingBookings;
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
+  FetchDatabaseListCompleted() async {
+    try {
+      await Bookings.where('status', isEqualTo: 'Completed')
+          .where('userId', isEqualTo: userId)
+          .get()
+          .then((QuerySnapshot) {
+        QuerySnapshot.docs.forEach((element) {
+          setState(() {
+            completedBookings.add(element.data());
+          });
+        });
+      });
+      return completedBookings;
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +78,7 @@ class ViewBooking extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ListView.separated(
-              itemCount: 1,
+              itemCount: pendingBookings.length,
               physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemBuilder: (context, index) {
@@ -50,35 +104,43 @@ class ViewBooking extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'KIA',
+                              'Car Type ' + pendingBookings[index]['Car Type'],
                               style: TextStyle(color: Colors.black),
                             ),
                             SizedBox(
                               height: 10.h,
                             ),
                             Text(
-                              '20/3/2021',
+                              'Date ' +
+                                  pendingBookings[index]['Start Date'] +
+                                  ' to ' +
+                                  pendingBookings[index]['End Date'],
                               style: TextStyle(color: Colors.grey),
                             ),
                             SizedBox(
                               height: 10.h,
                             ),
                             Text(
-                              'from:10:30 PM',
+                              'Time ' +
+                                  pendingBookings[index]['Start Time'] +
+                                  ' to ' +
+                                  pendingBookings[index]['End Time'],
                               style: TextStyle(color: Colors.grey),
                             ),
                             SizedBox(
                               height: 10.h,
                             ),
                             Text(
-                              'Insurance type: standard',
+                              'Insurance type: ' +
+                                  pendingBookings[index]['Insurance type'],
                               style: TextStyle(color: Colors.grey),
                             ),
                             SizedBox(
                               height: 10.h,
                             ),
                             Text(
-                              'Booking Status: Pending',
+                              'Booking Status: ' +
+                                  pendingBookings[index]['status'],
                               style: TextStyle(color: Colors.grey),
                             ),
                             SizedBox(
@@ -110,7 +172,10 @@ class ViewBooking extends StatelessWidget {
                                             Navigator.of(context).push(
                                                 MaterialPageRoute(
                                                     builder: (context) =>
-                                                        Paymentcar()));
+                                                        Paymentcar(
+                                                          pendingBookings[index]
+                                                              ['bookingId'],
+                                                        )));
                                           },
                                         );
                                       }),
@@ -169,7 +234,7 @@ class ViewBooking extends StatelessWidget {
               ),
             ),
             ListView.separated(
-              itemCount: 4,
+              itemCount: completedBookings.length,
               physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemBuilder: (context, index) {
@@ -195,35 +260,44 @@ class ViewBooking extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'KIA',
+                              'Car Type ' +
+                                  completedBookings[index]['Car Type'],
                               style: TextStyle(color: Colors.black),
                             ),
                             SizedBox(
                               height: 10.h,
                             ),
                             Text(
-                              '20/3/2021',
+                              'Date ' +
+                                  completedBookings[index]['Start Date'] +
+                                  ' to ' +
+                                  completedBookings[index]['End Date'],
                               style: TextStyle(color: Colors.grey),
                             ),
                             SizedBox(
                               height: 10.h,
                             ),
                             Text(
-                              'from:10:30 PM',
+                              'Time ' +
+                                  completedBookings[index]['Start Time'] +
+                                  ' to ' +
+                                  completedBookings[index]['End Time'],
                               style: TextStyle(color: Colors.grey),
                             ),
                             SizedBox(
                               height: 10.h,
                             ),
                             Text(
-                              'Insurance type: standard',
+                              'Insurance type: ' +
+                                  completedBookings[index]['Insurance type'],
                               style: TextStyle(color: Colors.grey),
                             ),
                             SizedBox(
                               height: 10.h,
                             ),
                             Text(
-                              'Booking Status: completed',
+                              'Booking Status: ' +
+                                  completedBookings[index]['status'],
                               style: TextStyle(color: Colors.grey),
                             ),
                             SizedBox(

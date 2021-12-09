@@ -1,18 +1,20 @@
-import 'dart:ffi';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/images/Car_images.dart';
 import 'package:flutter_application_1/screens/HomeScreen.dart';
+import 'package:flutter_application_1/screens/button_nav_controller.dart';
 import 'package:flutter_application_1/widgets/custom_button.dart';
 import 'package:flutter_application_1/widgets/my_text_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_application_1/helper/functions.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import "package:permission_handler/permission_handler.dart";
+// import 'package:f'
 
 int cNumber = -1;
 
@@ -22,18 +24,9 @@ class ListCar extends StatefulWidget {
 }
 
 class _ListCarState extends State<ListCar> {
+  var _url;
   @override
   File _carImageFile;
-
-  void _pickedImage(File Image) {
-    // if (_carImageFile == null) {
-    //   Scaffold.of(context).showSnackBar(SnackBar(
-    //     content: Text('Please Upload Image'),
-    //     backgroundColor: Theme.of(context).errorColor,
-    //   ));
-    // }
-    _carImageFile = Image;
-  }
 
   Future<bool> CheckChasisNumber(int chasisNumber) async {
     List cList = [];
@@ -88,10 +81,6 @@ class _ListCarState extends State<ListCar> {
 
   int price;
 
-  PermissionStatus _status;
-
-  File file;
-
   final String userId = FirebaseAuth.instance.currentUser.uid;
   List<File> image;
   @override
@@ -113,6 +102,7 @@ class _ListCarState extends State<ListCar> {
       'Start Time': sTime,
       'End Time': eTime,
       'Price': price,
+      'url': _url,
       'userId': userId,
     }).then((value) => print("Car Added"));
   }
@@ -153,20 +143,25 @@ class _ListCarState extends State<ListCar> {
                 Center(
                   child: InkWell(
                     onTap: () async {
-                      image = await pickImage();
-                      ImagesCars(_pickedImage);
+                      // image = await pickImage();
+                      // ImagesCars(_pickedImage);
+                      pickImage();
                     },
                     child: Container(
-                      height: 85,
-                      width: 80,
+                      height: 100,
+                      width: 100,
                       decoration: BoxDecoration(
                         color: Color(0xFF27292E),
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      child: Icon(
-                        Icons.camera_alt_sharp,
-                        color: Colors.white,
-                      ),
+                      child: _carImageFile == null
+                          ? Icon(
+                              Icons.camera_alt_sharp,
+                              color: Colors.white,
+                            )
+                          : Image.file(
+                              _carImageFile,
+                            ),
                     ),
                   ),
                 ),
@@ -374,7 +369,7 @@ class _ListCarState extends State<ListCar> {
                           ),
                           onTap: () {
                             selectDate(context, CupertinoDatePickerMode.time,
-                                controller: totimecontroller);
+                                controller: fromtimecontroller);
                           },
                           onSaved: (value) {
                             sTime = value;
@@ -421,7 +416,7 @@ class _ListCarState extends State<ListCar> {
                       return null;
                     },
                     onSaved: (value) {
-                      price = value;
+                      price = int.tryParse(value);
                     }),
                 SizedBox(
                   height: 20.h,
@@ -432,7 +427,7 @@ class _ListCarState extends State<ListCar> {
                   textcolor: Colors.white,
                   height: 50,
                   onTap: () async {
-                    if (!_formKey.currentState.validate()) {
+                    if (_formKey.currentState.validate()) {
                       _formKey.currentState.save();
                       print("hi you found the bug${cNumber}");
                       if (cNumber != -1) {
@@ -440,7 +435,7 @@ class _ListCarState extends State<ListCar> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => HomeScreen()));
+                                builder: (context) => ButtonNavController()));
                       }
                       if (image == null) {
                         ScaffoldMessenger.of(context).showSnackBar(
@@ -457,10 +452,49 @@ class _ListCarState extends State<ListCar> {
     );
   }
 
+  // Future pickImage() async {
+  //   final img = await FilePicker.platform.pickFiles(allowMultiple: true);
+  //   if (img == null) return;
+  //   final path = img.files;
+  //   // setState(() => file = File(path));
+  // }
+
+  // void _imagesPicker() async {
+  //   final picker = ImagePicker();
+  //   final pickedImage = await picker.getImage(source: ImageSource.gallery);
+  //   final pickedImageFile = File(pickedImage.path);
+
+  //   setState(() {
+  //     _carImageFile = pickedImageFile;
+
+  //     return;
+  //   });
+
+  // }
+  // void _imagesPicker(File carImageFile) async {
+  //   final imagePicker = ImagePicker();
+  //   final pickedImageFile =
+  //       await imagePicker.getImage(source: ImageSource.gallery);
+  //   setState(() {
+  //     if (pickedImageFile != null) {
+  //       _carImageFile = File(pickedImageFile.path);
+  //     }
+  //   });
+  // }
+  final picker = ImagePicker();
+
   Future pickImage() async {
-    final img = await FilePicker.platform.pickFiles(allowMultiple: true);
-    if (img == null) return;
-    final path = img.files;
-    // setState(() => file = File(path));
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+
+    setState(() {
+      _carImageFile = File(pickedFile.path);
+    });
+    String _id = DateTime.now().millisecondsSinceEpoch.toString();
+    Reference firebaseStorageRefImage =
+        FirebaseStorage.instance.ref().child("Cars Pictures").child("$_id.png");
+    final TaskSnapshot taskImage =
+        await firebaseStorageRefImage.putFile(_carImageFile);
+    _url = await taskImage.ref.getDownloadURL();
+    print(_url);
   }
 }

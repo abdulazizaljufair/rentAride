@@ -1,6 +1,8 @@
+import 'dart:ffi';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutter_application_1/Database/search.dart';
+import 'package:flutter_application_1/Provider/Bookings.dart';
 import 'package:flutter_application_1/screens/cardetails.dart';
 import 'package:flutter_application_1/widgets/my_text_field.dart';
 import 'package:flutter_application_1/widgets/time_date.dart';
@@ -16,25 +18,25 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   @override
-  // var queryresult = [];
-  // institateSearch(value){
-  //     if(value.lenght == 0){
-  //       setState(() {
-  //         queryresult =[];
-  //       });
-
-  //     var capital = value.toUpperCase() + value;
-  //     if(queryresult.length == value.lenght){
-  //       searchService().searchByName(value).then((QuerySnapshot doc){
-  //         for(int i =0;i< doc.docs.length;i++){
-  //           queryresult.add(doc.docs[i].data);
-  //         }
-  //       });
-  //     }
-  // }
   CollectionReference lCars =
       FirebaseFirestore.instance.collection('Listed Cars');
+
+  CollectionReference recent =
+      FirebaseFirestore.instance.collection('Recent Search');
+
   List lcar = [];
+
+  Future<void> RecentSearch(cType, int price, userId, cModel, year, odometer) {
+    return recent.add({
+      'Car Type': cType,
+      'Price': price,
+      'userId': userId,
+      'Model': cModel,
+      'Year': year,
+      'odometer': odometer,
+      'createdAt': Timestamp.now()
+    }).then((value) => print('recent search added'));
+  }
 
   void initState() {
     super.initState();
@@ -117,10 +119,6 @@ class _SearchScreenState extends State<SearchScreen> {
                   SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
               itemBuilder: (context, index) {
                 return InkWell(
-                  onTap: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => CarDetails()));
-                  },
                   child: Container(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -140,12 +138,33 @@ class _SearchScreenState extends State<SearchScreen> {
                           style: TextStyle(color: Colors.black),
                         ),
                         Text(
-                          lcar[index]['Price'].toString(),
+                          'Price ' + lcar[index]['Price'].toString(),
                           style: TextStyle(color: Colors.black),
                         ),
                       ],
                     ),
                   ),
+                  onTap: () {
+                    String carType = lcar[index]['Car Type'];
+                    String cModel = lcar[index]['Model'];
+                    String year = lcar[index]['year'];
+                    String lNumber = lcar[index]['License Number'];
+                    String odometer = lcar[index]['odometer'];
+                    int cNumber = lcar[index]['Chasis Number'];
+                    String cAddress = lcar[index]['Car address'];
+                    int price = lcar[index]['Price'];
+                    // String url = lcar[index]['url'];
+
+                    final userId = FirebaseAuth.instance.currentUser.uid;
+
+                    RecentSearch(
+                        carType, price, userId, cModel, year, odometer);
+
+                    print(carType);
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => CarDetails(carType, cModel, year,
+                            lNumber, cNumber, odometer, cAddress, price)));
+                  },
                 );
               },
             ),

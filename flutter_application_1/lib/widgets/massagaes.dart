@@ -15,19 +15,20 @@ class Massages extends StatelessWidget {
           .collection('chat')
           .orderBy('createdAt', descending: true)
           .snapshots(),
-      builder: (ctx, ChatsSnapshot) {
-        if (ChatsSnapshot.connectionState == ConnectionState.waiting) {
+      builder: (ctx, chatsSnapshot) {
+        if (chatsSnapshot.connectionState == ConnectionState.waiting) {
           return Center(
             child: CircularProgressIndicator(),
           );
         }
-        final chatDocs = ChatsSnapshot.data.documents.lenght;
+
+        final chatDocs = chatsSnapshot.data.documents;
         return ListView.builder(
           reverse: true,
           itemCount: chatDocs.lenght,
           itemBuilder: (ctx, index) => messageBubble(
-              chatDocs[index]['text'],
-              chatDocs[index].get['userId'] ==
+              chatDocs[index].data()['text'],
+              chatDocs[index].get('userId') ==
                   FirebaseAuth.instance.currentUser.uid),
         );
       },

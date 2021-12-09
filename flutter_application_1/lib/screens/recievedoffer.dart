@@ -1,8 +1,41 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/modules/users.dart';
 import 'package:flutter_application_1/widgets/custom_button.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class Recievedoffer extends StatelessWidget {
+class Recievedoffer extends StatefulWidget {
+  @override
+  State<Recievedoffer> createState() => _RecievedofferState();
+}
+
+class _RecievedofferState extends State<Recievedoffer> {
+  CollectionReference bookings =
+      FirebaseFirestore.instance.collection('Bookings');
+
+  List vBookings = [];
+
+  void initState() {
+    super.initState();
+    FetchDatabaseList();
+  }
+
+  FetchDatabaseList() async {
+    try {
+      await bookings.get().then((QuerySnapshot) {
+        QuerySnapshot.docs.forEach((element) {
+          setState(() {
+            vBookings.add(element.data());
+          });
+        });
+      });
+      return vBookings;
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -11,7 +44,7 @@ class Recievedoffer extends StatelessWidget {
         title: Text('Recieved Offers'),
       ),
       body: ListView.separated(
-        itemCount: 15,
+        itemCount: vBookings.length,
         itemBuilder: (context, index) {
           return Container(
               padding: EdgeInsets.all(15),
@@ -35,28 +68,34 @@ class Recievedoffer extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'KIA',
+                        vBookings[index]['Car Type'],
                         style: TextStyle(color: Colors.black),
                       ),
                       SizedBox(
                         height: 10.h,
                       ),
                       Text(
-                        '20/3/2021',
+                        'from ' +
+                            vBookings[index]['sDate'] +
+                            ' to ' +
+                            vBookings[index]['eDate'],
                         style: TextStyle(color: Colors.grey),
                       ),
                       SizedBox(
                         height: 10.h,
                       ),
                       Text(
-                        'from:10:30 PM',
+                        'from ' +
+                            vBookings[index]['sTime'] +
+                            ' to ' +
+                            vBookings[index]['eTime'],
                         style: TextStyle(color: Colors.grey),
                       ),
                       SizedBox(
                         height: 10.h,
                       ),
                       Text(
-                        'Insurance type: standard',
+                        'Insurance type:' + vBookings[index]['insurancetype'],
                         style: TextStyle(color: Colors.grey),
                       ),
                       SizedBox(

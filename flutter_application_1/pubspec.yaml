@@ -46,6 +46,7 @@ dependencies:
   file_picker: ^3.0.3
   permission_handler:
   provider:
+  firebase_storage:
   # firebase_storage: ^10.1.0
 
 dev_dependencies:

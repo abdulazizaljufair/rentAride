@@ -83,6 +83,37 @@ class _HomeScreenState extends State<HomeScreen> {
   // }
   CollectionReference users = FirebaseFirestore.instance.collection('users');
 
+  CollectionReference recent =
+      FirebaseFirestore.instance.collection('Recent Search');
+
+  List lrecent = [];
+
+  void initState() {
+    super.initState();
+    FetchDatabaseRecentSearch();
+  }
+
+  FetchDatabaseRecentSearch() async {
+    try {
+      await recent
+          .where('userId', isEqualTo: userId)
+          .orderBy('createdAt', descending: true)
+          .limit(3)
+          .get()
+          .then((QuerySnapshot) {
+        QuerySnapshot.docs.forEach((element) {
+          setState(() {
+            lrecent.add(element.data());
+          });
+        });
+      });
+      return lrecent;
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     // x();
@@ -257,7 +288,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ListView.separated(
                     physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
-                    itemCount: 4,
+                    itemCount: lrecent.length,
                     itemBuilder: (context, index) {
                       return Container(
                           padding: EdgeInsets.all(15),
@@ -281,35 +312,37 @@ class _HomeScreenState extends State<HomeScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'KIA',
+                                    'Type ' +
+                                        lrecent[index]['Car Type'].toString(),
                                     style: TextStyle(color: Colors.black),
                                   ),
                                   SizedBox(
                                     height: 10.h,
                                   ),
                                   Text(
-                                    '20/3/2021',
+                                    'Model  ' + lrecent[index]['Model'],
                                     style: TextStyle(color: Colors.grey),
                                   ),
                                   SizedBox(
                                     height: 10.h,
                                   ),
                                   Text(
-                                    'from:10:30 PM',
+                                    'Model Year  ' + lrecent[index]['Year'],
                                     style: TextStyle(color: Colors.grey),
                                   ),
                                   SizedBox(
                                     height: 10.h,
                                   ),
                                   Text(
-                                    'Insurance type: standard',
+                                    'Odometer ' + lrecent[index]['odometer'],
                                     style: TextStyle(color: Colors.grey),
                                   ),
                                   SizedBox(
                                     height: 10.h,
                                   ),
                                   Text(
-                                    'Booking Status: Pending',
+                                    'Price ' +
+                                        lrecent[index]['Price'].toString(),
                                     style: TextStyle(color: Colors.grey),
                                   ),
                                   SizedBox(
@@ -376,7 +409,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: 350.h,
+                    height: 50.h,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
