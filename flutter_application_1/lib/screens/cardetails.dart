@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/resrve.dart';
 import 'package:flutter_application_1/widgets/custom_button.dart';
@@ -14,6 +15,7 @@ class CarDetails extends StatefulWidget {
   int cNumber;
   String cAddress;
   int price;
+  String sDate;
 
   CarDetails(
     String carType,
@@ -24,6 +26,7 @@ class CarDetails extends StatefulWidget {
     String odometer,
     String cAddress,
     int price,
+    String sDate,
   ) {
     this.carType = carType;
     this.cModel = cModel;
@@ -33,11 +36,13 @@ class CarDetails extends StatefulWidget {
     this.odometer = odometer;
     this.cAddress = cAddress;
     this.price = price;
+    this.sDate = sDate;
   }
 }
 
 class _CarDetailsState extends State<CarDetails> {
   String insurancetype = 'Insurance Type';
+  String DisplayName = FirebaseAuth.instance.currentUser.email;
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +50,7 @@ class _CarDetailsState extends State<CarDetails> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.network(
+          Image.asset(
             'images/car.jpeg',
             width: MediaQuery.of(context).size.width,
             height: 300.h,
@@ -57,10 +62,10 @@ class _CarDetailsState extends State<CarDetails> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  height: 15.h,
+                  height: 8.h,
                 ),
                 Text(
-                  widget.carType,
+                  '                        ' + widget.carType.toUpperCase(),
                   style:
                       TextStyle(fontSize: 22.sp, fontWeight: FontWeight.bold),
                 ),
@@ -68,9 +73,9 @@ class _CarDetailsState extends State<CarDetails> {
                   height: 10.h,
                 ),
                 Text(
-                  'Aziz saleh',
+                  '  Car Owner Aziz',
                   style:
-                      TextStyle(fontSize: 15.sp, fontWeight: FontWeight.normal),
+                      TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
                 ),
                 Container(
                   height: 250.h,
@@ -88,15 +93,29 @@ class _CarDetailsState extends State<CarDetails> {
                         'Car Details',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 22.sp,
+                          fontSize: 21.sp,
                         ),
                       ),
                       SizedBox(
-                        height: 10.h,
+                        height: 20.h,
                       ),
-                      Text(""" 
-
- """),
+                      Text('Model: ' + widget.cModel.toUpperCase()),
+                      SizedBox(
+                        height: 15.h,
+                      ),
+                      Text('Year: ' + widget.year),
+                      SizedBox(
+                        height: 15.h,
+                      ),
+                      Text('Odometer: ' + widget.odometer),
+                      SizedBox(
+                        height: 15.h,
+                      ),
+                      Text('Price per hour: ' + widget.price.toString()),
+                      SizedBox(
+                        height: 15.h,
+                      ),
+                      Text('Pick up and Return Location: ' + widget.cAddress)
                     ],
                   ),
                 ),
@@ -134,8 +153,6 @@ class _CarDetailsState extends State<CarDetails> {
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                           content: Text('Please choose Insurance Type')));
                     } else {
-                      print(widget.cAddress);
-
                       Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
@@ -148,7 +165,8 @@ class _CarDetailsState extends State<CarDetails> {
                                   widget.odometer,
                                   widget.cAddress,
                                   widget.price,
-                                  insurancetype)));
+                                  insurancetype,
+                                  widget.sDate)));
                     }
                   },
                 ),

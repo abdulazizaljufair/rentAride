@@ -10,9 +10,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'button_nav_controller.dart';
 
-class reserveCar extends StatefulWidget {
+class listCarFromEx extends StatefulWidget {
   @override
-  State<reserveCar> createState() => _reserveCarState();
+  State<listCarFromEx> createState() => _listCarFromEx();
 
   String carType = '-';
   String cModel = '-';
@@ -22,20 +22,9 @@ class reserveCar extends StatefulWidget {
   int cNumber = 0;
   String cAddress = '-';
   int price = 0;
-  String insurancetype = '-';
-  String sDate;
 
-  reserveCar(
-      String carType,
-      String cModel,
-      String year,
-      String lNumber,
-      int cNumber,
-      String odometer,
-      String cAddress,
-      int price,
-      String insurancetype,
-      String sDate) {
+  listCarFromEx(String carType, String cAddress, int cNumber, String lNumber,
+      String cModel, String year, String odometer) {
     this.carType = carType;
     this.cModel = cModel;
     this.year = year;
@@ -43,13 +32,10 @@ class reserveCar extends StatefulWidget {
     this.cNumber = cNumber;
     this.odometer = odometer;
     this.cAddress = cAddress;
-    this.price = price;
-    this.insurancetype = insurancetype;
-    this.sDate = sDate;
   }
 }
 
-class _reserveCarState extends State<reserveCar> {
+class _listCarFromEx extends State<listCarFromEx> {
   var _formKey = GlobalKey<FormState>();
 
   TextEditingController fromdatecontroller = TextEditingController();
@@ -61,63 +47,54 @@ class _reserveCarState extends State<reserveCar> {
   TextEditingController totimecontroller = TextEditingController();
 
   @override
-  CollectionReference booking =
-      FirebaseFirestore.instance.collection('Bookings');
+  String sDate;
+  String eDate;
+  String sTime;
+  String eTime;
+  int price;
+  String uDisplayName;
+  var _url;
 
-  CollectionReference recent =
-      FirebaseFirestore.instance.collection('Recent Search');
+  CollectionReference car1 =
+      FirebaseFirestore.instance.collection('Listed Cars');
+  CollectionReference users = FirebaseFirestore.instance.collection('users');
 
-  final auth = FirebaseAuth.instance.currentUser;
-
-  String startDate;
-  String endDate;
-  String startTime;
-  String endTime;
-  int totalPricePerHour = 0;
-
-  CollectionReference bookings =
-      FirebaseFirestore.instance.collection('Bookings');
-
-  Future<void> Bookings(
-      String cType,
+  Future<void> listCar(
+      carType,
       cModel,
       year,
       lNumber,
+      cNumber,
       odometer,
-      int cNumber,
       cAddress,
+      String userId,
+      sDate,
+      eDate,
+      sTime,
+      eTime,
       int price,
-      userId,
-      startDate,
-      endDate,
-      startTime,
-      endTime,
-      insurancetype,
-      totalPricePerHour) {
+      uDisplayName) {
     // Call the user's CollectionReference to add a new user
-    return bookings.doc(userId.toString() + cNumber.toString()).set({
-      'Car Type': cType,
+    return car1.add({
+      'Car Type': carType,
       'Model': cModel,
       'year': year,
       'Plate Number': lNumber,
       'odometer': odometer,
       'Chasis Number': cNumber,
       'Car address': cAddress,
-      'Start Date': startDate,
-      'End Date': endDate,
-      'Start Time': startTime,
-      'End Time': endTime,
-      'Price': price,
-      'Insurance type': insurancetype,
+      'Start Date': sDate,
+      'End Date': eDate,
+      'Start Time': sTime,
+      'End Time': eTime,
+      'Price': price.toString(),
+      'url': _url,
       'userId': userId,
-      'status': 'Pending',
-      'bookingId': userId.toString() + cNumber.toString(),
-      'totalPrice': totalPricePerHour
+      'Display Name': uDisplayName,
     }).then((value) => print("Car Added"));
   }
 
   Widget build(BuildContext context) {
-    print(widget.sDate);
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Color(0xFF27292E),
@@ -151,7 +128,7 @@ class _reserveCarState extends State<reserveCar> {
                           return null;
                         },
                         onSaved: (value) {
-                          startDate = value;
+                          sDate = value;
                         },
                         suffixIcon: Icon(
                           Icons.calendar_today,
@@ -161,8 +138,8 @@ class _reserveCarState extends State<reserveCar> {
                           selectDate(
                               context,
                               CupertinoDatePickerMode.date,
-                              min = DateTime.tryParse(widget.sDate),
-                              max = DateTime.tryParse(widget.sDate),
+                              min = DateTime.tryParse(sDate),
+                              max = DateTime.tryParse(sDate),
                               controller: fromdatecontroller);
                         },
                       ),
@@ -182,7 +159,7 @@ class _reserveCarState extends State<reserveCar> {
                           return null;
                         },
                         onSaved: (value) {
-                          endDate = value;
+                          eDate = value;
                         },
                         suffixIcon: Icon(
                           Icons.calendar_today,
@@ -192,8 +169,8 @@ class _reserveCarState extends State<reserveCar> {
                           selectDate(
                               context,
                               CupertinoDatePickerMode.date,
-                              min = DateTime.tryParse(widget.sDate),
-                              max = DateTime.tryParse(widget.sDate),
+                              min = DateTime.tryParse(sDate),
+                              max = DateTime.tryParse(sDate),
                               controller: todatecontroller);
                         },
                       ),
@@ -217,7 +194,7 @@ class _reserveCarState extends State<reserveCar> {
                           return null;
                         },
                         onSaved: (value) {
-                          startTime = value;
+                          sTime = value;
                         },
                         suffixIcon: Icon(
                           Icons.access_time,
@@ -227,8 +204,8 @@ class _reserveCarState extends State<reserveCar> {
                           selectDate(
                               context,
                               CupertinoDatePickerMode.time,
-                              min = DateTime.tryParse(widget.sDate),
-                              max = DateTime.tryParse(widget.sDate),
+                              min = DateTime.tryParse(sDate),
+                              max = DateTime.tryParse(sDate),
                               controller: fromtimecontroller);
                         },
                       ),
@@ -248,14 +225,7 @@ class _reserveCarState extends State<reserveCar> {
                           return null;
                         },
                         onSaved: (value) {
-                          endTime = value;
-                          if (value != '') {
-                            totalPricePerHour = ((int.tryParse(
-                                            startTime.substring(0, 2)) -
-                                        int.tryParse(endTime.substring(0, 2)))
-                                    .abs() *
-                                widget.price);
-                          }
+                          eTime = value;
                         },
                         suffixIcon: Icon(
                           Icons.access_time,
@@ -265,8 +235,8 @@ class _reserveCarState extends State<reserveCar> {
                           selectDate(
                               context,
                               CupertinoDatePickerMode.time,
-                              min = DateTime.tryParse(widget.sDate),
-                              max = DateTime.now(),
+                              min = DateTime.tryParse(sDate),
+                              max = DateTime.tryParse(sDate),
                               controller: totimecontroller);
                         },
                       ),
@@ -274,35 +244,65 @@ class _reserveCarState extends State<reserveCar> {
                   ],
                 ),
                 SizedBox(
-                  height: 40.h,
+                  height: 15.w,
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: MyTextformField(
+                        hintText: 'Price Per Hour',
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return 'Please enter a price';
+                          }
+                          return null;
+                        },
+                        onSaved: (value) {
+                          price = int.tryParse(value);
+                        },
+                        suffixIcon: Icon(
+                          Icons.money,
+                          color: Color(0xFF27292E),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 10.w,
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 20.h,
                 ),
                 CustomButton(
-                  text: 'Reserve',
+                  text: 'List',
                   buttoncolor: Color(0xFF27292E),
                   textcolor: Colors.white,
                   height: 50.h,
                   onTap: () {
                     _formKey.currentState.save();
-
                     if (_formKey.currentState.validate()) {
-                      final String user = FirebaseAuth.instance.currentUser.uid;
+                      final String userId =
+                          FirebaseAuth.instance.currentUser.uid;
 
-                      Bookings(
+                      uDisplayName =
+                          FirebaseAuth.instance.currentUser.displayName;
+
+                      listCar(
                           widget.carType,
                           widget.cModel,
                           widget.year,
                           widget.lNumber,
-                          widget.odometer,
                           widget.cNumber,
+                          widget.odometer,
                           widget.cAddress,
-                          widget.price,
-                          user,
-                          startDate,
-                          startDate,
-                          startTime,
-                          endTime,
-                          widget.insurancetype,
-                          totalPricePerHour);
+                          userId,
+                          sDate,
+                          eDate,
+                          sTime,
+                          eTime,
+                          price,
+                          uDisplayName);
 
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => ButtonNavController()));

@@ -34,6 +34,7 @@ class TimeDate extends StatelessWidget {
             IconButton(
               onPressed: () {
                 selectDate(context, CupertinoDatePickerMode.date,
+                    min = min = DateTime.now(), max = DateTime.now(),
                     controller: fromdatecontroller);
               },
               icon: Icon(
@@ -60,6 +61,7 @@ class TimeDate extends StatelessWidget {
             IconButton(
                 onPressed: () {
                   selectDate(context, CupertinoDatePickerMode.time,
+                      min = DateTime.now(), max = DateTime.now(),
                       controller: fromtimecontroller);
                 },
                 icon: Icon(

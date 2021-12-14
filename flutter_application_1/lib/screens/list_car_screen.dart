@@ -82,6 +82,7 @@ class _ListCarState extends State<ListCar> {
   int price;
 
   final String userId = FirebaseAuth.instance.currentUser.uid;
+  final String uDisplayName = FirebaseAuth.instance.currentUser.displayName;
   List<File> image;
   @override
   CollectionReference car1 =
@@ -93,7 +94,7 @@ class _ListCarState extends State<ListCar> {
       'Car Type': cType,
       'Model': cModel,
       'year': year,
-      'License Number': lNumber,
+      'Plate Number': lNumber,
       'odometer': odometer,
       'Chasis Number': cNumber,
       'Car address': cAddress,
@@ -104,6 +105,7 @@ class _ListCarState extends State<ListCar> {
       'Price': price,
       'url': _url,
       'userId': userId,
+      'Dispaly Name': uDisplayName,
     }).then((value) => print("Car Added"));
   }
 
@@ -264,7 +266,7 @@ class _ListCarState extends State<ListCar> {
                   height: 15,
                 ),
                 MyTextformField(
-                  hintText: 'License Number',
+                  hintText: 'Plate Number',
                   validator: (value) {
                     if (value.isEmpty) {
                       return 'Please enter some text';
@@ -312,7 +314,11 @@ class _ListCarState extends State<ListCar> {
                             color: Color(0xFF27292E),
                           ),
                           onTap: () {
-                            selectDate(context, CupertinoDatePickerMode.date,
+                            selectDate(
+                                context,
+                                CupertinoDatePickerMode.date,
+                                min = DateTime.tryParse(sDate),
+                                max = DateTime.tryParse(sDate),
                                 controller: fromdatecontroller);
                           },
                           onSaved: (value) {
@@ -338,7 +344,11 @@ class _ListCarState extends State<ListCar> {
                             color: Color(0xFF27292E),
                           ),
                           onTap: () {
-                            selectDate(context, CupertinoDatePickerMode.date,
+                            selectDate(
+                                context,
+                                CupertinoDatePickerMode.date,
+                                min = DateTime.tryParse(sDate),
+                                max = DateTime.tryParse(sDate),
                                 controller: todatecontroller);
                           },
                           onSaved: (value) {
@@ -368,7 +378,11 @@ class _ListCarState extends State<ListCar> {
                             color: Color(0xFF27292E),
                           ),
                           onTap: () {
-                            selectDate(context, CupertinoDatePickerMode.time,
+                            selectDate(
+                                context,
+                                CupertinoDatePickerMode.time,
+                                min = DateTime.tryParse(sDate),
+                                max = DateTime.tryParse(sDate),
                                 controller: fromtimecontroller);
                           },
                           onSaved: (value) {
@@ -394,7 +408,11 @@ class _ListCarState extends State<ListCar> {
                             color: Color(0xFF27292E),
                           ),
                           onTap: () {
-                            selectDate(context, CupertinoDatePickerMode.time,
+                            selectDate(
+                                context,
+                                CupertinoDatePickerMode.time,
+                                min = DateTime.tryParse(sDate),
+                                max = DateTime.tryParse(sDate),
                                 controller: totimecontroller);
                           },
                           onSaved: (value) {
@@ -407,7 +425,7 @@ class _ListCarState extends State<ListCar> {
                   height: 15.h,
                 ),
                 MyTextformField(
-                    hintText: 'Price',
+                    hintText: 'Price Per Hour',
                     keyboardType: TextInputType.number,
                     validator: (value) {
                       if (value.isEmpty) {

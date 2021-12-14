@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/helper/functions.dart';
+import 'package:flutter_application_1/screens/button_nav_controller.dart';
 import 'package:flutter_application_1/widgets/custom_button.dart';
 import 'package:flutter_application_1/widgets/my_text_field.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -16,21 +17,22 @@ class AddCar extends StatelessWidget {
   var lNumber = 'z';
   var odometer = 's';
   var year = 's';
-  var cNumber = 's';
+  int cNumber = 0;
   var cAddress;
   final String userId = FirebaseAuth.instance.currentUser.uid;
 
   Future<void> addCar() {
     // Call the user's CollectionReference to add a new user
-    return car.add({
+    return car.doc(userId.toString() + cNumber.toString()).set({
       'Car Type': carType,
       'Model': model,
       'year': year,
-      'License Number': lNumber,
+      'Plate Number': lNumber,
       'odometer': odometer,
       'Chasis Number': cNumber,
       'Car address': cAddress,
-      'userId': userId
+      'userId': userId,
+      'carId': (userId + cNumber.toString()),
     }).then((value) => print("Car Added"));
   }
 
@@ -122,7 +124,7 @@ class AddCar extends StatelessWidget {
                     height: 20.h,
                   ),
                   MyTextformField(
-                    hintText: 'License Number',
+                    hintText: 'Plate Number',
                     onSaved: (value) {
                       lNumber = value;
                     },
@@ -183,7 +185,7 @@ class AddCar extends StatelessWidget {
                       Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => HomeScreen()));
+                              builder: (context) => ButtonNavController()));
                     },
                   ),
                 ],

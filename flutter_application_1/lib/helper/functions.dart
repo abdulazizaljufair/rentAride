@@ -1,9 +1,13 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
-selectDate(BuildContext context, CupertinoDatePickerMode mode,
+DateTime min = DateTime.now();
+DateTime max = DateTime.now();
+selectDate(BuildContext context, CupertinoDatePickerMode mode, min, max,
     {TextEditingController controller, String pickedDate}) {
   showModalBottomSheet<DateTime>(
     context: context,
@@ -38,6 +42,8 @@ selectDate(BuildContext context, CupertinoDatePickerMode mode,
             Expanded(
               child: Container(
                 child: CupertinoDatePicker(
+                  minimumDate: min,
+                  maximumDate: max,
                   mode: mode,
                   onDateTimeChanged: (DateTime dateTime) {
                     String formattedDate =

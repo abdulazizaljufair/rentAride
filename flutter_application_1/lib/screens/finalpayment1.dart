@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/helper/functions.dart';
@@ -10,17 +12,24 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class Paymentcar extends StatelessWidget {
   String bookingId;
+  int price;
   final _formKey = GlobalKey<FormState>();
 
   CollectionReference bookings =
       FirebaseFirestore.instance.collection('Bookings');
-  Paymentcar(String bookingId) {
+
+  Paymentcar(String bookingId, int price) {
     this.bookingId = bookingId;
+    this.price = price;
   }
-  Future<void> BookingsStatus() {
+  BookingsStatus() async {
     // Call the user's CollectionReference to add a new user
-    return bookings.doc(bookingId).update({'status': 'Completed'}).then(
-        (value) => print("Payment Completed"));
+    print("hi nawaf ");
+    print("${bookingId} hi nawaf this is the bookid");
+    bookings.doc(bookingId).update({"status": "Completed"}).catchError((e) {
+      print(e);
+      print("hi nawaf inside the catcher");
+    });
   }
 
   @override
@@ -95,16 +104,24 @@ class Paymentcar extends StatelessWidget {
                 },
               ),
               SizedBox(
-                height: 50.h,
+                height: 10.h,
+              ),
+              Text(
+                'Total Price: ' + price.toString(),
+                textScaleFactor: 1.2,
+              ),
+              Icon(Icons.price_change),
+              SizedBox(
+                height: 10.h,
               ),
               CustomButton(
                 buttoncolor: Color(0xFF27292E),
                 textcolor: Colors.white,
                 text: 'Pay',
                 height: 50.h,
-                onTap: () {
+                onTap: () async {
                   if (_formKey.currentState.validate()) {
-                    BookingsStatus();
+                    await BookingsStatus();
                     showDialog(
                         context: context,
                         builder: (context) {
@@ -140,11 +157,11 @@ class Paymentcar extends StatelessWidget {
                                     text: 'Ok',
                                     height: 50.h,
                                     onTap: () {
-                                      Navigator.pushReplacement(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  ButtonNavController()));
+                                      // Navigator.pushReplacement(
+                                      //     context,
+                                      //     MaterialPageRoute(
+                                      //         builder: (context) =>
+                                      //             ButtonNavController()));
                                     },
                                   ),
                                 ),

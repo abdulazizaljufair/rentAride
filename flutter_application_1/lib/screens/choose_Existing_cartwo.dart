@@ -39,6 +39,7 @@ class ChooseExistingScreen extends StatelessWidget {
                   ),
                   onTap: () {
                     selectDate(context, CupertinoDatePickerMode.date,
+                        min = DateTime.now(), max = DateTime.now(),
                         controller: fromdatecontroller);
                   },
                 ),
@@ -63,6 +64,7 @@ class ChooseExistingScreen extends StatelessWidget {
                   ),
                   onTap: () {
                     selectDate(context, CupertinoDatePickerMode.date,
+                        min = DateTime.now(), max = DateTime.now(),
                         controller: todatecontroller);
                   },
                 ),
@@ -91,6 +93,7 @@ class ChooseExistingScreen extends StatelessWidget {
                   ),
                   onTap: () {
                     selectDate(context, CupertinoDatePickerMode.time,
+                        min = DateTime.now(), max = DateTime.now(),
                         controller: totimecontroller);
                   },
                 ),
@@ -115,6 +118,7 @@ class ChooseExistingScreen extends StatelessWidget {
                   ),
                   onTap: () {
                     selectDate(context, CupertinoDatePickerMode.time,
+                        min = DateTime.now(), max = DateTime.now(),
                         controller: totimecontroller);
                   },
                 ),

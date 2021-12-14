@@ -67,23 +67,10 @@ class _HomeScreenState extends State<HomeScreen> {
     ),
   ];
   List<CityModel> cities = [
-   CityModel(
-     name: 'Riyadh',
-     imageURL: 'images/riyadh.jpeg'
-   ),
-    CityModel(
-        name: 'Jeddah',
-        imageURL: 'images/jeddah.jpeg'
-    ),
-    CityModel(
-        name: 'Dammam',
-        imageURL: 'images/Dammam.jpeg'
-    ),
-    CityModel(
-        name: 'Makkah',
-        imageURL: 'images/makkah.jpeg'
-    ),
-
+    CityModel(name: 'Riyadh', imageURL: 'images/riyadh.jpeg'),
+    CityModel(name: 'Jeddah', imageURL: 'images/jeddah.jpeg'),
+    CityModel(name: 'Dammam', imageURL: 'images/Dammam.jpeg'),
+    CityModel(name: 'Makkah', imageURL: 'images/makkah.jpeg'),
   ];
 
   // void x() async {
@@ -118,7 +105,7 @@ class _HomeScreenState extends State<HomeScreen> {
       await recent
           .where('userId', isEqualTo: userId)
           .orderBy('createdAt', descending: true)
-          .limit(3)
+          .limit(2)
           .get()
           .then((QuerySnapshot) {
         QuerySnapshot.docs.forEach((element) {
@@ -361,7 +348,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     height: 10.h,
                                   ),
                                   Text(
-                                    'Price ' +
+                                    'Price Per Hour ' +
                                         lrecent[index]['Price'].toString(),
                                     style: TextStyle(color: Colors.grey),
                                   ),
@@ -410,7 +397,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               ]),
                           child: Column(
                             children: [
-
                               Container(
                                 height: 130.h,
                                 width: 160.w,
@@ -418,12 +404,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                   borderRadius: BorderRadius.circular(20),
                                   image: DecorationImage(
                                       fit: BoxFit.cover,
-                                      image: AssetImage(cities[index].imageURL)),
+                                      image:
+                                          AssetImage(cities[index].imageURL)),
                                 ),
                               ),
-                                SizedBox(
-                                  height: 10.h,
-                                ),
+                              SizedBox(
+                                height: 10.h,
+                              ),
                               Text(
                                 cities[index].name,
                                 style: TextStyle(

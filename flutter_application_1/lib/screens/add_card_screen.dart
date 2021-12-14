@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/screens/button_nav_controller.dart';
 import 'package:flutter_application_1/widgets/custom_button.dart';
 import 'package:flutter_application_1/widgets/my_text_field.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -109,9 +110,11 @@ class AddCard extends StatelessWidget {
                   height: 50.h,
                   onTap: () async {
                     _formKey.currentState.save();
-                    addCard();
-                    Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) => HomeScreen()));
+                    if (_formKey.currentState.validate()) addCard();
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ButtonNavController()));
                   },
                 ),
               ],

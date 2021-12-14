@@ -1,9 +1,13 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Provider/Bookings.dart';
 import 'package:flutter_application_1/helper/functions.dart';
 import 'package:flutter_application_1/modules/users.dart';
 import 'package:flutter_application_1/screens/add_card_screen.dart';
+import 'package:flutter_application_1/screens/button_nav_controller.dart';
 import 'package:flutter_application_1/screens/choose_Existingcard.dart';
 import 'package:flutter_application_1/screens/finalpayment1.dart';
 import 'package:flutter_application_1/widgets/custom_button.dart';
@@ -21,11 +25,22 @@ class _ViewBookingState extends State<ViewBooking> {
 
   List pendingBookings = [];
   List completedBookings = [];
+  Timer _timer;
+  String cancelTimer = '';
+  static const max = 60;
+  int seconds = max;
+
+  // void startTimer() {
+  //   _timer = Timer.periodic(Duration(minutes: 1), (timer) {
+  //     setState(() => seconds--);
+  //   });
+  // }
 
   void initState() {
     super.initState();
     FetchDatabaseListPending();
     FetchDatabaseListCompleted();
+    // startTimer();
   }
 
   final String userId = FirebaseAuth.instance.currentUser.uid;
@@ -146,6 +161,15 @@ class _ViewBookingState extends State<ViewBooking> {
                             SizedBox(
                               height: 20.h,
                             ),
+                            Text(
+                              'Pay Time Expire in ' +
+                                  // seconds.toString() +
+                                  ' Minutes',
+                              style: TextStyle(color: Colors.grey),
+                            ),
+                            SizedBox(
+                              height: 20.h,
+                            ),
                             Row(
                               children: [
                                 SizedBox(
@@ -169,13 +193,17 @@ class _ViewBookingState extends State<ViewBooking> {
                                                         ChooseCard()));
                                           },
                                           onPressedButton2: () {
+                                            // _timer.cancel();
                                             Navigator.of(context).push(
                                                 MaterialPageRoute(
                                                     builder: (context) =>
                                                         Paymentcar(
-                                                          pendingBookings[index]
-                                                              ['bookingId'],
-                                                        )));
+                                                            pendingBookings[
+                                                                    index]
+                                                                ['bookingId'],
+                                                            pendingBookings[
+                                                                    index][
+                                                                'totalPrice'])));
                                           },
                                         );
                                       }),
@@ -195,8 +223,18 @@ class _ViewBookingState extends State<ViewBooking> {
                                           context: context,
                                           button1title: 'Yes',
                                           button2title: 'NO',
-                                          onPressedButton1: () {
-                                            Navigator.pop(context);
+                                          onPressedButton1: () async {
+                                            await Bookings.doc(
+                                                    pendingBookings[index]
+                                                        ['bookingId'])
+                                                .delete();
+
+                                            Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        ButtonNavController()));
+
+                                            // _timer.cancel();
                                           },
                                           onPressedButton2: () {
                                             Navigator.pop(context);

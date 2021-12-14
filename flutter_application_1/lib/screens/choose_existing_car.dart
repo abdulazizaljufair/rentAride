@@ -31,7 +31,8 @@ class _ChooseExistingCarState extends State<ChooseExistingCar> {
       });
     }
   }
-    int selectedIndex=-1;
+
+  int selectedIndex = -1;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,17 +58,16 @@ class _ChooseExistingCarState extends State<ChooseExistingCar> {
                     itemCount: car.length,
                     itemBuilder: (context, index) {
                       return InkWell(
-                        onTap: (){
-                         selectedIndex=index ;
-                        print(index);
-                        setState(() {
-
-                        });
+                        onTap: () {
+                          selectedIndex = index;
+                          print(index);
+                          setState(() {});
                         },
                         child: Container(
-                          decoration: BoxDecoration(
-                            color: selectedIndex==index? Colors.grey.shade400 : Colors.white
-                          ),
+                            decoration: BoxDecoration(
+                                color: selectedIndex == index
+                                    ? Colors.grey.shade400
+                                    : Colors.white),
                             padding: EdgeInsets.all(15),
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -90,42 +90,60 @@ class _ChooseExistingCarState extends State<ChooseExistingCar> {
                                   children: [
                                     Text(
                                       car[index]['Car Type'],
-                                      style: TextStyle(color: selectedIndex==index? Colors.white : Colors.grey),
+                                      style: TextStyle(
+                                          color: selectedIndex == index
+                                              ? Colors.white
+                                              : Colors.grey),
                                     ),
                                     SizedBox(
                                       height: 10.h,
                                     ),
                                     Text(
                                       car[index]['Chasis Number'],
-                                      style: TextStyle(color: selectedIndex==index? Colors.white : Colors.grey),
+                                      style: TextStyle(
+                                          color: selectedIndex == index
+                                              ? Colors.white
+                                              : Colors.grey),
                                     ),
                                     SizedBox(
                                       height: 10.h,
                                     ),
                                     Text(
-                                      car[index]['License Number'],
-                                      style: TextStyle(color: selectedIndex==index? Colors.white : Colors.grey),
+                                      car[index]['Plate Number'],
+                                      style: TextStyle(
+                                          color: selectedIndex == index
+                                              ? Colors.white
+                                              : Colors.grey),
                                     ),
                                     SizedBox(
                                       height: 10.h,
                                     ),
                                     Text(
                                       car[index]['Model'],
-                                      style: TextStyle(color: selectedIndex==index? Colors.white : Colors.grey),
+                                      style: TextStyle(
+                                          color: selectedIndex == index
+                                              ? Colors.white
+                                              : Colors.grey),
                                     ),
                                     SizedBox(
                                       height: 10.h,
                                     ),
                                     Text(
                                       car[index]['odometer'],
-                                      style: TextStyle(color: selectedIndex==index? Colors.white : Colors.grey),
+                                      style: TextStyle(
+                                          color: selectedIndex == index
+                                              ? Colors.white
+                                              : Colors.grey),
                                     ),
                                     SizedBox(
                                       height: 10.h,
                                     ),
                                     Text(
                                       car[index]['year'],
-                                      style: TextStyle(color: selectedIndex==index? Colors.white : Colors.grey),
+                                      style: TextStyle(
+                                          color: selectedIndex == index
+                                              ? Colors.white
+                                              : Colors.grey),
                                     )
                                   ],
                                 ),
@@ -140,16 +158,18 @@ class _ChooseExistingCarState extends State<ChooseExistingCar> {
                     },
                   ),
           ),
-          selectedIndex!=-1?CustomButton(
-            text: 'Next',
-            textcolor: Colors.white,
-            buttoncolor: Color(0xFF27292E),
-            height: 50.h,
-            onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => ChooseExistingScreen()));
-            },
-          ):SizedBox(),
+          selectedIndex != -1
+              ? CustomButton(
+                  text: 'Next',
+                  textcolor: Colors.white,
+                  buttoncolor: Color(0xFF27292E),
+                  height: 50.h,
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => ChooseExistingScreen()));
+                  },
+                )
+              : SizedBox(),
           SizedBox(
             height: 50.h,
           ),

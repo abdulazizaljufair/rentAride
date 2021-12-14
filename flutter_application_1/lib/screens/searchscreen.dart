@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Provider/Bookings.dart';
 import 'package:flutter_application_1/screens/cardetails.dart';
+import 'package:flutter_application_1/widgets/Search.dart';
 import 'package:flutter_application_1/widgets/my_text_field.dart';
 import 'package:flutter_application_1/widgets/time_date.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -24,7 +25,12 @@ class _SearchScreenState extends State<SearchScreen> {
   CollectionReference recent =
       FirebaseFirestore.instance.collection('Recent Search');
 
+  CollectionReference bookings =
+      FirebaseFirestore.instance.collection('Bookings');
+
   List lcar = [];
+
+  List booking = [];
 
   Future<void> RecentSearch(cType, int price, userId, cModel, year, odometer) {
     return recent.add({
@@ -45,7 +51,10 @@ class _SearchScreenState extends State<SearchScreen> {
 
   FetchDatabaseList() async {
     try {
-      await lCars.get().then((QuerySnapshot) {
+      await lCars
+          .where('userId', isNotEqualTo: FirebaseAuth.instance.currentUser.uid)
+          .get()
+          .then((QuerySnapshot) {
         QuerySnapshot.docs.forEach((element) {
           setState(() {
             lcar.add(element.data());
@@ -53,6 +62,24 @@ class _SearchScreenState extends State<SearchScreen> {
         });
       });
       return lcar;
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
+  check(String bookingId) async {
+    try {
+      await bookings
+          .where('bookingId', isEqualTo: bookingId)
+          .get()
+          .then((QuerySnapshot) {
+        QuerySnapshot.docs.forEach((element) {
+          booking.add(element.data());
+        });
+      });
+
+      return booking.length > 0;
     } catch (e) {
       print(e.toString());
       return null;
@@ -85,16 +112,16 @@ class _SearchScreenState extends State<SearchScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 MyTextformField(
-                    hintText: 'Search',
-                    suffixIcon: Icon(
-                      Icons.search,
-                      color: Colors.grey.shade50,
-                      size: 15,
-                    )
-                    //   ),onTap:(val){
-                    //   institateSearch(val);
-                    // }
-                    ),
+                  hintText: 'Search',
+                  suffixIcon: Icon(
+                    Icons.search,
+                    color: Colors.grey.shade50,
+                    size: 15,
+                  ),
+                  onTap: () {
+                    showSearch(context: context, delegate: customSearch());
+                  },
+                ),
                 SizedBox(
                   height: 10.h,
                 ),
@@ -138,13 +165,14 @@ class _SearchScreenState extends State<SearchScreen> {
                           style: TextStyle(color: Colors.black),
                         ),
                         Text(
-                          'Price ' + lcar[index]['Price'].toString(),
+                          'Model ' + lcar[index]['Model'],
                           style: TextStyle(color: Colors.black),
                         ),
                       ],
                     ),
                   ),
-                  onTap: () {
+                  onTap: () async {
+                    final userId = FirebaseAuth.instance.currentUser.uid;
                     String carType = lcar[index]['Car Type'];
                     String cModel = lcar[index]['Model'];
                     String year = lcar[index]['year'];
@@ -153,17 +181,33 @@ class _SearchScreenState extends State<SearchScreen> {
                     int cNumber = lcar[index]['Chasis Number'];
                     String cAddress = lcar[index]['Car address'];
                     int price = lcar[index]['Price'];
+                    String sDate = lcar[index]['Start Date'];
+                    // String DisplayName = lcar[index]['Price'];
                     // String url = lcar[index]['url'];
+                    if (await check(userId.toString() + cNumber.toString()) !=
+                        true) {
+                      RecentSearch(
+                          carType, price, userId, cModel, year, odometer);
 
-                    final userId = FirebaseAuth.instance.currentUser.uid;
+                      print(carType);
 
-                    RecentSearch(
-                        carType, price, userId, cModel, year, odometer);
-
-                    print(carType);
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => CarDetails(carType, cModel, year,
-                            lNumber, cNumber, odometer, cAddress, price)));
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => CarDetails(
+                              carType,
+                              cModel,
+                              year,
+                              lNumber,
+                              cNumber,
+                              odometer,
+                              cAddress,
+                              price,
+                              sDate)));
+                    } else {
+                      booking.length--;
+                      print('car already ');
+                      print(userId + cNumber.toString());
+                      print(booking.length);
+                    }
                   },
                 );
               },
