@@ -16,6 +16,7 @@ class CarDetails extends StatefulWidget {
   String cAddress;
   int price;
   String sDate;
+  String eDate;
 
   CarDetails(
     String carType,
@@ -27,6 +28,7 @@ class CarDetails extends StatefulWidget {
     String cAddress,
     int price,
     String sDate,
+    String eDate,
   ) {
     this.carType = carType;
     this.cModel = cModel;
@@ -37,6 +39,7 @@ class CarDetails extends StatefulWidget {
     this.cAddress = cAddress;
     this.price = price;
     this.sDate = sDate;
+    this.eDate = eDate;
   }
 }
 
@@ -65,7 +68,10 @@ class _CarDetailsState extends State<CarDetails> {
                   height: 8.h,
                 ),
                 Text(
-                  '                        ' + widget.carType.toUpperCase(),
+                  '                     ' +
+                      widget.carType.toUpperCase() +
+                      " " +
+                      widget.cModel.toUpperCase(),
                   style:
                       TextStyle(fontSize: 22.sp, fontWeight: FontWeight.bold),
                 ),
@@ -97,25 +103,29 @@ class _CarDetailsState extends State<CarDetails> {
                         ),
                       ),
                       SizedBox(
-                        height: 20.h,
-                      ),
-                      Text('Model: ' + widget.cModel.toUpperCase()),
-                      SizedBox(
-                        height: 15.h,
+                        height: 13.h,
                       ),
                       Text('Year: ' + widget.year),
                       SizedBox(
-                        height: 15.h,
+                        height: 13.h,
                       ),
                       Text('Odometer: ' + widget.odometer),
                       SizedBox(
-                        height: 15.h,
+                        height: 13.h,
                       ),
                       Text('Price per hour: ' + widget.price.toString()),
                       SizedBox(
-                        height: 15.h,
+                        height: 13.h,
                       ),
-                      Text('Pick up and Return Location: ' + widget.cAddress)
+                      Text('Pick up and Return Location: ' + widget.cAddress),
+                      SizedBox(
+                        height: 13.h,
+                      ),
+                      Text('Dates Avaliablity  From:     ' + widget.sDate),
+                      SizedBox(
+                        height: 13.h,
+                      ),
+                      Text('Dates Avaliablity  Until:      ' + widget.eDate)
                     ],
                   ),
                 ),
@@ -166,7 +176,8 @@ class _CarDetailsState extends State<CarDetails> {
                                   widget.cAddress,
                                   widget.price,
                                   insurancetype,
-                                  widget.sDate)));
+                                  widget.sDate,
+                                  widget.eDate)));
                     }
                   },
                 ),

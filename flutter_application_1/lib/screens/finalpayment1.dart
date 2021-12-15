@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/helper/functions.dart';
 import 'package:flutter_application_1/screens/HomeScreen.dart';
@@ -12,23 +13,42 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class Paymentcar extends StatelessWidget {
   String bookingId;
+
+  String sTime;
+  String eTime;
+  String sDate;
+  String eDate;
+  String insuranceType;
+  String carType;
+
   int price;
   final _formKey = GlobalKey<FormState>();
 
-  CollectionReference bookings =
-      FirebaseFirestore.instance.collection('Bookings');
-
-  Paymentcar(String bookingId, int price) {
+  Paymentcar(String bookingId, int price, sTime, eTime, sDate, eDate,
+      insuranceType, carType) {
     this.bookingId = bookingId;
     this.price = price;
+    this.sTime = sTime;
+    this.eDate = eDate;
+    this.sDate = sDate;
+    this.eTime = eTime;
+    this.insuranceType = insuranceType;
+    this.carType = carType;
   }
+  final userId = FirebaseAuth.instance.currentUser.uid;
   BookingsStatus() async {
     // Call the user's CollectionReference to add a new user
-    print("hi nawaf ");
-    print("${bookingId} hi nawaf this is the bookid");
-    bookings.doc(bookingId).update({"status": "Completed"}).catchError((e) {
-      print(e);
-      print("hi nawaf inside the catcher");
+
+    await FirebaseFirestore.instance.collection('Bookings').doc(bookingId).set({
+      'status': 'Completed',
+      'Start Time': sTime,
+      'End Time': eTime,
+      'Start Date': sDate,
+      'End Date': eDate,
+      'Insurance type': insuranceType,
+      'BookingId': bookingId,
+      'Car Type': carType,
+      'userId': userId,
     });
   }
 
@@ -120,6 +140,7 @@ class Paymentcar extends StatelessWidget {
                 text: 'Pay',
                 height: 50.h,
                 onTap: () async {
+                  await BookingsStatus();
                   if (_formKey.currentState.validate()) {
                     await BookingsStatus();
                     showDialog(

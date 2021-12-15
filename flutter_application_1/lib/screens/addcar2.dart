@@ -135,11 +135,10 @@ class _AddCarScreenState extends State<AddCarScreen> {
                                         showMyDialog(
                                           context: context,
                                           primarytitle:
-                                              'please choose card from',
-                                          button1title: 'Choose Existing card',
-                                          button2title: 'Add new card',
-                                          onPressedButton1: () {},
-                                          onPressedButton2: () {
+                                              'please are sure you want list your car?',
+                                          button1title: 'Yes',
+                                          button2title: 'No',
+                                          onPressedButton1: () {
                                             String carType =
                                                 car[index]['Car Type'];
                                             String carAdd =
@@ -165,6 +164,9 @@ class _AddCarScreenState extends State<AddCarScreen> {
                                                             carModel,
                                                             carYear,
                                                             odometer)));
+                                          },
+                                          onPressedButton2: () {
+                                            Navigator.pop(context);
                                           },
                                         );
                                       }),

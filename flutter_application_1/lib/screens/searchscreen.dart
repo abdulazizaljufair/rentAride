@@ -182,6 +182,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     String cAddress = lcar[index]['Car address'];
                     int price = lcar[index]['Price'];
                     String sDate = lcar[index]['Start Date'];
+                    String eDate = lcar[index]['End Date'];
                     // String DisplayName = lcar[index]['Price'];
                     // String url = lcar[index]['url'];
                     if (await check(userId.toString() + cNumber.toString()) !=
@@ -201,7 +202,8 @@ class _SearchScreenState extends State<SearchScreen> {
                               odometer,
                               cAddress,
                               price,
-                              sDate)));
+                              sDate,
+                              eDate)));
                     } else {
                       booking.length--;
                       print('car already ');

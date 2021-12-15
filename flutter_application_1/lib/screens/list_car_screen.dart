@@ -71,15 +71,18 @@ class _ListCarState extends State<ListCar> {
 
   var lNumber;
 
-  var sDate;
+  String sDate;
 
-  var eDate;
+  String eDate;
 
   var sTime;
 
   var eTime;
 
   int price;
+
+  String statrDate;
+  String endDate;
 
   final String userId = FirebaseAuth.instance.currentUser.uid;
   final String uDisplayName = FirebaseAuth.instance.currentUser.displayName;
@@ -300,30 +303,31 @@ class _ListCarState extends State<ListCar> {
                   children: [
                     Expanded(
                       child: MyTextformField(
-                          hintText: 'From Date',
-                          controller: fromdatecontroller,
-                          keyboardType: TextInputType.datetime,
-                          validator: (value) {
-                            if (value.isEmpty) {
-                              return 'Please enter the date';
-                            }
-                            return null;
-                          },
-                          suffixIcon: Icon(
-                            Icons.calendar_today,
-                            color: Color(0xFF27292E),
-                          ),
-                          onTap: () {
-                            selectDate(
-                                context,
-                                CupertinoDatePickerMode.date,
-                                min = DateTime.tryParse(sDate),
-                                max = DateTime.tryParse(sDate),
-                                controller: fromdatecontroller);
-                          },
-                          onSaved: (value) {
-                            sDate = value;
-                          }),
+                        hintText: 'From Date',
+                        controller: fromdatecontroller,
+                        keyboardType: TextInputType.datetime,
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return 'Please enter the date';
+                          }
+                          return null;
+                        },
+                        suffixIcon: Icon(
+                          Icons.calendar_today,
+                          color: Color(0xFF27292E),
+                        ),
+                        onTap: () async {
+                          await selectDate(
+                              context, CupertinoDatePickerMode.date,
+                              controller: fromdatecontroller);
+
+                          statrDate = fromdatecontroller.text;
+                          print("$statrDate");
+                        },
+                        onSaved: (value) {
+                          sDate = value;
+                        },
+                      ),
                     ),
                     SizedBox(
                       width: 10.w,
@@ -336,6 +340,9 @@ class _ListCarState extends State<ListCar> {
                           validator: (value) {
                             if (value.isEmpty) {
                               return 'Please enter the date';
+                            } else if (DateTime.tryParse(statrDate)
+                                .isAfter(DateTime.tryParse(value))) {
+                              return 'Please enter a valid Date';
                             }
                             return null;
                           },
@@ -344,11 +351,7 @@ class _ListCarState extends State<ListCar> {
                             color: Color(0xFF27292E),
                           ),
                           onTap: () {
-                            selectDate(
-                                context,
-                                CupertinoDatePickerMode.date,
-                                min = DateTime.tryParse(sDate),
-                                max = DateTime.tryParse(sDate),
+                            selectDate(context, CupertinoDatePickerMode.date,
                                 controller: todatecontroller);
                           },
                           onSaved: (value) {
@@ -378,11 +381,7 @@ class _ListCarState extends State<ListCar> {
                             color: Color(0xFF27292E),
                           ),
                           onTap: () {
-                            selectDate(
-                                context,
-                                CupertinoDatePickerMode.time,
-                                min = DateTime.tryParse(sDate),
-                                max = DateTime.tryParse(sDate),
+                            selectDate(context, CupertinoDatePickerMode.time,
                                 controller: fromtimecontroller);
                           },
                           onSaved: (value) {
@@ -408,11 +407,7 @@ class _ListCarState extends State<ListCar> {
                             color: Color(0xFF27292E),
                           ),
                           onTap: () {
-                            selectDate(
-                                context,
-                                CupertinoDatePickerMode.time,
-                                min = DateTime.tryParse(sDate),
-                                max = DateTime.tryParse(sDate),
+                            selectDate(context, CupertinoDatePickerMode.time,
                                 controller: totimecontroller);
                           },
                           onSaved: (value) {

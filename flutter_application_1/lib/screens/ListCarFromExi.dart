@@ -94,12 +94,13 @@ class _listCarFromEx extends State<listCarFromEx> {
     }).then((value) => print("Car Added"));
   }
 
+  String startDate;
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Color(0xFF27292E),
           title: Text(
-            'Reserve Car',
+            'List Car',
             style: TextStyle(
               color: Colors.white,
             ),
@@ -135,12 +136,9 @@ class _listCarFromEx extends State<listCarFromEx> {
                           color: Color(0xFF27292E),
                         ),
                         onTap: () {
-                          selectDate(
-                              context,
-                              CupertinoDatePickerMode.date,
-                              min = DateTime.tryParse(sDate),
-                              max = DateTime.tryParse(sDate),
+                          selectDate(context, CupertinoDatePickerMode.date,
                               controller: fromdatecontroller);
+                          startDate = fromdatecontroller.text;
                         },
                       ),
                     ),
@@ -155,6 +153,9 @@ class _listCarFromEx extends State<listCarFromEx> {
                         validator: (value) {
                           if (value.isEmpty) {
                             return 'Please enter the date';
+                          } else if (DateTime.tryParse(startDate)
+                              .isAfter(DateTime.tryParse(value))) {
+                            return 'Please enter a valid Date';
                           }
                           return null;
                         },
@@ -166,11 +167,7 @@ class _listCarFromEx extends State<listCarFromEx> {
                           color: Color(0xFF27292E),
                         ),
                         onTap: () {
-                          selectDate(
-                              context,
-                              CupertinoDatePickerMode.date,
-                              min = DateTime.tryParse(sDate),
-                              max = DateTime.tryParse(sDate),
+                          selectDate(context, CupertinoDatePickerMode.date,
                               controller: todatecontroller);
                         },
                       ),
@@ -201,11 +198,7 @@ class _listCarFromEx extends State<listCarFromEx> {
                           color: Color(0xFF27292E),
                         ),
                         onTap: () {
-                          selectDate(
-                              context,
-                              CupertinoDatePickerMode.time,
-                              min = DateTime.tryParse(sDate),
-                              max = DateTime.tryParse(sDate),
+                          selectDate(context, CupertinoDatePickerMode.time,
                               controller: fromtimecontroller);
                         },
                       ),
@@ -232,11 +225,7 @@ class _listCarFromEx extends State<listCarFromEx> {
                           color: Color(0xFF27292E),
                         ),
                         onTap: () {
-                          selectDate(
-                              context,
-                              CupertinoDatePickerMode.time,
-                              min = DateTime.tryParse(sDate),
-                              max = DateTime.tryParse(sDate),
+                          selectDate(context, CupertinoDatePickerMode.time,
                               controller: totimecontroller);
                         },
                       ),

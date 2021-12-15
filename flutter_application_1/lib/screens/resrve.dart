@@ -24,6 +24,7 @@ class reserveCar extends StatefulWidget {
   int price = 0;
   String insurancetype = '-';
   String sDate;
+  String eDate;
 
   reserveCar(
       String carType,
@@ -35,7 +36,8 @@ class reserveCar extends StatefulWidget {
       String cAddress,
       int price,
       String insurancetype,
-      String sDate) {
+      String sDate,
+      String eDate) {
     this.carType = carType;
     this.cModel = cModel;
     this.year = year;
@@ -46,6 +48,7 @@ class reserveCar extends StatefulWidget {
     this.price = price;
     this.insurancetype = insurancetype;
     this.sDate = sDate;
+    this.eDate = eDate;
   }
 }
 
@@ -158,12 +161,11 @@ class _reserveCarState extends State<reserveCar> {
                           color: Color(0xFF27292E),
                         ),
                         onTap: () {
-                          selectDate(
-                              context,
-                              CupertinoDatePickerMode.date,
-                              min = DateTime.tryParse(widget.sDate),
-                              max = DateTime.tryParse(widget.sDate),
-                              controller: fromdatecontroller);
+                          selectDateWithLimit(
+                              context, CupertinoDatePickerMode.date,
+                              controller: fromdatecontroller,
+                              minDate: widget.sDate,
+                              maxDate: widget.eDate);
                         },
                       ),
                     ),
@@ -172,31 +174,32 @@ class _reserveCarState extends State<reserveCar> {
                     ),
                     Expanded(
                       child: MyTextformField(
-                        hintText: 'Until Date',
-                        keyboardType: TextInputType.datetime,
-                        controller: todatecontroller,
-                        validator: (value) {
-                          if (value.isEmpty) {
-                            return 'Please enter the date';
-                          }
-                          return null;
-                        },
-                        onSaved: (value) {
-                          endDate = value;
-                        },
-                        suffixIcon: Icon(
-                          Icons.calendar_today,
-                          color: Color(0xFF27292E),
-                        ),
-                        onTap: () {
-                          selectDate(
-                              context,
-                              CupertinoDatePickerMode.date,
-                              min = DateTime.tryParse(widget.sDate),
-                              max = DateTime.tryParse(widget.sDate),
-                              controller: todatecontroller);
-                        },
-                      ),
+                          hintText: 'Until Date',
+                          keyboardType: TextInputType.datetime,
+                          controller: todatecontroller,
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return 'Please enter the date';
+                            } else if (DateTime.tryParse(startDate)
+                                .isAfter(DateTime.tryParse(endDate))) {
+                              return 'Please enter a valid Date';
+                            }
+                            return null;
+                          },
+                          onSaved: (value) {
+                            endDate = value;
+                          },
+                          suffixIcon: Icon(
+                            Icons.calendar_today,
+                            color: Color(0xFF27292E),
+                          ),
+                          onTap: () {
+                            selectDateWithLimit(
+                                context, CupertinoDatePickerMode.date,
+                                controller: todatecontroller,
+                                minDate: widget.sDate,
+                                maxDate: widget.eDate);
+                          }),
                     ),
                   ],
                 ),
@@ -224,11 +227,7 @@ class _reserveCarState extends State<reserveCar> {
                           color: Color(0xFF27292E),
                         ),
                         onTap: () {
-                          selectDate(
-                              context,
-                              CupertinoDatePickerMode.time,
-                              min = DateTime.tryParse(widget.sDate),
-                              max = DateTime.tryParse(widget.sDate),
+                          selectDate(context, CupertinoDatePickerMode.time,
                               controller: fromtimecontroller);
                         },
                       ),
@@ -262,11 +261,7 @@ class _reserveCarState extends State<reserveCar> {
                           color: Color(0xFF27292E),
                         ),
                         onTap: () {
-                          selectDate(
-                              context,
-                              CupertinoDatePickerMode.time,
-                              min = DateTime.tryParse(widget.sDate),
-                              max = DateTime.now(),
+                          selectDate(context, CupertinoDatePickerMode.time,
                               controller: totimecontroller);
                         },
                       ),

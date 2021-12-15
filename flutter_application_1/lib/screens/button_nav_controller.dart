@@ -23,7 +23,7 @@ class _ButtonNavControllerState extends State<ButtonNavController> {
   List<Widget> screens = [
     HomeScreen(),
     SearchScreen(),
-    ChatScreen2(),
+    ChatsScreen(),
     ViewBooking(),
     ListCar(),
   ];

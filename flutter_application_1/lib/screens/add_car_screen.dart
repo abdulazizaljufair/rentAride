@@ -156,9 +156,9 @@ class AddCar extends StatelessWidget {
                   MyTextformField(
                     hintText: 'Chasis Number',
                     onSaved: (value) {
-                      cNumber = value;
+                      cNumber = int.tryParse(value);
                     },
-                    // keyboardType: TextInputType.number,
+                    keyboardType: TextInputType.number,
                   ),
                   SizedBox(
                     height: 35.h,
@@ -168,7 +168,7 @@ class AddCar extends StatelessWidget {
                     onSaved: (value) {
                       cAddress = value;
                     },
-                    // keyboardType: TextInputType.number,
+                    keyboardType: TextInputType.number,
                   ),
                   SizedBox(
                     height: 35,

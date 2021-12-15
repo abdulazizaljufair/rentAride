@@ -1,14 +1,20 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
-DateTime min = DateTime.now();
-DateTime max = DateTime.now();
-selectDate(BuildContext context, CupertinoDatePickerMode mode, min, max,
-    {TextEditingController controller, String pickedDate}) {
+int min = 2021;
+
+DateTime time = DateTime.now();
+selectDate(
+  BuildContext context,
+  CupertinoDatePickerMode mode, {
+  TextEditingController controller,
+  String pickedDate,
+}) {
   showModalBottomSheet<DateTime>(
     context: context,
     builder: (context) {
@@ -42,8 +48,76 @@ selectDate(BuildContext context, CupertinoDatePickerMode mode, min, max,
             Expanded(
               child: Container(
                 child: CupertinoDatePicker(
-                  minimumDate: min,
-                  maximumDate: max,
+                  minimumYear: 2021,
+                  mode: mode,
+                  onDateTimeChanged: (DateTime dateTime) {
+                    String formattedDate =
+                        DateFormat('yyyy-MM-dd').format(dateTime);
+                    String formattedTime = DateFormat('hh:mm').format(dateTime);
+
+                    if (mode == CupertinoDatePickerMode.date) {
+                      if (controller != null) controller.text = formattedDate;
+                      if (pickedDate != null) pickedDate = formattedDate;
+                    } else {
+                      if (controller != null) controller.text = formattedTime;
+                      if (pickedDate != null) pickedDate = formattedTime;
+                    }
+                  },
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    },
+  );
+}
+
+selectDateWithLimit(
+  BuildContext context,
+  CupertinoDatePickerMode mode, {
+  TextEditingController controller,
+  String pickedDate,
+  String minDate,
+  String maxDate,
+}) {
+  showModalBottomSheet<DateTime>(
+    context: context,
+    builder: (context) {
+      return Container(
+        height: 300,
+        child: Column(
+          children: <Widget>[
+            Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  CupertinoButton(
+                    child: Text('Cancel'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                  CupertinoButton(
+                    child: Text('Done'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              ),
+            ),
+            Divider(
+              height: 0,
+              thickness: 1,
+            ),
+            Expanded(
+              child: Container(
+                child: CupertinoDatePicker(
+                  maximumDate: DateTime.tryParse(maxDate),
+                  minimumDate: DateTime.tryParse(minDate),
+                  minimumYear: 2021,
+                  initialDateTime: DateTime.tryParse(minDate),
                   mode: mode,
                   onDateTimeChanged: (DateTime dateTime) {
                     String formattedDate =

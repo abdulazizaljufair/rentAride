@@ -27,20 +27,20 @@ class _ViewBookingState extends State<ViewBooking> {
   List completedBookings = [];
   Timer _timer;
   String cancelTimer = '';
-  static const max = 60;
+  static const max = 2;
   int seconds = max;
 
-  // void startTimer() {
-  //   _timer = Timer.periodic(Duration(minutes: 1), (timer) {
-  //     setState(() => seconds--);
-  //   });
-  // }
+  void startTimer() {
+    _timer = Timer.periodic(Duration(hours: 1), (timer) {
+      if (mounted) setState(() => seconds--);
+    });
+  }
 
   void initState() {
     super.initState();
     FetchDatabaseListPending();
     FetchDatabaseListCompleted();
-    // startTimer();
+    startTimer();
   }
 
   final String userId = FirebaseAuth.instance.currentUser.uid;
@@ -51,9 +51,11 @@ class _ViewBookingState extends State<ViewBooking> {
           .get()
           .then((QuerySnapshot) {
         QuerySnapshot.docs.forEach((element) {
-          setState(() {
-            pendingBookings.add(element.data());
-          });
+          if (mounted) {
+            setState(() {
+              pendingBookings.add(element.data());
+            });
+          }
         });
       });
       return pendingBookings;
@@ -70,9 +72,11 @@ class _ViewBookingState extends State<ViewBooking> {
           .get()
           .then((QuerySnapshot) {
         QuerySnapshot.docs.forEach((element) {
-          setState(() {
-            completedBookings.add(element.data());
-          });
+          if (mounted) {
+            setState(() {
+              completedBookings.add(element.data());
+            });
+          }
         });
       });
       return completedBookings;
@@ -163,8 +167,8 @@ class _ViewBookingState extends State<ViewBooking> {
                             ),
                             Text(
                               'Pay Time Expire in ' +
-                                  // seconds.toString() +
-                                  ' Minutes',
+                                  seconds.toString() +
+                                  ' Hour',
                               style: TextStyle(color: Colors.grey),
                             ),
                             SizedBox(
@@ -193,17 +197,26 @@ class _ViewBookingState extends State<ViewBooking> {
                                                         ChooseCard()));
                                           },
                                           onPressedButton2: () {
-                                            // _timer.cancel();
+                                            _timer.cancel();
                                             Navigator.of(context).push(
                                                 MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        Paymentcar(
-                                                            pendingBookings[
-                                                                    index]
-                                                                ['bookingId'],
-                                                            pendingBookings[
-                                                                    index][
-                                                                'totalPrice'])));
+                                                    builder: (context) => Paymentcar(
+                                                        pendingBookings[index]
+                                                            ['bookingId'],
+                                                        pendingBookings[index]
+                                                            ['totalPrice'],
+                                                        pendingBookings[index]
+                                                            ['Start Time'],
+                                                        pendingBookings[index]
+                                                            ['End Time'],
+                                                        pendingBookings[index]
+                                                            ['Start Date'],
+                                                        pendingBookings[index]
+                                                            ['End Date'],
+                                                        pendingBookings[index]
+                                                            ['Insurance type'],
+                                                        pendingBookings[index]
+                                                            ['Car Type'])));
                                           },
                                         );
                                       }),
@@ -234,7 +247,7 @@ class _ViewBookingState extends State<ViewBooking> {
                                                     builder: (context) =>
                                                         ButtonNavController()));
 
-                                            // _timer.cancel();
+                                            _timer.cancel();
                                           },
                                           onPressedButton2: () {
                                             Navigator.pop(context);
