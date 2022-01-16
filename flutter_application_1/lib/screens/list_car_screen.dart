@@ -81,6 +81,7 @@ class _ListCarState extends State<ListCar> {
 
   int price;
 
+  int postalCode;
   String statrDate;
   String endDate;
 
@@ -93,6 +94,7 @@ class _ListCarState extends State<ListCar> {
 
   Future<void> listCar() {
     // Call the user's CollectionReference to add a new user
+
     return car1.add({
       'Car Type': cType,
       'Model': cModel,
@@ -108,7 +110,7 @@ class _ListCarState extends State<ListCar> {
       'Price': price,
       'url': _url,
       'userId': userId,
-      'Dispaly Name': uDisplayName,
+      'Postal Code': postalCode,
     }).then((value) => print("Car Added"));
   }
 
@@ -218,6 +220,8 @@ class _ListCarState extends State<ListCar> {
                   validator: (value) {
                     if (value.isEmpty) {
                       return 'Please enter some text';
+                    } else if (int.tryParse(value) <= 1980) {
+                      return 'Please enter year above 1980';
                     }
                     return null;
                   },
@@ -283,18 +287,41 @@ class _ListCarState extends State<ListCar> {
                 SizedBox(
                   height: 15,
                 ),
-                MyTextformField(
-                  hintText: 'Car address',
-                  keyboardType: TextInputType.text,
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return 'Please enter some text';
-                    }
-                    return null;
-                  },
-                  onSaved: (value) {
-                    cAddress = value;
-                  },
+                Row(
+                  children: [
+                    Expanded(
+                      child: MyTextformField(
+                        hintText: 'Car address',
+                        keyboardType: TextInputType.text,
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return 'Please enter some text';
+                          }
+                          return null;
+                        },
+                        onSaved: (value) {
+                          cAddress = value;
+                        },
+                      ),
+                    ),
+                    SizedBox(
+                      width: 10.w,
+                    ),
+                    Expanded(
+                        child: MyTextformField(
+                      hintText: 'Postal Code',
+                      keyboardType: TextInputType.number,
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Please enter some text';
+                        }
+                        return null;
+                      },
+                      onSaved: (value) {
+                        postalCode = int.tryParse(value);
+                      },
+                    ))
+                  ],
                 ),
                 SizedBox(
                   height: 15,
@@ -340,8 +367,8 @@ class _ListCarState extends State<ListCar> {
                           validator: (value) {
                             if (value.isEmpty) {
                               return 'Please enter the date';
-                            } else if (DateTime.tryParse(statrDate)
-                                .isAfter(DateTime.tryParse(value))) {
+                            } else if (DateTime.parse(statrDate)
+                                .isAfter(DateTime.parse(value))) {
                               return 'Please enter a valid Date';
                             }
                             return null;
@@ -353,6 +380,7 @@ class _ListCarState extends State<ListCar> {
                           onTap: () {
                             selectDate(context, CupertinoDatePickerMode.date,
                                 controller: todatecontroller);
+                            print('${sDate}, hi');
                           },
                           onSaved: (value) {
                             eDate = value;
@@ -450,10 +478,10 @@ class _ListCarState extends State<ListCar> {
                             MaterialPageRoute(
                                 builder: (context) => ButtonNavController()));
                       }
-                      if (image == null) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('You Should choose Image')));
-                      }
+                      // if (image == null) {
+                      //   ScaffoldMessenger.of(context).showSnackBar(
+                      //       SnackBar(content: Text('You Should choose Image')));
+                      // }
                     }
                   },
                 ),

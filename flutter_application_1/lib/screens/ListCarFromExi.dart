@@ -87,7 +87,7 @@ class _listCarFromEx extends State<listCarFromEx> {
       'End Date': eDate,
       'Start Time': sTime,
       'End Time': eTime,
-      'Price': price.toString(),
+      'Price': price,
       'url': _url,
       'userId': userId,
       'Display Name': uDisplayName,
@@ -139,6 +139,7 @@ class _listCarFromEx extends State<listCarFromEx> {
                           selectDate(context, CupertinoDatePickerMode.date,
                               controller: fromdatecontroller);
                           startDate = fromdatecontroller.text;
+                          print(startDate);
                         },
                       ),
                     ),

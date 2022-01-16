@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +8,6 @@ import 'package:flutter_application_1/widgets/my_text_field.dart';
 import 'package:flutter_application_1/widgets/time_date.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 import 'list_car_screen.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -183,6 +181,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     int price = lcar[index]['Price'];
                     String sDate = lcar[index]['Start Date'];
                     String eDate = lcar[index]['End Date'];
+                    int postalCode = lcar[index]['Postal Code'];
                     // String DisplayName = lcar[index]['Price'];
                     // String url = lcar[index]['url'];
                     if (await check(userId.toString() + cNumber.toString()) !=
@@ -203,7 +202,8 @@ class _SearchScreenState extends State<SearchScreen> {
                               cAddress,
                               price,
                               sDate,
-                              eDate)));
+                              eDate,
+                              postalCode)));
                     } else {
                       booking.length--;
                       print('car already ');

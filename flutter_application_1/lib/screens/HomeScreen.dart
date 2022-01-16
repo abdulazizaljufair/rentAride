@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -445,12 +444,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       Column(
                         children: [
-                          Image.asset(
-                            'images/twitter logo.png',
-                            height: 40.h,
-                            width: 40.w,
+                          InkWell(
+                            child: Image.asset(
+                              'images/twitter logo.png',
+                              height: 40.h,
+                              width: 40.w,
+                            ),
                           ),
-                          Text('@RentARide')
+                          Text('@RentARide'),
                         ],
                       ),
                       SizedBox(

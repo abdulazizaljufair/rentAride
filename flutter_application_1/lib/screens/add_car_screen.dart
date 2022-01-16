@@ -20,6 +20,7 @@ class AddCar extends StatelessWidget {
   int cNumber = 0;
   var cAddress;
   final String userId = FirebaseAuth.instance.currentUser.uid;
+  int postalCode;
 
   Future<void> addCar() {
     // Call the user's CollectionReference to add a new user
@@ -31,6 +32,7 @@ class AddCar extends StatelessWidget {
       'odometer': odometer,
       'Chasis Number': cNumber,
       'Car address': cAddress,
+      'Postal Code': postalCode,
       'userId': userId,
       'carId': (userId + cNumber.toString()),
     }).then((value) => print("Car Added"));
@@ -161,17 +163,46 @@ class AddCar extends StatelessWidget {
                     keyboardType: TextInputType.number,
                   ),
                   SizedBox(
-                    height: 35.h,
+                    height: 20.h,
                   ),
-                  MyTextformField(
-                    hintText: 'Car Address',
-                    onSaved: (value) {
-                      cAddress = value;
-                    },
-                    keyboardType: TextInputType.number,
+                  Row(
+                    children: [
+                      Expanded(
+                        child: MyTextformField(
+                          hintText: 'Car address',
+                          keyboardType: TextInputType.text,
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return 'Please enter some text';
+                            }
+                            return null;
+                          },
+                          onSaved: (value) {
+                            cAddress = value;
+                          },
+                        ),
+                      ),
+                      SizedBox(
+                        width: 10.w,
+                      ),
+                      Expanded(
+                          child: MyTextformField(
+                        hintText: 'Postal Code',
+                        keyboardType: TextInputType.number,
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return 'Please enter some text';
+                          }
+                          return null;
+                        },
+                        onSaved: (value) {
+                          postalCode = int.tryParse(value);
+                        },
+                      ))
+                    ],
                   ),
                   SizedBox(
-                    height: 35,
+                    height: 20,
                   ),
                   CustomButton(
                     buttoncolor: Color(0xFF27292E),

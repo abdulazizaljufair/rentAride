@@ -49,6 +49,7 @@ selectDate(
               child: Container(
                 child: CupertinoDatePicker(
                   minimumYear: 2021,
+                  minimumDate: time,
                   mode: mode,
                   onDateTimeChanged: (DateTime dateTime) {
                     String formattedDate =
@@ -117,7 +118,8 @@ selectDateWithLimit(
                   maximumDate: DateTime.tryParse(maxDate),
                   minimumDate: DateTime.tryParse(minDate),
                   minimumYear: 2021,
-                  initialDateTime: DateTime.tryParse(minDate),
+                  initialDateTime:
+                      DateTime.tryParse(minDate).add(new Duration(days: 1)),
                   mode: mode,
                   onDateTimeChanged: (DateTime dateTime) {
                     String formattedDate =

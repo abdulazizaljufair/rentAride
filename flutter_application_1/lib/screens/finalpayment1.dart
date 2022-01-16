@@ -178,11 +178,11 @@ class Paymentcar extends StatelessWidget {
                                     text: 'Ok',
                                     height: 50.h,
                                     onTap: () {
-                                      // Navigator.pushReplacement(
-                                      //     context,
-                                      //     MaterialPageRoute(
-                                      //         builder: (context) =>
-                                      //             ButtonNavController()));
+                                      Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ButtonNavController()));
                                     },
                                   ),
                                 ),

@@ -187,6 +187,7 @@ class CreateAccountScreen extends StatelessWidget {
                   buttoncolor: Colors.black,
                   height: 50.h,
                   onTap: () async {
+                    _formKey.currentState.save();
                     if (_formKey.currentState.validate()) {
                       try {
                         await FirebaseAuth.instance
@@ -194,6 +195,7 @@ class CreateAccountScreen extends StatelessWidget {
                                 email: _userEmail, password: _userPassword);
 
                         await addUser(FirebaseAuth.instance.currentUser.uid);
+
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(

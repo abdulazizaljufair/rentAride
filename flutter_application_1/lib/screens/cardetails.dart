@@ -17,19 +17,20 @@ class CarDetails extends StatefulWidget {
   int price;
   String sDate;
   String eDate;
+  int postalCode;
 
   CarDetails(
-    String carType,
-    String cModel,
-    String year,
-    String lNumber,
-    int cNumber,
-    String odometer,
-    String cAddress,
-    int price,
-    String sDate,
-    String eDate,
-  ) {
+      String carType,
+      String cModel,
+      String year,
+      String lNumber,
+      int cNumber,
+      String odometer,
+      String cAddress,
+      int price,
+      String sDate,
+      String eDate,
+      int postalCode) {
     this.carType = carType;
     this.cModel = cModel;
     this.year = year;
@@ -40,6 +41,7 @@ class CarDetails extends StatefulWidget {
     this.price = price;
     this.sDate = sDate;
     this.eDate = eDate;
+    this.postalCode = postalCode;
   }
 }
 
@@ -68,10 +70,12 @@ class _CarDetailsState extends State<CarDetails> {
                   height: 8.h,
                 ),
                 Text(
-                  '                     ' +
+                  '               ' +
                       widget.carType.toUpperCase() +
                       " " +
-                      widget.cModel.toUpperCase(),
+                      widget.cModel.toUpperCase() +
+                      ' ' +
+                      widget.year,
                   style:
                       TextStyle(fontSize: 22.sp, fontWeight: FontWeight.bold),
                 ),
@@ -105,10 +109,6 @@ class _CarDetailsState extends State<CarDetails> {
                       SizedBox(
                         height: 13.h,
                       ),
-                      Text('Year: ' + widget.year),
-                      SizedBox(
-                        height: 13.h,
-                      ),
                       Text('Odometer: ' + widget.odometer),
                       SizedBox(
                         height: 13.h,
@@ -121,11 +121,15 @@ class _CarDetailsState extends State<CarDetails> {
                       SizedBox(
                         height: 13.h,
                       ),
-                      Text('Dates Avaliablity  From:     ' + widget.sDate),
+                      Text('Postal Code: ' + widget.postalCode.toString()),
                       SizedBox(
                         height: 13.h,
                       ),
-                      Text('Dates Avaliablity  Until:      ' + widget.eDate)
+                      Text('Dates Avaliablity  From:   ' + widget.sDate),
+                      SizedBox(
+                        height: 13.h,
+                      ),
+                      Text('Dates Avaliablity  Until:    ' + widget.eDate)
                     ],
                   ),
                 ),

@@ -5,6 +5,7 @@ import 'package:flutter_application_1/helper/functions.dart';
 import 'package:flutter_application_1/screens/ChatScreen_2.dart';
 import 'package:flutter_application_1/screens/HomeScreen.dart';
 import 'package:flutter_application_1/screens/View_booking.dart';
+import 'package:flutter_application_1/screens/addcar2.dart';
 
 import 'package:flutter_application_1/screens/chatsScreen.dart';
 import 'package:flutter_application_1/screens/choose_existing_car.dart';
@@ -39,7 +40,7 @@ class _ButtonNavControllerState extends State<ButtonNavController> {
             button2title: 'List new car',
             onPressedButton1: () {
               Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => ChooseExistingCar()));
+                  MaterialPageRoute(builder: (context) => AddCarScreen()));
             },
             onPressedButton2: () {
               Navigator.of(context)
